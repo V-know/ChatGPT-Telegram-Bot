@@ -1,0 +1,265 @@
+2023-02-09 23:48:47,204 - telegram.ext._application - INFO - Application started
+2023-02-09 23:50:26,496 - __main__ - INFO - {"id": "cmpl-6i3SsnHJdKPPz6rxsj4GVPUp0udm1", "object": "text_completion", "created": 1675957770, "model": "text-davinci-003", "choices": [{"text": "\n\nKubernetes\u4e2dpod\u7684\u521b\u5efa\u8fc7\u7a0b\u9700\u8981\u4ee5\u4e0b\u7ec4\u4ef6\uff1a\n\n- \u4e3b\u673a\u548c\u8282\u70b9\uff1aKubernetes\u96c6\u7fa4\u4e2d\u7684\u8ba1\u7b97\u8d44\u6e90\u662f\u7531\u4e00\u7ec4\u7269\u7406\u6216\u865a\u62df\u7684\u4e3b\u673a\u6784\u6210\u7684\uff0c\u6bcf\u4e2a\u4e3b\u673a\u4e0a\u8fd0\u884c\u4e00\u4e2a\u6216\u591a\u4e2aKubernetes\u8282\u70b9\uff0c\u7528\u4e8e\u5bb9\u7eb3\u5bb9\u5668\u3002\n\n- \u5bb9\u5668\u955c\u50cf\uff1a\u5bb9\u5668\u955c\u50cf\u662f\u5bb9\u5668\u7684\u6838\u5fc3\uff0c\u5b83\u5305\u542b\u8fd0\u884c\u5bb9\u5668\u7684\u6240\u6709\u5fc5\u8981\u7684\u73af\u5883\u3002\n\n- \u5bb9\u5668\u5f15\u64ce\uff1a\u5bb9\u5668\u5f15\u64ce\uff08\u5982Docker\uff09\u662f\u4e00\u4e2a\u8f6f\u4ef6\u7cfb\u7edf\uff0c\u7528\u4e8e\u5b9a\u4e49\uff0c\u90e8\u7f72\u548c\u8fd0\u884c\u5bb9\u5668\uff0c\u5b83\u8fde\u63a5\u5bb9\u5668\u955c\u50cf\u548c\u5b9e\u9645\u7684\u5bb9\u5668\u5b9e\u4f8b\u3002\n\n- \u5bb9\u5668\u7f16\u6392\uff1a\u5bb9\u5668\u7f16\u6392\uff08\u5982Kubernetes\uff09\u7ba1\u7406\u5bb9\u5668\u8fd0\u884c\u73af\u5883\uff0c\u76d1\u63a7\u5bb9\u5668\u72b6\u6001\uff0c\u8c03\u5ea6\u5bb9\u5668\uff0c\u5e76\u5728\u5bb9\u5668\u4e4b\u95f4\u8fdb\u884c\u8d1f\u8f7d\u5e73\u8861\u3002\n\n- \u7f51\u7edc\u7b56\u7565\uff1a\u7f51\u7edc\u7b56\u7565", "index": 0, "logprobs": null, "finish_reason": "length"}], "usage": {"prompt_tokens": 36, "completion_tokens": 512, "total_tokens": 548}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "K8s\u4e2dpod\u7684\u521b\u5efa\u8fc7\u7a0b\u90fd\u9700\u8981\u54ea\u4e9b\u7ec4\u4ef6\uff1f"}
+2023-02-09 23:52:50,079 - telegram.ext._application - INFO - Application is stopping. This might take a moment.
+2023-02-09 23:52:50,080 - telegram.ext._application - INFO - Application.stop() complete
+2023-02-09 23:53:12,997 - telegram.ext._application - INFO - Application started
+2023-02-09 23:55:08,491 - __main__ - INFO - {"id": "cmpl-6i3Xr1CcFtE4zoqFcdThbv1ixSoaV", "object": "text_completion", "created": 1675958079, "model": "text-davinci-003", "choices": [{"text": "\n\nKube-scheduler\u662fKubernetes\u6846\u67b6\u7684\u4e00\u90e8\u5206\uff0c\u5b83\u7684\u4e3b\u8981\u4f5c\u7528\u662f\u5c06Pod\uff08\u5bb9\u5668\uff09\u8c03\u5ea6\u5230\u96c6\u7fa4\u7684\u8282\u70b9\u4e0a\u3002\u5b83\u7684\u5de5\u4f5c\u539f\u7406\u662f\uff0c\u5b83\u4f1a\u6839\u636e\u7528\u6237\u63d0\u4f9b\u7684\u8c03\u5ea6\u7b56\u7565\u3001\u53ef\u7528\u8d44\u6e90\u548c\u96c6\u7fa4\u72b6\u6001\uff0c\u51b3\u5b9a\u5c06Pod\u8c03\u5ea6\u5230\u54ea\u4e2a\u8282\u70b9\u4e0a\uff0c\u4ee5\u53ca\u5728\u8282\u70b9\u4e0a\u7684\u4f4d\u7f6e\u3002\u5b83\u8fd8\u53ef\u4ee5\u76d1\u63a7Pod\u7684\u72b6\u6001\uff0c\u5f53\u4e00\u4e2aPod\u5931\u8d25\u65f6\uff0c\u5b83\u53ef\u4ee5\u5c06\u8be5Pod\u91cd\u65b0\u8c03\u5ea6\u5230\u53e6\u4e00\u4e2a\u8282\u70b9\u4e0a\u3002", "index": 0, "logprobs": null, "finish_reason": "stop"}], "usage": {"prompt_tokens": 10, "completion_tokens": 265, "total_tokens": 275}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "kube-scheduler\u7684\u4f5c\u7528"}
+2023-02-09 23:55:47,769 - __main__ - INFO - {"id": "cmpl-6i3YpzincMbQeZJZVcL9lR0YTRnlX", "object": "text_completion", "created": 1675958139, "model": "text-davinci-003", "choices": [{"text": "\n\n\u53ef\u4ee5\u4f7f\u7528eval\u51fd\u6570\u548cmvzip\u51fd\u6570\uff0c\u4f8b\u5982\uff1a\n\n```\n| eval json_string='{\"name\":\"John Doe\",\"age\":34}'\n| mvzip json_string\n| fields name, age\n```\n\n\u4e0a\u9762\u7684\u67e5\u8be2\u5c06\u89e3\u6790json\u5b57\u7b26\u4e32\uff0c\u5e76\u8fd4\u56dename\u548cage\u5b57\u6bb5\u7684\u503c\u3002", "index": 0, "logprobs": null, "finish_reason": "stop"}], "usage": {"prompt_tokens": 27, "completion_tokens": 125, "total_tokens": 152}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "\u5728splunk\u4e2d\u53d6json\u5b57\u7b26\u4e32\u4e2d\u7684\u67d0\u4e2akey\u7684\u503c"}
+2023-02-10 14:32:27,533 - __main__ - INFO - {"id": "cmpl-6iHF1bcJKM1Miqk6AOyCXyps7jAzt", "object": "text_completion", "created": 1676010727, "model": "text-davinci-003", "choices": [{"text": "\n\n1. \u5728\u5de5\u4f5c\u65f6\u95f4\u5229\u7528\u4e0a\u7f51\u641c\u7d22\u6709\u5173\u81ea\u5df1\u804c\u4f4d\u7684\u65b0\u4fe1\u606f\uff1b\n\n2. \u5c1d\u8bd5\u65b0\u7684\u8f6f\u4ef6\uff0c\u5b66\u4e60\u4f7f\u7528\u65b0\u7684\u6280\u672f\uff1b\n\n3. \u5c1d\u8bd5\u9605\u8bfb\u4e00\u4e9b\u6280\u672f\u6587\u7ae0\uff1b\n\n4. \u627e\u51e0\u4e2a\u9879\u76ee\u6765\u7ec3\u4e60\uff0c\u63d0\u9ad8\u6280\u80fd\uff1b\n\n5. \u901a\u8fc7\u5728\u7ebf\u5b66\u4e60\u6765\u63d0\u9ad8\u81ea\u5df1\u7684\u4e13\u4e1a\u6c34\u5e73\uff1b\n\n6. \u7ed3\u4ea4\u4e00\u4e9b\u884c\u4e1a\u5185\u7684\u670b\u53cb\uff0c\u5206\u4eab\u6280\u672f\u7ecf\u9a8c\uff1b\n\n7. \u6536\u96c6\u548c\u7814\u7a76\u6709\u5173\u884c\u4e1a\u7684\u6700\u65b0\u8d8b\u52bf\uff1b\n\n8. \u5c1d\u8bd5\u7f16\u5199\u4e00\u4e9b\u4e13\u4e1a\u7684\u6587\u7ae0\uff1b\n\n9. \u5c1d\u8bd5\u5728\u7ebf\u8ba8\u8bba\uff0c\u4e0e\u5176\u4ed6\u4e13\u5bb6\u4ea4\u6d41\uff1b\n\n10. \u5c1d\u8bd5\u5199\u4e00\u4e9b\u5b9e\u7528\u7684\u5de5\u5177\uff0c\u65b9\u4fbf\u65e5\u5e38\u5de5\u4f5c\u3002", "index": 0, "logprobs": null, "finish_reason": "stop"}], "usage": {"prompt_tokens": 16, "completion_tokens": 390, "total_tokens": 406}, "user": {"name": "fooksky", "id": 572036312}, "prompt": "\u5728\u516c\u53f8\u600e\u4e48\u6478\u9c7c"}
+2023-02-10 15:28:15,267 - __main__ - INFO - {"id": "cmpl-6iI7GGkxSXp418O5yQMxWAA8q1X6g", "object": "text_completion", "created": 1676014090, "model": "text-davinci-003", "choices": [{"text": "\n\nAlibaba Cloud overseas export IPs will be changed in the future, but the timeline is not determined yet. \n\nWe need to review:\n\nWhich services are calling Global services\nWhether there is a whitelist restriction for the corresponding Global services\nTo prevent service unavailability when the outbound IPs are changed.", "index": 0, "logprobs": null, "finish_reason": "stop"}], "usage": {"prompt_tokens": 161, "completion_tokens": 68, "total_tokens": 229}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "\u7ffb\u8bd1\u4e0b\u65b9\uff1a\n\u963f\u91cc\u4e91\u6d77\u5916\u51fa\u53e3IP\u672a\u6765\u4f1a\u8fdb\u884c\u53d8\u66f4\uff0c\u65f6\u95f4\u672a\u5b9a\u3002\n\n\u6211\u4eec\u9700\u8981\u68b3\u7406\u51fa\uff1a\n\n\u54ea\u4e9b\u670d\u52a1\u8c03\u7528\u4e86Global\u7684\u670d\u52a1\n\u5bf9\u5e94\u7684Global\u670d\u52a1\u662f\u5426\u6709\u767d\u540d\u5355\u9650\u5236\n\u9632\u6b62\u51fa\u53e3IP\u53d8\u66f4\u65f6\uff0c\u9020\u6210\u670d\u52a1\u4e0d\u53ef\u7528"}
+2023-02-10 15:52:14,133 - __main__ - INFO - {"id": "cmpl-6iIUBOaiZD8sM101ZtEm0TegkLdNF", "object": "text_completion", "created": 1676015511, "model": "text-davinci-003", "choices": [{"text": "\n\n1. \u786e\u5b9a\u6c47\u62a5\u65b9\u5f0f\uff1a\u53ef\u4ee5\u901a\u8fc7\u7535\u8bdd\uff0c\u4f1a\u8bae\u6216\u7535\u5b50\u90ae\u4ef6\u7b49\u65b9\u5f0f\u6c47\u62a5\u5de5\u4f5c\u3002\n\n2. \u786e\u5b9a\u6c47\u62a5\u5185\u5bb9\uff1a\u6c47\u62a5\u5185\u5bb9\u5e94\u5305\u62ec\u5de5\u4f5c\u4efb\u52a1\u3001\u8fdb\u5ea6\u3001\u7ed3\u679c\u4ee5\u53ca\u9047\u5230\u7684\u95ee\u9898\u548c\u89e3\u51b3\u529e\u6cd5\u3002\n\n3. \u7ec4\u7ec7\u6c47\u62a5\uff1a\u5728\u6c47\u62a5\u524d\u8981\u5145\u5206\u51c6\u5907\uff0c\u91cd\u70b9\u7a81\u51fa\uff0c\u9610\u8ff0\u6e05\u695a\uff0c\u786e\u4fdd\u4fe1\u606f\u51c6\u786e\u65e0\u8bef\u3002\n\n4. \u6c47\u62a5\u65f6\u95f4\uff1a\u5e94\u6309\u7167\u7ea6\u5b9a\u7684\u65f6\u95f4\u6c47\u62a5\uff0c\u53ca\u65f6\u66f4\u65b0\u6c47\u62a5\u5185\u5bb9\uff0c\u4fdd\u6301\u5de5\u4f5c\u8fdb\u5ea6\u7684\u987a\u5229\u5b8c\u6210\u3002", "index": 0, "logprobs": null, "finish_reason": "stop"}], "usage": {"prompt_tokens": 16, "completion_tokens": 329, "total_tokens": 345}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "\u5982\u4f55\u6c47\u62a5\u5de5\u4f5c\uff1f"}
+2023-02-10 16:09:41,680 - __main__ - INFO - {"id": "cmpl-6iIlBYC1Lsi68ooxCjIHHlKZ9Z90H", "object": "text_completion", "created": 1676016565, "model": "text-davinci-003", "choices": [{"text": "\n\nratio \u662f\u6bd4\u7387\u7684\u610f\u601d\uff0c\u8868\u793a\u4e24\u4e2a\u52a8\u4f5c\u6216\u4e24\u4e2a\u503c\u4e4b\u95f4\u7684\u6bd4\u503c\uff0c\u6bd4\u5982\u6295\u8d44\u56de\u62a5\u7387\uff0c\u6bd4\u7387\u53ef\u4ee5\u662f\u767e\u5206\u6bd4\uff0c\u4e5f\u53ef\u4ee5\u662f\u7528\u7eaf\u6570\u5b57\u8868\u793a\u7684\u4e00\u4e2a\u6bd4\u4f8b\u3002\n\nrate \u662f\u6307\u67d0\u4e00\u6bb5\u65f6\u95f4\u5185\u7684\u5e73\u5747\u901f\u7387\uff0c\u6bd4\u5982\u5e74\u5229\u7387\uff0c\u6bcf\u5c0f\u65f6\u6d88\u8017\u7684\u70ed\u91cf\u7b49\u7b49\uff0c\u5355\u4f4d\u65f6\u95f4\u5185\u6240\u53d1\u751f\u7684\u4e8b\u4ef6\u6216\u91cf\u5316\u7684\u53d8\u5316\u60c5\u51b5\u3002", "index": 0, "logprobs": null, "finish_reason": "stop"}], "usage": {"prompt_tokens": 11, "completion_tokens": 244, "total_tokens": 255}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "ratio\u548crate\u7684\u533a\u522b"}
+2023-02-10 16:25:36,984 - __main__ - INFO - {"id": "cmpl-6iJ0qlFprPS1bHLcUIONMa51IjIRb", "object": "text_completion", "created": 1676017536, "model": "text-davinci-003", "choices": [{"text": "\n\nI need permission to create a board on Miro.", "index": 0, "logprobs": null, "finish_reason": "stop"}], "usage": {"prompt_tokens": 34, "completion_tokens": 13, "total_tokens": 47}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "\u7ffb\u8bd1\uff1a \u6211\u9700\u8981Miro\u4e0a\u9762\u521b\u5efaboard\u7684\u6743\u9650"}
+2023-02-13 10:23:51,544 - __main__ - INFO - {"id": "cmpl-6jInL2WDRCCxccT4PJwjUiFEuR7Vt", "object": "text_completion", "created": 1676255027, "model": "text-davinci-003", "choices": [{"text": "\n\n\u76ee\u524d\uff0c\u7531\u4e8e\u9999\u6e2f\u7684\u6cd5\u5f8b\u6cd5\u89c4\u548c\u653f\u7b56\u4e0e\u4e2d\u56fd\u5927\u9646\u4e0d\u540c\uff0c\u56e0\u6b64ChatGPT\u6682\u65f6\u4e0d\u5f00\u653e\u9999\u6e2f\u5730\u533a\u7684\u8bbf\u95ee\u3002", "index": 0, "logprobs": null, "finish_reason": "stop"}], "usage": {"prompt_tokens": 34, "completion_tokens": 88, "total_tokens": 122}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "chatgpt\u4e3a\u4ec0\u4e48\u4e0d\u5f00\u653e\u9999\u6e2f\u5730\u533a\u7684\u8bbf\u95ee\uff1f"}
+2023-02-13 10:24:20,718 - __main__ - INFO - {"id": "cmpl-6jInlvFB4kE9LetAcui9mJ7wDyvkD", "object": "text_completion", "created": 1676255053, "model": "text-davinci-003", "choices": [{"text": "\n\n\u4e2d\u56fd\u5927\u9646\u5730\u533a\u4f4d\u4e8e\u4e9a\u6d32\u4e1c\u90e8\uff0c\u5305\u62ec\u5317\u4eac\u3001\u4e0a\u6d77\u3001\u5e7f\u5dde\u3001\u91cd\u5e86\u3001\u5929\u6d25\u7b49\u57ce\u5e02\uff0c\u65e0\u8bba\u662f\u5730\u7406\u4f4d\u7f6e\u3001\u7ecf\u6d4e\u5b9e\u529b\u3001\u4eba\u53e3\u6570\u91cf\u8fd8\u662f\u6587\u5316\u5f71\u54cd\u529b\u90fd\u662f\u6700\u5927\u7684\u56fd\u5bb6\u4e4b\u4e00\u3002", "index": 0, "logprobs": null, "finish_reason": "stop"}], "usage": {"prompt_tokens": 19, "completion_tokens": 129, "total_tokens": 148}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "\u90a3\u4e2d\u56fd\u5927\u9646\u5730\u533a\u5462\uff1f"}
+2023-02-13 10:24:43,212 - __main__ - INFO - {"id": "cmpl-6jIo9uG6yv6tDLK4Yo0z9y4ts2hPK", "object": "text_completion", "created": 1676255077, "model": "text-davinci-003", "choices": [{"text": "\n\n\u76ee\u524d\uff0c\u56fd\u5185\u5e02\u573a\u653f\u7b56\u548c\u6cd5\u5f8b\u6cd5\u89c4\u6709\u4e00\u5b9a\u7684\u9650\u5236\uff0c\u4e3a\u4e86\u786e\u4fdd\u5b89\u5168\u548c\u5408\u89c4\uff0cChatGPT\u4e0d\u5f00\u653e\u4e2d\u56fd\u5927\u9646\u5730\u533a\u7684\u8bbf\u95ee\u3002", "index": 0, "logprobs": null, "finish_reason": "stop"}], "usage": {"prompt_tokens": 35, "completion_tokens": 99, "total_tokens": 134}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "chatgpt\u4e3a\u4ec0\u4e48\u4e0d\u5f00\u653e\u4e2d\u56fd\u5927\u9646\u5730\u533a\u7684\u8bbf\u95ee\uff1f"}
+2023-02-13 16:30:52,904 - __main__ - INFO - {"id": "cmpl-6jOWRxNuG7TvjD5yITjhsDOS6AAEj", "object": "text_completion", "created": 1676277043, "model": "text-davinci-003", "choices": [{"text": "\n\nIf a peer cannot be obtained from the ring-balancer, it may be due to a network issue or a problem with the balancer itself. It could also be caused by a lack of available peers to connect to, or a misconfigured balancer. In any case, it is best to troubleshoot the issue by attempting to connect to the balancer manually and identify any errors. If the issue persists, it is recommended to contact the balancer's support team for further assistance.", "index": 0, "logprobs": null, "finish_reason": "stop"}], "usage": {"prompt_tokens": 12, "completion_tokens": 102, "total_tokens": 114}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "failure to get a peer from the ring-balancer"}
+2023-02-13 17:35:49,655 - __main__ - INFO - {"id": "cmpl-6jPXGgW0pGQESMHC33zXqQ0WS5T9H", "object": "text_completion", "created": 1676280938, "model": "text-davinci-003", "choices": [{"text": "\u662f\u4ec0\u4e48\uff1f\n\nport\uff1a\u6307\u5b9a\u66b4\u9732 Service \u7684\u7aef\u53e3\u53f7\uff0c\u8be5\u7aef\u53e3\u53f7\u5c06\u88ab\u6620\u5c04\u5230 Service \u4e0a\u5bf9\u5e94\u7684\u5bb9\u5668\u7aef\u53e3\u53f7\u4e0a\uff0c\u4f9b\u5916\u90e8\u8bbf\u95ee\u3002\n\ntargetPort\uff1a\u6307\u5b9a Service \u4e0a\u5bf9\u5e94\u5bb9\u5668\u7684\u7aef\u53e3\u53f7\uff0c\u8be5\u7aef\u53e3\u53f7\u7528\u4e8e\u5bb9\u5668\u4e0e Service \u4e4b\u95f4\u7684\u901a\u4fe1\u3002", "index": 0, "logprobs": null, "finish_reason": "stop"}], "usage": {"prompt_tokens": 26, "completion_tokens": 156, "total_tokens": 182}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "K8s\u7684service\u8d44\u6e90\u4e2d\uff0cport\u548ctargetPort\u7684\u533a\u522b"}
+2023-02-13 17:43:45,295 - __main__ - INFO - {"id": "cmpl-6jPf2H5EbDElUDqvSye7peQ7HRaCC", "object": "text_completion", "created": 1676281420, "model": "text-davinci-003", "choices": [{"text": "\n\nThis is a confirmation message that your account has been successfully activated. It means that you can now start using the Konga platform to buy and sell items.", "index": 0, "logprobs": null, "finish_reason": "stop"}], "usage": {"prompt_tokens": 19, "completion_tokens": 33, "total_tokens": 52}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "i got \" Neat! Your account is activated.\" when i configure Konga, why?"}
+2023-02-13 22:48:30,424 - telegram.ext._updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2023-02-13 22:48:30,427 - telegram.ext._application - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_updater.py", line 600, in _network_loop_retry
+    if not await action_cb():
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_updater.py", line 327, in polling_action_cb
+    raise exc
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_updater.py", line 319, in polling_action_cb
+    allowed_updates=allowed_updates,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_extbot.py", line 533, in get_updates
+    api_kwargs=api_kwargs,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/_bot.py", line 334, in decorator
+    result = await func(*args, **kwargs)  # skipcq: PYL-E1102
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/_bot.py", line 3591, in get_updates
+    api_kwargs=api_kwargs,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/_bot.py", line 428, in _post
+    pool_timeout=pool_timeout,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_extbot.py", line 312, in _do_post
+    read_timeout=read_timeout,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/_bot.py", line 459, in _do_post
+    pool_timeout=pool_timeout,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/request/_baserequest.py", line 172, in post
+    pool_timeout=pool_timeout,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/request/_baserequest.py", line 330, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2023-02-14 21:08:06,762 - telegram.ext._updater - ERROR - Error while getting Updates: httpx HTTPError: 
+2023-02-14 21:08:06,771 - telegram.ext._application - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/usr/local/python3/lib/python3.7/asyncio/selector_events.py", line 801, in _read_ready__data_received
+    data = self._sock.recv(self.max_size)
+ConnectionResetError: [Errno 104] Connection reset by peer
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpcore/_exceptions.py", line 10, in map_exceptions
+    yield
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpcore/backends/asyncio.py", line 34, in read
+    return await self._stream.receive(max_bytes=max_bytes)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/anyio/streams/tls.py", line 195, in receive
+    data = await self._call_sslobject_method(self._ssl_object.read, max_bytes)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/anyio/streams/tls.py", line 137, in _call_sslobject_method
+    data = await self.transport_stream.receive()
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/anyio/_backends/_asyncio.py", line 1274, in receive
+    raise self._protocol.exception
+anyio.BrokenResourceError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpx/_transports/default.py", line 60, in map_httpcore_exceptions
+    yield
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpx/_transports/default.py", line 353, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpcore/_async/connection_pool.py", line 253, in handle_async_request
+    raise exc
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpcore/_async/connection_pool.py", line 237, in handle_async_request
+    response = await connection.handle_async_request(request)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpcore/_async/connection.py", line 90, in handle_async_request
+    return await self._connection.handle_async_request(request)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpcore/_async/http11.py", line 112, in handle_async_request
+    raise exc
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpcore/_async/http11.py", line 91, in handle_async_request
+    ) = await self._receive_response_headers(**kwargs)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpcore/_async/http11.py", line 155, in _receive_response_headers
+    event = await self._receive_event(timeout=timeout)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpcore/_async/http11.py", line 192, in _receive_event
+    self.READ_NUM_BYTES, timeout=timeout
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpcore/backends/asyncio.py", line 36, in read
+    return b""
+  File "/usr/local/python3/lib/python3.7/contextlib.py", line 130, in __exit__
+    self.gen.throw(type, value, traceback)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc)
+httpcore.ReadError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/request/_httpxrequest.py", line 189, in do_request
+    data=data,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpx/_client.py", line 1533, in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpx/_client.py", line 1624, in send
+    history=[],
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpx/_client.py", line 1651, in _send_handling_auth
+    history=history,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpx/_client.py", line 1685, in _send_handling_redirects
+    response = await self._send_single_request(request)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpx/_client.py", line 1722, in _send_single_request
+    response = await transport.handle_async_request(request)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpx/_transports/default.py", line 353, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+  File "/usr/local/python3/lib/python3.7/contextlib.py", line 130, in __exit__
+    self.gen.throw(type, value, traceback)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpx/_transports/default.py", line 77, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ReadError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_updater.py", line 600, in _network_loop_retry
+    if not await action_cb():
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_updater.py", line 327, in polling_action_cb
+    raise exc
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_updater.py", line 319, in polling_action_cb
+    allowed_updates=allowed_updates,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_extbot.py", line 533, in get_updates
+    api_kwargs=api_kwargs,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/_bot.py", line 334, in decorator
+    result = await func(*args, **kwargs)  # skipcq: PYL-E1102
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/_bot.py", line 3591, in get_updates
+    api_kwargs=api_kwargs,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/_bot.py", line 428, in _post
+    pool_timeout=pool_timeout,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_extbot.py", line 312, in _do_post
+    read_timeout=read_timeout,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/_bot.py", line 459, in _do_post
+    pool_timeout=pool_timeout,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/request/_baserequest.py", line 172, in post
+    pool_timeout=pool_timeout,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/request/_baserequest.py", line 288, in _request_wrapper
+    raise exc
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/request/_baserequest.py", line 281, in _request_wrapper
+    pool_timeout=pool_timeout,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/request/_httpxrequest.py", line 204, in do_request
+    raise NetworkError(f"httpx HTTPError: {err}") from err
+telegram.error.NetworkError: httpx HTTPError: 
+2023-02-14 21:19:25,846 - telegram.ext._updater - ERROR - Error while getting Updates: httpx HTTPError: 
+2023-02-14 21:19:25,849 - telegram.ext._application - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/usr/local/python3/lib/python3.7/asyncio/selector_events.py", line 801, in _read_ready__data_received
+    data = self._sock.recv(self.max_size)
+ConnectionResetError: [Errno 104] Connection reset by peer
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpcore/_exceptions.py", line 10, in map_exceptions
+    yield
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpcore/backends/asyncio.py", line 34, in read
+    return await self._stream.receive(max_bytes=max_bytes)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/anyio/streams/tls.py", line 195, in receive
+    data = await self._call_sslobject_method(self._ssl_object.read, max_bytes)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/anyio/streams/tls.py", line 137, in _call_sslobject_method
+    data = await self.transport_stream.receive()
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/anyio/_backends/_asyncio.py", line 1274, in receive
+    raise self._protocol.exception
+anyio.BrokenResourceError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpx/_transports/default.py", line 60, in map_httpcore_exceptions
+    yield
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpx/_transports/default.py", line 353, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpcore/_async/connection_pool.py", line 253, in handle_async_request
+    raise exc
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpcore/_async/connection_pool.py", line 237, in handle_async_request
+    response = await connection.handle_async_request(request)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpcore/_async/connection.py", line 90, in handle_async_request
+    return await self._connection.handle_async_request(request)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpcore/_async/http11.py", line 112, in handle_async_request
+    raise exc
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpcore/_async/http11.py", line 91, in handle_async_request
+    ) = await self._receive_response_headers(**kwargs)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpcore/_async/http11.py", line 155, in _receive_response_headers
+    event = await self._receive_event(timeout=timeout)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpcore/_async/http11.py", line 192, in _receive_event
+    self.READ_NUM_BYTES, timeout=timeout
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpcore/backends/asyncio.py", line 36, in read
+    return b""
+  File "/usr/local/python3/lib/python3.7/contextlib.py", line 130, in __exit__
+    self.gen.throw(type, value, traceback)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc)
+httpcore.ReadError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/request/_httpxrequest.py", line 189, in do_request
+    data=data,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpx/_client.py", line 1533, in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpx/_client.py", line 1624, in send
+    history=[],
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpx/_client.py", line 1651, in _send_handling_auth
+    history=history,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpx/_client.py", line 1685, in _send_handling_redirects
+    response = await self._send_single_request(request)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpx/_client.py", line 1722, in _send_single_request
+    response = await transport.handle_async_request(request)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpx/_transports/default.py", line 353, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+  File "/usr/local/python3/lib/python3.7/contextlib.py", line 130, in __exit__
+    self.gen.throw(type, value, traceback)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpx/_transports/default.py", line 77, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ReadError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_updater.py", line 600, in _network_loop_retry
+    if not await action_cb():
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_updater.py", line 327, in polling_action_cb
+    raise exc
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_updater.py", line 319, in polling_action_cb
+    allowed_updates=allowed_updates,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_extbot.py", line 533, in get_updates
+    api_kwargs=api_kwargs,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/_bot.py", line 334, in decorator
+    result = await func(*args, **kwargs)  # skipcq: PYL-E1102
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/_bot.py", line 3591, in get_updates
+    api_kwargs=api_kwargs,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/_bot.py", line 428, in _post
+    pool_timeout=pool_timeout,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_extbot.py", line 312, in _do_post
+    read_timeout=read_timeout,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/_bot.py", line 459, in _do_post
+    pool_timeout=pool_timeout,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/request/_baserequest.py", line 172, in post
+    pool_timeout=pool_timeout,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/request/_baserequest.py", line 288, in _request_wrapper
+    raise exc
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/request/_baserequest.py", line 281, in _request_wrapper
+    pool_timeout=pool_timeout,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/request/_httpxrequest.py", line 204, in do_request
+    raise NetworkError(f"httpx HTTPError: {err}") from err
+telegram.error.NetworkError: httpx HTTPError: 
+2023-02-15 17:21:36,556 - __main__ - INFO - {"id": "cmpl-6k8GSrVO3B7j0vpSFQDwuICUaqsTq", "object": "text_completion", "created": 1676452876, "model": "text-davinci-003", "choices": [{"text": "\n\n\u4eca\u5929\uff0c\u621133\u5c81\u4e86\uff01\u65f6\u5149\u98de\u901d\uff0c\u4f46\u6bcf\u4e00\u6bb5\u7ecf\u5386\uff0c\u90fd\u8ba9\u6211\u66f4\u52a0\u6210\u719f\u3001\u7a33\u91cd\u3001\u5e78\u798f\u3002\u611f\u8c22\u4e00\u8def\u4e0a\u6709\u4f60\u4eec\u966a\u4f34\uff0c\u8c22\u8c22\u4f60\u4eec\u6240\u6709\u7684\u795d\u798f\uff0c\u6211\u4f1a\u7ee7\u7eed\u52aa\u529b\uff0c\u4e3a\u4e86\u66f4\u52a0\u7f8e\u597d\u7684\u660e\u5929\uff01", "index": 0, "logprobs": null, "finish_reason": "stop"}], "usage": {"prompt_tokens": 52, "completion_tokens": 162, "total_tokens": 214}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "\u4eca\u592933\u5c81\u751f\u65e5\uff0c\u5e2e\u6211\u751f\u6210\u4e00\u6bb5\u8868\u8fbe\u5e78\u798f\u3001\u6210\u719f\u3001\u7a33\u91cd\u7684\u63a8\u6587"}
+2023-02-15 17:22:51,538 - __main__ - INFO - {"id": "cmpl-6k8HYmEdnkUWQXljmALQQAKUnPuk6", "object": "text_completion", "created": 1676452944, "model": "text-davinci-003", "choices": [{"text": "\n\n\u65f6\u5149\u834f\u82d2\uff0c\u5c81\u6708\u5982\u68ad\uff0c\n\u4e09\u5341\u4e09\u8fd9\u4e2a\u5e74\u7eaa\uff0c\u610f\u5473\u7740\u66f4\u591a\u7684\u53d8\u5316\uff1b\n\u7ecf\u5386\u8fc7\u65e0\u6570\u8270\u8f9b\uff0c\u6210\u957f\u5df2\u8d8a\u8fc7\u8bb8\u591a\u6697\u6de1\uff1b\n\u5e78\u798f\u3001\u6210\u719f\u3001\u7a33\u91cd\uff0c\u8ba9\u6211\u7684\u5fc3\u66f4\u8f7b\u677e\uff1b\n\u518d\u8ba9\u6211\u7684\u7b11\u5bb9\uff0c\u66f4\u52a0\u5706\u6da6\uff0c\n\u795d\u6211\u751f\u65e5\u5feb\u4e50\uff0c\u4eca\u540e\u6210\u7ee9\u66f4\u4e0a\u65b0\u53f0\u9636\uff01", "index": 0, "logprobs": null, "finish_reason": "stop"}], "usage": {"prompt_tokens": 60, "completion_tokens": 220, "total_tokens": 280}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "\u4eca\u592933\u5c81\u751f\u65e5\uff0c\u5e2e\u6211\u751f\u6210\u4e00\u6bb5\u8bd7\u6587\uff0c\u8868\u8fbe\u5e78\u798f\u3001\u6210\u719f\u3001\u7a33\u91cd\u7684\u72b6\u6001\u3002"}
+2023-02-15 17:28:09,409 - __main__ - INFO - {"id": "cmpl-6k8N4cmLAHYZZ99SQP26w1d03qDhh", "object": "text_completion", "created": 1676453286, "model": "text-davinci-003", "choices": [{"text": "\n\n\u4eba\u751f\u8d62\u5bb6\uff0c\u4eca\u65e5\u6210\u957f\u3002", "index": 0, "logprobs": null, "finish_reason": "stop"}], "usage": {"prompt_tokens": 49, "completion_tokens": 22, "total_tokens": 71}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "\u4eca\u592933\u5c81\u751f\u65e5\uff0c\u7528\u4e00\u53e5\u8bdd\u8868\u8fbe\u5e78\u798f\u3001\u6210\u719f\u3001\u7a33\u91cd\u7684\u72b6\u6001\u3002"}
+2023-02-15 17:28:46,775 - __main__ - INFO - {"id": "cmpl-6k8NdoI8BBWzQs0FrN8FcJUK5jhy8", "object": "text_completion", "created": 1676453321, "model": "text-davinci-003", "choices": [{"text": "\n\n\u4eba\u751f\u4e09\u5341\u4e09\uff0c\u8e0f\u4e0a\u5d2d\u65b0\u5f81\u7a0b\uff0c\u81ea\u4fe1\u6ee1\u6ee1\u51c6\u5907\u8fce\u63a5\u672a\u6765\u3002", "index": 0, "logprobs": null, "finish_reason": "stop"}], "usage": {"prompt_tokens": 55, "completion_tokens": 53, "total_tokens": 108}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "\u4eca\u592933\u5c81\u751f\u65e5\uff0c\u7528\u4e00\u53e5\u8bdd\u8868\u8fbe\u5e78\u798f\u3001\u6210\u719f\u3001\u7a33\u91cd\u3001\u81ea\u4fe1\u7684\u72b6\u6001\u3002"}
+2023-02-15 17:29:09,718 - __main__ - INFO - {"id": "cmpl-6k8NwNKwHviofccQu0KFvWKLLAVuJ", "object": "text_completion", "created": 1676453340, "model": "text-davinci-003", "choices": [{"text": "\n\n\u4eca\u5929\uff0c\u6211\u611f\u89c9\u81ea\u5df1\u66f4\u52a0\u6210\u719f\u3001\u66f4\u52a0\u7a33\u91cd\u3001\u5145\u6ee1\u81ea\u4fe1\uff0c\u5e78\u798f\u4e0d\u5df2\u3002", "index": 0, "logprobs": null, "finish_reason": "stop"}], "usage": {"prompt_tokens": 55, "completion_tokens": 64, "total_tokens": 119}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "\u4eca\u592933\u5c81\u751f\u65e5\uff0c\u7528\u4e00\u53e5\u8bdd\u8868\u8fbe\u5e78\u798f\u3001\u6210\u719f\u3001\u7a33\u91cd\u3001\u81ea\u4fe1\u7684\u72b6\u6001\u3002"}
+2023-02-15 17:29:43,155 - __main__ - INFO - {"id": "cmpl-6k8OU1rsiqHWvJ5kjt5Io7qdpxrKi", "object": "text_completion", "created": 1676453374, "model": "text-davinci-003", "choices": [{"text": "\n\n\u795d\u6211\u751f\u65e5\u5feb\u4e50\uff0c\u5b89\u4eab\u5065\u5eb7\u7f8e\u6ee1\uff0c\u7a33\u5065\u6210\u957f\u81ea\u4fe1\u81ea\u5f3a\uff01", "index": 0, "logprobs": null, "finish_reason": "stop"}], "usage": {"prompt_tokens": 48, "completion_tokens": 59, "total_tokens": 107}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "\u751f\u65e5\u5f53\u5929\u7528\u4e00\u53e5\u8bdd\u8868\u8fbe\u5e78\u798f\u3001\u6210\u719f\u3001\u7a33\u91cd\u3001\u81ea\u4fe1\u7684\u72b6\u6001\u3002"}
+2023-02-15 19:12:16,161 - __main__ - INFO - {"id": "cmpl-6k9zT7DqBgXf3W8SJngW4JV0RShs6", "object": "text_completion", "created": 1676459511, "model": "text-davinci-003", "choices": [{"text": "\n\nGwei\u662f\u4ee5\u592a\u574a\u7f51\u7edc\u4e2d\u7684\u4e00\u4e2a\u865a\u62df\u8d27\u5e01\u5355\u4f4d\uff0c\u5b83\u662f\u4ee5\u592a\u5e01\uff08Ether\uff09\u7684\u6700\u5c0f\u5355\u4f4d\uff0c\u7528\u4e8e\u8ba1\u7b97\u4ee5\u592a\u5e01\u7684\u4ef7\u683c\u30021 Gwei\u7b49\u4e8e0.000000001\u4ee5\u592a\u5e01\uff0810\u7684-9\u6b21\u5e42\uff09\u3002\u5b83\u7684\u540d\u5b57\u662f\u53d6\u81ea\u4ee5\u592a\u5e01\u7684\u53d1\u660e\u8005Vitalik Buterin\u7684\u59d3\uff0cGwei\u662fButerin\u7684\u5bb6\u5ead\u59d3\u6c0f\u7684\u884d\u751f\u540d\u79f0\u3002", "index": 0, "logprobs": null, "finish_reason": "stop"}], "usage": {"prompt_tokens": 7, "completion_tokens": 188, "total_tokens": 195}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "\u89e3\u91cagwei"}
+2023-02-19 11:56:29,337 - __main__ - INFO - {"id": "cmpl-6lV688Hjxe5dA3uail33na7yaD2bd", "object": "text_completion", "created": 1676778976, "model": "text-davinci-003", "choices": [{"text": "\n\n1. \u716e\u8336\uff1a\u716e\u8336\u662f\u628a\u8336\u53f6\u653e\u5165\u5f00\u6c34\u4e2d\uff0c\u7528\u5927\u706b\u716e\uff0c\u76f4\u5230\u8336\u53f6\u53d8\u719f\u4e3a\u6b62\u3002\u8fd9\u79cd\u65b9\u5f0f\u53ef\u4ee5\u628a\u8336\u53f6\u4e2d\u7684\u8425\u517b\u6210\u5206\u5b8c\u6574\u5730\u91ca\u653e\u51fa\u6765\uff0c\u9999\u5473\u6d53\u90c1\uff0c\u53e3\u611f\u6d53\u539a\u3002\n\n2. \u6ce1\u8336\uff1a\u6ce1\u8336\u662f\u628a\u8336\u53f6\u653e\u5165\u51c9\u6c34\u4e2d\uff0c\u8ba9\u8336\u53f6\u6162\u6162\u6d78\u6ce1\uff0c\u8fbe\u5230\u4e00\u5b9a\u7684\u65f6\u95f4\u540e\u5373\u53ef\u996e\u7528\u3002\u8fd9\u79cd\u65b9\u5f0f\u53ef\u4ee5\u4fdd\u7559\u8336\u53f6\u7684\u9999\u6c14\u548c\u6e05\u65b0\u7684\u53e3\u611f\uff0c\u4f46\u7531\u4e8e\u6ca1\u6709\u716e\u8fc7\uff0c\u8336\u53f6\u4e2d\u7684\u8425\u517b\u6210\u5206\u6bd4\u8f83\u5c11\u3002", "index": 0, "logprobs": null, "finish_reason": "stop"}], "usage": {"prompt_tokens": 21, "completion_tokens": 311, "total_tokens": 332}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "\u716e\u8336\u4e0e\u6ce1\u8336\u7684\u533a\u522b\uff1f"}
+2023-02-19 11:57:18,424 - __main__ - INFO - {"id": "cmpl-6lV70c31zZnIunQ2TKIGIKHbTfgpv", "object": "text_completion", "created": 1676779030, "model": "text-davinci-003", "choices": [{"text": "\n\n\u716e\u8336\uff1a\u7eff\u8336\u3001\u4e4c\u9f99\u8336\u3001\u82b1\u8349\u8336\u3001\u666e\u6d31\u8336\u3001\u767d\u6beb\u94f6\u9488\u7b49\u7ecf\u5178\u7eff\u8336\u9002\u5b9c\u716e\u6cd5\u3002\n\n\u6ce1\u8336\uff1a\u94c1\u89c2\u97f3\u3001\u5927\u7ea2\u888d\u3001\u78a7\u87ba\u6625\u3001\u7941\u95e8\u7ea2\u8336\u3001\u541b\u5c71\u94f6\u9488\u7b49\u9ad8\u54c1\u8d28\u7684\u7ea2\u8336\u662f\u6700\u9002\u5408\u7528\u4e8e\u6ce1\u8336\u7684\u3002", "index": 0, "logprobs": null, "finish_reason": "stop"}], "usage": {"prompt_tokens": 33, "completion_tokens": 176, "total_tokens": 209}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "\u4ec0\u4e48\u8336\u53f6\u9002\u5408\u716e\uff1f\u4ec0\u4e48\u8336\u9002\u5408\u6ce1\uff1f"}
+2023-02-19 21:45:44,802 - __main__ - INFO - {"id": "cmpl-6leI41AGCY4RdEKb1V2khWI1WYMn0", "object": "text_completion", "created": 1676814312, "model": "text-davinci-003", "choices": [{"text": "\n\n\u300a\u57fa\u4e8e4P\u8425\u9500\u89c6\u89d2\u7684\u5feb\u65f6\u5c1a\u54c1\u724c\u8de8\u6587\u5316\u8425\u9500\u7b56\u7565\u5206\u6790\uff1a\u4ee5Zara\u4e3a\u4f8b\u300b\n\n\u6458\u8981\n\n\u968f\u7740\u5168\u7403\u5e02\u573a\u73af\u5883\u7684\u53d8\u5316\uff0c\u8de8\u6587\u5316\u8425\u9500\u7b56\u7565\u5df2\u6210\u4e3a\u5e02\u573a\u8425\u9500\u6d3b\u52a8\u4e2d\u4e0d\u53ef\u6216\u7f3a\u7684\u4e00\u90e8\u5206\u3002\u672c\u7814\u7a76\u65e8\u5728\u63a2\u7a76\u8de8\u6587\u5316\u8425\u9500\u7b56\u7565\u5bf9\u5feb\u65f6\u5c1a\u54c1\u724cZara\u7684\u5f71\u54cd\uff0c\u5e76\u4ee54P\u8425\u9500\u89c6\u89d2\u6765\u5206\u6790\u8fd9\u79cd\u5f71\u54cd\u3002\u672c\u7814\u7a76\u9996\u5148\u4ece\u76f8\u5173\u6587\u732e\u4e2d\u68b3\u7406\u51fa\u8de8\u6587\u5316\u8425\u9500\u7b56\u7565\uff0c\u7136\u540e\u7ed3\u5408Zara\u7684\u5b9e\u9645\u60c5\u51b5\uff0c\u91c7\u7528\u5b9a\u6027\u548c\u5b9a\u91cf\u7684\u7814\u7a76\u65b9\u6cd5\uff0c\u5206\u6790\u4e86Zara\u5728\u4ea7\u54c1\u3001\u4ef7\u683c\u3001\u4fc3\u9500\u548c\u5206\u9500\u65b9\u9762\u7684\u8de8\u6587\u5316\u8425\u9500\u7b56\u7565\u3002\u7814\u7a76\u53d1\u73b0\uff0cZara\u5728\u8de8\u6587\u5316\u8425\u9500\u7b56\u7565\u4e2d\u5145\u5206\u8003\u8651\u4e86\u672c\u5730\u5316\u548c\u5168\u7403\u5316\u7684\u8981\u7d20\uff0c\u5e76\u53d6\u5f97\u4e86\u4e00\u5b9a\u7684\u6210\u529f\u3002\u672c\u7814\u7a76\u6709\u52a9\u4e8e\u6df1\u5165\u7406\u89e3\u8de8\u6587\u5316\u8425\u9500\u7b56\u7565\u5bf9\u5feb\u65f6\u5c1a\u54c1\u724c\u7684\u5f71\u54cd\uff0c\u4e3a\u5feb\u65f6\u5c1a\u884c\u4e1a\u7684\u53d1\u5c55\u63d0\u4f9b\u7406\u8bba\u6307\u5bfc\u3002\n\n\u5173\u952e\u8bcd\uff1a\u8de8\u6587\u5316\u8425\u9500\uff1b4P\u8425\u9500\uff1bZara\uff1b\u5feb\u65f6\u5c1a", "index": 0, "logprobs": null, "finish_reason": "stop"}], "usage": {"prompt_tokens": 101, "completion_tokens": 661, "total_tokens": 762}, "user": {"name": null, "id": 5094401493}, "prompt": "\u5e2e\u6211\u5199\u4e00\u7bc7\u9898\u76ee\u4e3a\u300a\u57fa\u4e8e4p\u8425\u9500\u89c6\u89d2\u7684\u5feb\u65f6\u5c1a\u54c1\u724c\u8de8\u6587\u5316\u8425\u9500\u7b56\u7565\u5206\u6790---\u4ee5Zara\u4e3a\u4f8b\u300b\u7684\u672c\u79d1\u6bd5\u4e1a\u8bba\u6587"}
+2023-02-19 21:51:49,807 - __main__ - INFO - {"id": "cmpl-6leNrA4k2gqtTQYmyxBs5ANIZxILD", "object": "text_completion", "created": 1676814671, "model": "text-davinci-003", "choices": [{"text": "\n\nZara\u4f5c\u4e3a\u897f\u73ed\u7259\u65f6\u5c1a\u54c1\u724c\uff0c\u5728\u56fd\u5185\u5916\u5e02\u573a\u4e0a\u90fd\u53d7\u5230\u6b22\u8fce\u3002\u8fd1\u5e74\u6765\uff0cZara\u79ef\u6781\u6295\u8d44\u8425\u9500\u6d3b\u52a8\uff0c\u63a8\u51fa\u5404\u79cd\u8425\u9500\u7b56\u7565\uff0c\u4ee5\u63d0\u9ad8\u54c1\u724c\u77e5\u540d\u5ea6\u3001\u63d0\u9ad8\u9500\u91cf\u548c\u6536\u76ca\u3002\n\n\u5173\u4e8eZara\u7684\u8425\u9500\u7b56\u7565\uff0c\u56fd\u5185\u5916\u7814\u7a76\u73b0\u72b6\u4e3b\u8981\u6709\u4e24\u65b9\u9762\u3002\n\n\u4e00\u65b9\u9762\uff0c\u5728\u56fd\u5916\u5e02\u573a\uff0cZara\u79ef\u6781\u5229\u7528\u5404\u79cd\u6e20\u9053\u63a8\u5e7f\uff0c\u91cd\u70b9\u5229\u7528\u793e\u4ea4\u5a92\u4f53\u548c\u7535\u5b50\u5546\u52a1\u6e20\u9053\uff0c\u5b9e\u73b0\u54c1\u724c\u63a8\u5e7f\u548c\u65b0\u54c1\u9500\u552e\u3002\u6269\u5927\u54c1\u724c\u5ba3\u4f20\u8986\u76d6\u9762\uff0c\u63d0\u5347\u54c1\u724c\u5f71\u54cd\u529b\uff0c\u589e\u52a0\u65b0\u8001\u5ba2\u6237\u6570\u91cf\uff0c\u4ece\u800c\u5b9e\u73b0\u9ad8\u6548\u7387\u7684\u8425\u9500\u3002\n\n\u53e6\u4e00\u65b9\u9762\uff0c\u5728\u56fd\u5185\u5e02\u573a\uff0cZara\u6ce8\u91cd\u5728\u7ebf\u8425\u9500\uff0c\u91cd\u89c6\u54c1\u724c\u793e\u7fa4\u5efa\u8bbe\uff0c\u52a0\u5f3a\u4e0e\u7c89\u4e1d\u7684\u4e92\u52a8\uff0c\u63d0\u5347\u5ba2\u6237\u7c98\u6027\u3002\u6b64\u5916\uff0cZara\u8fd8\u79ef\u6781\u53c2\u4e0e\u5b9e\u4f53\u5e97\u7684\u6d3b\u52a8\uff0c\u5229\u7528\u201c\u7ebf\u4e0b\u4f53\u9a8c+\u7ebf\u4e0a\u63a8\u5e7f\u201d\u7684\u65b9\u5f0f\uff0c\u5b9e\u73b0\u54c1\u724c\u4f20\u64ad\uff0c\u63d0\u5347\u54c1\u724c\u77e5\u540d\u5ea6\u3002\n\n\u4ee5\u4e0a\u5c31\u662fZara\u8425\u9500\u7b56\u7565\u56fd\u5185\u5916\u7814\u7a76\u73b0\u72b6\u7684\u6982\u8ff0\uff0cZara\u5728\u56fd\u5916\u5e02\u573a\u91cd\u89c6\u793e\u4ea4\u5a92\u4f53\u548c\u7535\u5b50\u5546\u52a1\u6e20\u9053\uff0c\u800c\u5728\u56fd\u5185\u5e02\u573a\u5219\u91cd\u89c6\u793e\u7fa4\u5efa\u8bbe\u548c\u7ebf\u4e0b\u6d3b\u52a8\u3002", "index": 0, "logprobs": null, "finish_reason": "stop"}], "usage": {"prompt_tokens": 31, "completion_tokens": 763, "total_tokens": 794}, "user": {"name": null, "id": 5094401493}, "prompt": "Zara\u8425\u9500\u7b56\u7565\u56fd\u5185\u5916\u7814\u7a76\u73b0\u72b6"}
+2023-02-19 22:02:59,667 - __main__ - INFO - {"id": "cmpl-6leYmVwKCQCn0BL1TutwhvG3HdBxZ", "object": "text_completion", "created": 1676815348, "model": "text-davinci-003", "choices": [{"text": "\n\n4P\u8425\u9500\u7b56\u7565\u662f\u6307\u201c\u4ea7\u54c1\u3001\u4ef7\u683c\u3001\u4fc3\u9500\u548c\u6e20\u9053\u201d\uff0c\u662f\u73b0\u4ee3\u8425\u9500\u7ba1\u7406\u7684\u57fa\u672c\u7ec4\u6210\u90e8\u5206\uff0c\u662f\u8425\u9500\u7ba1\u7406\u7684\u57fa\u7840\u6a21\u578b\u3002\n\n\u56fd\u5185\u5916\u5bf94P\u8425\u9500\u7b56\u7565\u7684\u7814\u7a76\u7406\u8bba\u4e3b\u8981\u6709\u4ee5\u4e0b\u51e0\u70b9\uff1a\n\n\u4e00\u3001\u4ea7\u54c1\u8425\u9500\u7b56\u7565\u3002\u4e3b\u8981\u6d89\u53ca\u4ea7\u54c1\u7684\u8bbe\u8ba1\u3001\u7814\u53d1\u3001\u98ce\u683c\u3001\u54c1\u724c\u3001\u5206\u7c7b\u3001\u8d28\u91cf\u3001\u4ef7\u683c\u3001\u4fdd\u4fee\u548c\u670d\u52a1\u7b49\u65b9\u9762\uff0c\u4ee5\u6ee1\u8db3\u6d88\u8d39\u8005\u7684\u9700\u6c42\uff0c\u63d0\u9ad8\u4f01\u4e1a\u7684\u6838\u5fc3\u7ade\u4e89\u529b\u3002\n\n\u4e8c\u3001\u4ef7\u683c\u8425\u9500\u7b56\u7565\u3002\u4e3b\u8981\u6d89\u53ca\u4ef7\u683c\u7684\u5b9a\u4f4d\u3001\u5b9a\u4ef7\u3001\u4fc3\u9500\u7b49\uff0c\u4ee5\u5b9e\u73b0\u5229\u6da6\u6700\u5927\u5316\uff0c\u6ee1\u8db3\u6d88\u8d39\u8005\u7684\u4ef7\u503c\u671f\u671b\u3002\n\n\u4e09\u3001\u4fc3\u9500\u8425\u9500\u7b56\u7565\u3002\u4e3b\u8981\u6d89\u53ca\u6298\u6263\u3001\u8d60\u54c1\u3001\u5956\u52b1\u3001\u6d3b\u52a8\u4fc3\u9500\u3001\u5e7f\u544a\u5ba3\u4f20\u3001\u7f51\u7edc\u8425\u9500\u7b49\uff0c\u4ee5\u63d0\u9ad8\u4ea7\u54c1\u7684\u77e5\u540d\u5ea6\u548c\u5f71\u54cd\u529b\uff0c\u5438\u5f15\u6d88\u8d39\u8005\u8d2d\u4e70\u3002\n\n\u56db\u3001\u6e20\u9053\u8425\u9500\u7b56\u7565\u3002\u4e3b\u8981\u6d89\u53ca\u6e20\u9053\u7ed3\u6784\u3001\u6e20\u9053\u63a8\u5e7f\u3001\u6e20\u9053\u7ba1\u7406\u7b49\uff0c\u4ee5\u5b9e\u73b0\u8425\u9500\u6e20\u9053\u7684\u6700\u4f18\u5316\uff0c\u63d0\u9ad8\u8425\u9500\u6548\u7387\u3002\n\n\u4ee5\u4e0a\u5c31\u662f\u56fd\u5185\u5916\u5173\u4e8e4P\u8425\u9500\u7b56\u7565\u7684\u76f8\u5173\u7814\u7a76\u7406\u8bba\u3002", "index": 0, "logprobs": null, "finish_reason": "stop"}], "usage": {"prompt_tokens": 39, "completion_tokens": 703, "total_tokens": 742}, "user": {"name": null, "id": 5094401493}, "prompt": "\u56fd\u5185\u5916\u5173\u4e8e4p\u8425\u9500\u7b56\u7565\u7684\u76f8\u5173\u7814\u7a76\u7406\u8bba"}
+2023-02-19 22:11:52,684 - __main__ - INFO - {"id": "cmpl-6lehisRZFVWNvGtru8bouCnH5T1tN", "object": "text_completion", "created": 1676815902, "model": "text-davinci-003", "choices": [{"text": "\n\n\u5a36\u5ab3\u5987\u7684\u6807\u51c6\u53d6\u51b3\u4e8e\u4e2a\u4eba\u7684\u559c\u597d\u548c\u9700\u6c42\uff0c\u4f46\u662f\u4e00\u822c\u6765\u8bf4\uff0c\u5e94\u8be5\u627e\u6709\u8d23\u4efb\u5fc3\u3001\u6709\u80fd\u529b\u627f\u62c5\u5bb6\u5ead\u91cd\u62c5\u3001\u6709\u826f\u597d\u5bb6\u5ead\u7d20\u8d28\u548c\u9053\u5fb7\u89c2\u5ff5\u7684\u5973\u751f\u3002\u6709\u8bda\u4fe1\u3001\u5766\u8bda\u3001\u53cb\u5584\u3001\u6709\u7231\u5fc3\u3001\u61c2\u5f97\u7167\u987e\u5bb6\u5ead\u7684\u5973\u751f\u4e5f\u662f\u4e0d\u9519\u7684\u9009\u62e9\u3002", "index": 0, "logprobs": null, "finish_reason": "stop"}], "usage": {"prompt_tokens": 22, "completion_tokens": 184, "total_tokens": 206}, "user": {"name": null, "id": 5094401493}, "prompt": "\u5a36\u5ab3\u5987\u5e94\u8be5\u627e\u90a3\u79cd\u5973\u751f"}
