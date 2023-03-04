@@ -74,7 +74,7 @@ def ai(user: User, prompt):
     return response.get('choices')[0].get('text')
 
 
-def chatAI(user: User, prompt):
+def chatCompletionAI(user: User, prompt):
     openai.api_key = config["AI"]["TOKEN"]
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo-0301",
