@@ -55,22 +55,42 @@ logger.addHandler(fh)
 def ai(user: User, prompt):
     openai.api_key = config["AI"]["TOKEN"]
 
+    max_tokens = 4000 if user.id == 467300857 else 256
     response = openai.Completion.create(
         model="text-davinci-003",
         prompt=prompt,
+        temperature=0.7,
+        max_tokens=max_tokens,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0
+    )
+    response["user"] = {"name": user.username,
+                        "id": user.id
+                        }
+    response["prompt"] = prompt
+    logger.info(json.dumps(response))
+
+    return response.get('choices')[0].get('text')
+
+
+def chatAI(user: User, prompt):
+    openai.api_key = config["AI"]["TOKEN"]
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo-0301",
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": "你的新名字叫：星期五"},
+            {"role": "user", "content": prompt}
+        ],
         temperature=0.7,
         max_tokens=1024,
         top_p=1,
         frequency_penalty=0,
         presence_penalty=0
     )
-    response["user"] = {"name": user.username,
-                        "id": user.id,
-                        }
-    response["prompt"] = prompt
-    logger.info(json.dumps(response))
-
-    return response.get('choices')[0].get('text')
+    print(response)
+    return response.get("choices")[0].get("message").get("content")
 
 
 # Define a few command handlers. These usually take the two arguments update and
