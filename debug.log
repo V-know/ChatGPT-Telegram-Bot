@@ -567,3 +567,243 @@ Traceback (most recent call last):
   File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/request/_baserequest.py", line 332, in _request_wrapper
     raise NetworkError(description or "Bad Gateway")
 telegram.error.NetworkError: Bad Gateway
+2023-03-05 00:06:22,859 - __main__ - INFO - {"id": "cmpl-6qOgkXaUVcIsPRqTkaJ8Y5ezmRHyb", "object": "text_completion", "created": 1677945978, "model": "text-davinci-003", "choices": [{"text": "\n\n\u5c81\u6708\u5982\u6b4c\uff0c\u6d41\u5e74\u4e0d\u7559\u75d5\n\u4f60\u7684\u7b11\u5bb9\u4ee4\u6211\u5fc3\u5bbd\uff0c\u4f60\u7684\u6e29\u67d4\u96be\u4ee5\u5fd8\n\u6211\u4eec\u66fe\u62e5\u6709\u7684\u7f8e\u597d\uff0c\u4eca\u88ab\u56de\u5fc6\u6df1\u57cb\n\u867d\u7136\u524d\u8def\u4e0d\u518d\u76f8\u805a\uff0c\u4f46\u613f\u5e78\u798f\u5728\u8eab\u8fb9", "index": 0, "logprobs": null, "finish_reason": "stop"}], "usage": {"prompt_tokens": 41, "completion_tokens": 134, "total_tokens": 175}, "user": {"name": null, "id": 5094401493}, "prompt": "\u6211\u60f3\u6211\u7684\u524d\u4efb\u4e86\uff0c\u8bf7\u7ed9\u5979\u5199\u4e00\u9996\u8bd7 \u3002 \u7b80\u77ed\u4e9b"}
+2023-03-07 10:25:38,271 - telegram.ext._application - INFO - Application is stopping. This might take a moment.
+2023-03-07 10:25:38,283 - telegram.ext._application - INFO - Application.stop() complete
+2023-03-07 10:26:45,507 - telegram.ext._application - INFO - Application started
+2023-03-07 10:27:45,720 - __main__ - INFO - {"id": "cmpl-6rHL9fBmCW3pbOiNDcj44zzpQjvZM", "object": "text_completion", "created": 1678156059, "model": "text-davinci-003", "choices": [{"text": "\n\n2020\u5e7411\u670817\u65e5\uff0cPostgreSQL\u5b98\u65b9\u53d1\u5e03\u4e86\u4e00\u4e2a\u65b0\u7684\u5b89\u5168\u6f0f\u6d1e\uff0c\u8be5\u6f0f\u6d1e\u53ef\u80fd\u5bfc\u81f4\u8d44\u6e90\u6cc4\u6f0f\u548c\u62d2\u7edd\u670d\u52a1\uff08DoS\uff09\u653b\u51fb\u3002\u6b64\u6f0f\u6d1e\u5f71\u54cd\u4e86PostgreSQL 9.3\u81f312.4\u7248\u672c\uff0c\u5141\u8bb8\u4efb\u610f\u8fdc\u7a0b\u7528\u6237\u5728\u62d2\u7edd\u670d\u52a1\u653b\u51fb\uff08DoS\uff09\u7684\u540c\u65f6\u8bbf\u95ee\u670d\u52a1\u5668\u4e0a\u7684\u5185\u5b58\uff0c\u5e76\u5c06\u6570\u636e\u4ece\u670d\u52a1\u5668\u4e0a\u6cc4\u6f0f\u51fa\u53bb\u3002", "index": 0, "logprobs": null, "finish_reason": "stop"}], "usage": {"prompt_tokens": 21, "completion_tokens": 226, "total_tokens": 247}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "PostgreSQL\u6700\u65b0\u7684\u6f0f\u6d1e\u662f\u4ec0\u4e48\uff1f"}
+2023-03-09 04:31:03,326 - telegram.ext._updater - ERROR - Error while getting Updates: httpx HTTPError: Server disconnected without sending a response.
+2023-03-09 04:31:03,335 - telegram.ext._application - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpx/_transports/default.py", line 60, in map_httpcore_exceptions
+    yield
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpx/_transports/default.py", line 353, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpcore/_async/connection_pool.py", line 253, in handle_async_request
+    raise exc
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpcore/_async/connection_pool.py", line 237, in handle_async_request
+    response = await connection.handle_async_request(request)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpcore/_async/connection.py", line 90, in handle_async_request
+    return await self._connection.handle_async_request(request)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpcore/_async/http11.py", line 112, in handle_async_request
+    raise exc
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpcore/_async/http11.py", line 91, in handle_async_request
+    ) = await self._receive_response_headers(**kwargs)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpcore/_async/http11.py", line 155, in _receive_response_headers
+    event = await self._receive_event(timeout=timeout)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpcore/_async/http11.py", line 205, in _receive_event
+    raise RemoteProtocolError(msg)
+httpcore.RemoteProtocolError: Server disconnected without sending a response.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/request/_httpxrequest.py", line 189, in do_request
+    data=data,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpx/_client.py", line 1533, in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpx/_client.py", line 1624, in send
+    history=[],
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpx/_client.py", line 1651, in _send_handling_auth
+    history=history,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpx/_client.py", line 1685, in _send_handling_redirects
+    response = await self._send_single_request(request)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpx/_client.py", line 1722, in _send_single_request
+    response = await transport.handle_async_request(request)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpx/_transports/default.py", line 353, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+  File "/usr/local/python3/lib/python3.7/contextlib.py", line 130, in __exit__
+    self.gen.throw(type, value, traceback)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/httpx/_transports/default.py", line 77, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.RemoteProtocolError: Server disconnected without sending a response.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_updater.py", line 600, in _network_loop_retry
+    if not await action_cb():
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_updater.py", line 327, in polling_action_cb
+    raise exc
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_updater.py", line 319, in polling_action_cb
+    allowed_updates=allowed_updates,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_extbot.py", line 533, in get_updates
+    api_kwargs=api_kwargs,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/_bot.py", line 334, in decorator
+    result = await func(*args, **kwargs)  # skipcq: PYL-E1102
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/_bot.py", line 3591, in get_updates
+    api_kwargs=api_kwargs,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/_bot.py", line 428, in _post
+    pool_timeout=pool_timeout,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_extbot.py", line 312, in _do_post
+    read_timeout=read_timeout,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/_bot.py", line 459, in _do_post
+    pool_timeout=pool_timeout,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/request/_baserequest.py", line 172, in post
+    pool_timeout=pool_timeout,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/request/_baserequest.py", line 288, in _request_wrapper
+    raise exc
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/request/_baserequest.py", line 281, in _request_wrapper
+    pool_timeout=pool_timeout,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/request/_httpxrequest.py", line 204, in do_request
+    raise NetworkError(f"httpx HTTPError: {err}") from err
+telegram.error.NetworkError: httpx HTTPError: Server disconnected without sending a response.
+2023-03-09 06:39:51,555 - telegram.ext._updater - INFO - Flood control exceeded. Retry in 5 seconds
+2023-03-10 00:29:48,959 - telegram.ext._updater - INFO - Flood control exceeded. Retry in 5 seconds
+2023-03-10 09:17:40,889 - telegram.ext._updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2023-03-10 09:17:40,891 - telegram.ext._application - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_updater.py", line 600, in _network_loop_retry
+    if not await action_cb():
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_updater.py", line 327, in polling_action_cb
+    raise exc
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_updater.py", line 319, in polling_action_cb
+    allowed_updates=allowed_updates,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_extbot.py", line 533, in get_updates
+    api_kwargs=api_kwargs,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/_bot.py", line 334, in decorator
+    result = await func(*args, **kwargs)  # skipcq: PYL-E1102
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/_bot.py", line 3591, in get_updates
+    api_kwargs=api_kwargs,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/_bot.py", line 428, in _post
+    pool_timeout=pool_timeout,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_extbot.py", line 312, in _do_post
+    read_timeout=read_timeout,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/_bot.py", line 459, in _do_post
+    pool_timeout=pool_timeout,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/request/_baserequest.py", line 172, in post
+    pool_timeout=pool_timeout,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/request/_baserequest.py", line 330, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2023-03-10 09:18:12,877 - telegram.ext._updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2023-03-10 09:18:12,877 - telegram.ext._application - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_updater.py", line 600, in _network_loop_retry
+    if not await action_cb():
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_updater.py", line 327, in polling_action_cb
+    raise exc
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_updater.py", line 319, in polling_action_cb
+    allowed_updates=allowed_updates,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_extbot.py", line 533, in get_updates
+    api_kwargs=api_kwargs,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/_bot.py", line 334, in decorator
+    result = await func(*args, **kwargs)  # skipcq: PYL-E1102
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/_bot.py", line 3591, in get_updates
+    api_kwargs=api_kwargs,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/_bot.py", line 428, in _post
+    pool_timeout=pool_timeout,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_extbot.py", line 312, in _do_post
+    read_timeout=read_timeout,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/_bot.py", line 459, in _do_post
+    pool_timeout=pool_timeout,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/request/_baserequest.py", line 172, in post
+    pool_timeout=pool_timeout,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/request/_baserequest.py", line 330, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2023-03-13 14:09:49,475 - openai - INFO - error_code=None error_message='You exceeded your current quota, please check your plan and billing details.' error_param=None error_type=insufficient_quota message='OpenAI API error received' stream_error=False
+2023-03-13 14:09:49,487 - telegram.ext._application - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_application.py", line 1063, in process_update
+    await coroutine
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "main.py", line 115, in echo
+    await update.message.reply_text(ai(update.effective_user, update.message.text))
+  File "main.py", line 66, in ai
+    presence_penalty=0
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/openai/api_resources/completion.py", line 25, in create
+    return super().create(*args, **kwargs)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/openai/api_resources/abstract/engine_api_resource.py", line 160, in create
+    request_timeout=request_timeout,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/openai/api_requestor.py", line 227, in request
+    resp, got_stream = self._interpret_response(result, stream)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/openai/api_requestor.py", line 624, in _interpret_response
+    stream=False,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/openai/api_requestor.py", line 681, in _interpret_response_line
+    rbody, rcode, resp.data, rheaders, stream_error=stream_error
+openai.error.RateLimitError: You exceeded your current quota, please check your plan and billing details.
+2023-03-13 14:39:10,253 - telegram.ext._application - INFO - Application is stopping. This might take a moment.
+2023-03-13 14:39:10,254 - telegram.ext._application - INFO - Application.stop() complete
+2023-03-13 14:39:14,302 - telegram.ext._application - INFO - Application started
+2023-03-13 14:39:29,117 - openai - INFO - error_code=None error_message='You exceeded your current quota, please check your plan and billing details.' error_param=None error_type=insufficient_quota message='OpenAI API error received' stream_error=False
+2023-03-13 14:39:29,118 - telegram.ext._application - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_application.py", line 1063, in process_update
+    await coroutine
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "main.py", line 115, in echo
+    await update.message.reply_text(ai(update.effective_user, update.message.text))
+  File "main.py", line 66, in ai
+    presence_penalty=0
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/openai/api_resources/completion.py", line 25, in create
+    return super().create(*args, **kwargs)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/openai/api_resources/abstract/engine_api_resource.py", line 160, in create
+    request_timeout=request_timeout,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/openai/api_requestor.py", line 227, in request
+    resp, got_stream = self._interpret_response(result, stream)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/openai/api_requestor.py", line 624, in _interpret_response
+    stream=False,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/openai/api_requestor.py", line 681, in _interpret_response_line
+    rbody, rcode, resp.data, rheaders, stream_error=stream_error
+openai.error.RateLimitError: You exceeded your current quota, please check your plan and billing details.
+2023-03-13 15:02:16,954 - telegram.ext._application - INFO - Application is stopping. This might take a moment.
+2023-03-13 15:02:16,956 - telegram.ext._application - INFO - Application.stop() complete
+2023-03-13 15:02:19,949 - telegram.ext._application - INFO - Application started
+2023-03-13 15:02:39,244 - openai - INFO - error_code=None error_message='You exceeded your current quota, please check your plan and billing details.' error_param=None error_type=insufficient_quota message='OpenAI API error received' stream_error=False
+2023-03-13 15:02:39,245 - telegram.ext._application - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_application.py", line 1063, in process_update
+    await coroutine
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "main.py", line 115, in echo
+    await update.message.reply_text(ai(update.effective_user, update.message.text))
+  File "main.py", line 66, in ai
+    presence_penalty=0
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/openai/api_resources/completion.py", line 25, in create
+    return super().create(*args, **kwargs)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/openai/api_resources/abstract/engine_api_resource.py", line 160, in create
+    request_timeout=request_timeout,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/openai/api_requestor.py", line 227, in request
+    resp, got_stream = self._interpret_response(result, stream)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/openai/api_requestor.py", line 624, in _interpret_response
+    stream=False,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/openai/api_requestor.py", line 681, in _interpret_response_line
+    rbody, rcode, resp.data, rheaders, stream_error=stream_error
+openai.error.RateLimitError: You exceeded your current quota, please check your plan and billing details.
+2023-03-13 15:24:35,200 - telegram.ext._application - INFO - Application is stopping. This might take a moment.
+2023-03-13 15:24:35,202 - telegram.ext._application - INFO - Application.stop() complete
+2023-03-13 15:24:38,413 - telegram.ext._application - INFO - Application started
+2023-03-13 15:24:56,293 - __main__ - INFO - {"id": "cmpl-6tWq5LmSxKGt4Eb8mbIn9IVyRBuAy", "object": "text_completion", "created": 1678692293, "model": "text-davinci-003", "choices": [{"text": ".\n\n\u4e2d\u56fd\u5728\u5b9e\u4f53\u5e97\u548c\u5728\u7ebf\u6e20\u9053\u7684\u8868\u73b0\u90fd\u4f4e\u4e8e\u9884\u671f\uff0c\u53ea\u6709\u5728\u65b0\u5e74\u671f\u95f4\uff0c FY23\u7684\u8868\u73b0\u8d85\u8fc7\u4e86\u76ee\u6807\u3002", "index": 0, "logprobs": null, "finish_reason": "stop"}], "usage": {"prompt_tokens": 31, "completion_tokens": 83, "total_tokens": 114}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "\u7ffb\u8bd1\uff1aChina is performing below Goal in both store and online channel, only during new year time performed above goal in FY23"}
+2023-03-13 15:31:34,454 - telegram.ext._application - INFO - Application is stopping. This might take a moment.
+2023-03-13 15:31:34,454 - telegram.ext._application - INFO - Application.stop() complete
+2023-03-13 15:31:37,596 - telegram.ext._application - INFO - Application started
+2023-03-13 15:31:58,305 - openai - INFO - error_code=None error_message='This is a chat model and not supported in the v1/completions endpoint. Did you mean to use v1/chat/completions?' error_param=model error_type=invalid_request_error message='OpenAI API error received' stream_error=False
+2023-03-13 15:31:58,305 - telegram.ext._application - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_application.py", line 1063, in process_update
+    await coroutine
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "main.py", line 116, in echo
+    await update.message.reply_text(ai(update.effective_user, update.message.text))
+  File "main.py", line 67, in ai
+    presence_penalty=0
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/openai/api_resources/completion.py", line 25, in create
+    return super().create(*args, **kwargs)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/openai/api_resources/abstract/engine_api_resource.py", line 160, in create
+    request_timeout=request_timeout,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/openai/api_requestor.py", line 227, in request
+    resp, got_stream = self._interpret_response(result, stream)
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/openai/api_requestor.py", line 624, in _interpret_response
+    stream=False,
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/openai/api_requestor.py", line 681, in _interpret_response_line
+    rbody, rcode, resp.data, rheaders, stream_error=stream_error
+openai.error.InvalidRequestError: This is a chat model and not supported in the v1/completions endpoint. Did you mean to use v1/chat/completions?
+2023-03-13 15:32:53,238 - telegram.ext._application - INFO - Application is stopping. This might take a moment.
+2023-03-13 15:32:53,240 - telegram.ext._application - INFO - Application.stop() complete
+2023-03-13 15:32:56,208 - telegram.ext._application - INFO - Application started
+2023-03-13 15:33:38,858 - __main__ - INFO - {"id": "cmpl-6tWyNSCee0P1fZeipo36TrgdSk6Ap", "object": "text_completion", "created": 1678692807, "model": "text-davinci-003", "choices": [{"text": "\n\n1. \u5b89\u88c5Python 3\uff1a\n\n\u4e0b\u8f7d\u5e76\u5b89\u88c5Python 3\uff0c\u5b89\u88c5\u5b8c\u6210\u540e\uff0c\u8bf7\u786e\u4fdd\u60a8\u6709\u6b63\u786e\u5b89\u88c5\u7684Python 3\u73af\u5883\u3002\n\n2. \u5b89\u88c5chatgpt\uff1a\n\n\u4f7f\u7528pip\u547d\u4ee4\u5b89\u88c5chatgpt\uff0c\u8fd0\u884c\u4ee5\u4e0b\u547d\u4ee4\uff1a\n\npip install chatgpt\n\n3. \u4e0b\u8f7dGPT-3.5-turbo\uff1a\n\n\u4ecechatgpt\u7684GitHub\u4e0b\u8f7dGPT-3.5-turbo\uff0c\u4e0b\u8f7d\u5730\u5740\uff1ahttps://github.com/openai/gpt-3/releases/tag/v3.5.0-turbo\u3002\n\n4. \u8fd0\u884cGPT-3.5-turbo\uff1a\n\n\u8fd0\u884cGPT-3.5-turbo\uff0c\u4f7f\u7528\u4ee5\u4e0b\u547d\u4ee4\uff1a\n\npython3 path_to_gpt_3_5_turbo/run_gpt3.py", "index": 0, "logprobs": null, "finish_reason": "stop"}], "usage": {"prompt_tokens": 32, "completion_tokens": 299, "total_tokens": 331}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "\u5982\u4f55\u5728python3\u4f7f\u7528\u8c03\u7528chatgpt\u7684gpt-3.5-turbo\uff1f"}
