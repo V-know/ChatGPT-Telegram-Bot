@@ -846,3 +846,6 @@ Traceback (most recent call last):
   File "main.py", line 79, in chatCompletionAI
     response = openai.ChatCompletion.create(
 AttributeError: module 'openai' has no attribute 'ChatCompletion'
+2023-03-15 12:01:09,731 - telegram.ext._application - INFO - Application is stopping. This might take a moment.
+2023-03-15 12:01:09,733 - telegram.ext._application - INFO - Application.stop() complete
+2023-03-15 12:03:24,696 - telegram.ext._application - INFO - Application started
