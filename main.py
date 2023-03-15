@@ -116,7 +116,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Echo the user message."""
     if update.message:
-        await update.message.reply_text(chatCompletionAI(update.effective_user, update.message.text))
+        await update.message.reply_text(chatCompletionAI(update.effective_user, update.message.text), parse_mode='Markdown')
 
 
 def main() -> None:
