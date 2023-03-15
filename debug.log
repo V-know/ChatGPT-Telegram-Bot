@@ -832,3 +832,17 @@ Traceback (most recent call last):
   File "main.py", line 79, in chatCompletionAI
     response = openai.ChatCompletion.create(
 AttributeError: module 'openai' has no attribute 'ChatCompletion'
+2023-03-15 11:08:29,089 - telegram.ext._application - INFO - Application is stopping. This might take a moment.
+2023-03-15 11:08:29,090 - telegram.ext._application - INFO - Application.stop() complete
+2023-03-15 11:08:56,730 - telegram.ext._application - INFO - Application started
+2023-03-15 11:09:02,918 - telegram.ext._application - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_application.py", line 1063, in process_update
+    await coroutine
+  File "/root/bots/ai/ai-bot/venv/lib/python3.7/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "main.py", line 119, in echo
+    await update.message.reply_text(chatCompletionAI(update.effective_user, update.message.text))
+  File "main.py", line 79, in chatCompletionAI
+    response = openai.ChatCompletion.create(
+AttributeError: module 'openai' has no attribute 'ChatCompletion'
