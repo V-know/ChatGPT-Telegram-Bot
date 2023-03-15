@@ -54,7 +54,6 @@ logger.addHandler(fh)
 
 def ai(user: User, prompt):
     openai.api_key = config["AI"]["TOKEN"]
-
     max_tokens = 4000 if user.id == 467300857 else 256
     response = openai.Completion.create(
         model="text-davinci-003",
@@ -74,22 +73,27 @@ def ai(user: User, prompt):
     return response.get('choices')[0].get('text')
 
 
-def chatAI(user: User, prompt):
+def chatCompletionAI(user: User, prompt):
+    max_tokens = 4000 if user.id == 467300857 else 256
     openai.api_key = config["AI"]["TOKEN"]
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo-0301",
         messages=[
-            {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": "你的新名字叫：星期五"},
+            # {"role": "system", "content": "You are a helpful assistant."},
             {"role": "user", "content": prompt}
         ],
         temperature=0.7,
-        max_tokens=1024,
+        max_tokens=max_tokens,
         top_p=1,
         frequency_penalty=0,
         presence_penalty=0
     )
-    print(response)
+    response["user"] = {"name": user.username,
+                        "id": user.id
+                        }
+    response["prompt"] = prompt
+    logger.info(json.dumps(response))
+
     return response.get("choices")[0].get("message").get("content")
 
 
@@ -112,7 +116,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Echo the user message."""
     if update.message:
-        await update.message.reply_text(ai(update.effective_user, update.message.text))
+        await update.message.reply_text(chatCompletionAI(update.effective_user, update.message.text))
 
 
 def main() -> None:
