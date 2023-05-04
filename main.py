@@ -78,7 +78,7 @@ def chatCompletionAI(user: User, prompt):
     openai.api_key = config["AI"]["TOKEN"]
     openai.api_type = "azure"
     openai.api_base = "https://openaitrial0417.openai.azure.com/"
-    openai.api_version = "2022-12-01"
+    openai.api_version = "2023-03-15-preview"
 
     response = openai.Completion.create(
         engine="gpt-35-turbo",
