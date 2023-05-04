@@ -54,7 +54,7 @@ logger.addHandler(fh)
 
 def ai(user: User, prompt):
     openai.api_key = config["AI"]["TOKEN"]
-    max_tokens = 4000 if user.id == 467300857 else 256
+    max_tokens = 1000 if user.id == 467300857 else 256
     response = openai.Completion.create(
         model="text-davinci-003",
         prompt=prompt,
@@ -74,12 +74,11 @@ def ai(user: User, prompt):
 
 
 def chatCompletionAI(user: User, prompt):
-    max_tokens = 4000 if user.id == 467300857 else 256
+    max_tokens = 1000 if user.id == 467300857 else 256
     openai.api_key = config["AI"]["TOKEN"]
     openai.api_type = "azure"
     openai.api_base = "https://openaitrial0417.openai.azure.com/"
     openai.api_version = "2022-12-01"
-    max_tokens = 4000 if user.id == 467300857 else 256
 
     response = openai.Completion.create(
         engine="gpt-35-turbo",
