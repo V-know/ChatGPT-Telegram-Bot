@@ -76,25 +76,27 @@ def ai(user: User, prompt):
 def chatCompletionAI(user: User, prompt):
     max_tokens = 4000 if user.id == 467300857 else 256
     openai.api_key = config["AI"]["TOKEN"]
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo-0301",
-        messages=[
-            # {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": prompt}
-        ],
-        temperature=0.7,
+    openai.api_type = "azure"
+    openai.api_base = "https://openaitrial0417.openai.azure.com/"
+    openai.api_version = "2022-12-01"
+    max_tokens = 4000 if user.id == 467300857 else 256
+
+    response = openai.Completion.create(
+        engine="gpt-35-turbo",
+        prompt=prompt,
+        temperature=0.8,
         max_tokens=max_tokens,
         top_p=1,
         frequency_penalty=0,
-        presence_penalty=0
-    )
+        presence_penalty=0,
+        stop=None)
     response["user"] = {"name": user.username,
                         "id": user.id
                         }
     response["prompt"] = prompt
     logger.info(json.dumps(response))
 
-    return response.get("choices")[0].get("message").get("content")
+    return response.get("choices")[0].get("text")
 
 
 # Define a few command handlers. These usually take the two arguments update and
