@@ -18,6 +18,7 @@ import logging
 import openai
 import yaml
 import json
+import redis
 
 from telegram import __version__ as TG_VER
 
@@ -38,6 +39,7 @@ from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandl
 with open("config.yaml") as f:
     config = yaml.load(f, Loader=yaml.FullLoader)
 
+cache = redis.Redis(host='localhost', port=6379)
 # Enable logging
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
@@ -93,7 +95,7 @@ def CompletionsAI(user: User, prompt):
                         "id": user.id
                         }
     response["prompt"] = prompt
-    logger.info(json.dumps(response))
+    logger.info(response)
 
     return response.get("choices")[0].get("text")
 
@@ -116,6 +118,11 @@ def ChatCompletionsAI(user: User, prompt):
         presence_penalty=0,
         stop=None)
 
+    response["user"] = {"name": user.username,
+                        "id": user.id
+                        }
+    response["prompt"] = prompt
+    logger.info(response)
     return response.get('choices')[0].get('message').get('content')
 
 
@@ -137,9 +144,17 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 
 async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Echo the user message."""
+    user_id = update.effective_user.id
     if update.message:
-        await update.message.reply_text(ChatCompletionsAI(update.effective_user, update.message.text),
-                                        parse_mode='Markdown')
+        key = 'user:{}:requests'.format(user_id)
+        count = cache.incr(key)
+        cache.expire(key, 60)
+        print(count)
+        if user_id != 467300857 and count > 3:
+            reply = "请求太快了，请联系 @JarvisMessagerBot 或稍后再试！"
+        else:
+            reply = ChatCompletionsAI(update.effective_user, update.message.text)
+        await update.message.reply_text(reply, parse_mode='Markdown')
 
 
 def main() -> None:
