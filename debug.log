@@ -1567,3 +1567,6 @@ Traceback (most recent call last):
 telegram.error.BadRequest: Can't parse entities: can't find end of the entity starting at byte offset 87
 2023-05-08 13:27:54,303 - telegram.ext._application - INFO - Application is stopping. This might take a moment.
 2023-05-08 13:27:54,305 - telegram.ext._application - INFO - Application.stop() complete
+2023-05-08 14:01:13,621 - telegram.ext._application - INFO - Application started
+2023-05-08 23:56:48,360 - telegram.ext._application - INFO - Application is stopping. This might take a moment.
+2023-05-08 23:56:48,362 - telegram.ext._application - INFO - Application.stop() complete
