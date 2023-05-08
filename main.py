@@ -73,7 +73,7 @@ def ai(user: User, prompt):
     return response.get('choices')[0].get('text')
 
 
-def chatCompletionAI(user: User, prompt):
+def CompletionsAI(user: User, prompt):
     max_tokens = 1000 if user.id == 467300857 else 256
     openai.api_key = config["AI"]["TOKEN"]
     openai.api_type = "azure"
@@ -98,6 +98,27 @@ def chatCompletionAI(user: User, prompt):
     return response.get("choices")[0].get("text")
 
 
+def ChatCompletionsAI(user: User, prompt):
+    max_tokens = 1000 if user.id == 467300857 else 256
+    openai.api_key = config["AI"]["TOKEN"]
+    openai.api_type = "azure"
+    openai.api_base = "https://openaitrial0417.openai.azure.com/"
+    openai.api_version = "2023-03-15-preview"
+
+    response = openai.ChatCompletion.create(
+        engine="gpt-35-turbo",
+        messages=[{"role": "system", "content": "You are an AI assistant that helps people find information."},
+                  {"role": "user", "content": prompt}],
+        temperature=0.7,
+        max_tokens=max_tokens,
+        top_p=0.95,
+        frequency_penalty=0,
+        presence_penalty=0,
+        stop=None)
+
+    return response.get('choices')[0].get('message').get('content')
+
+
 # Define a few command handlers. These usually take the two arguments update and
 # context.
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -117,7 +138,8 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Echo the user message."""
     if update.message:
-        await update.message.reply_text(chatCompletionAI(update.effective_user, update.message.text), parse_mode='Markdown')
+        await update.message.reply_text(ChatCompletionsAI(update.effective_user, update.message.text),
+                                        parse_mode='Markdown')
 
 
 def main() -> None:
@@ -129,7 +151,7 @@ def main() -> None:
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("help", help_command))
 
-    # on non command i.e message - echo the message on Telegram
+    # on non command i.e. message - echo the message on Telegram
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, echo))
 
     # Run the bot until the user presses Ctrl-C
@@ -138,4 +160,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

@@ -10,17 +10,15 @@ openai.api_base = "https://openaitrial0417.openai.azure.com/"
 openai.api_version = "2023-03-15-preview"
 openai.api_key = config["AI"]["TOKEN"]
 
-response = openai.Completion.create(
+response = openai.ChatCompletion.create(
     engine="gpt-35-turbo",
-    prompt="What is the 10th fibonacci number?",
-    temperature=0.8,
-    max_tokens=100,
-    top_p=1,
+    messages=[{"role": "system", "content": "You are an AI assistant that helps people find information."},
+              {"role": "user", "content": "hi"}],
+    temperature=0.5,
+    max_tokens=800,
+    top_p=0.95,
     frequency_penalty=0,
-    presence_penalty=0.5,
+    presence_penalty=0,
     stop=None)
 
-
-# print(response)
-
-print(response.get('choices')[0].get('text'))
+print(response.get('choices')[0].get('message').get('content'))
