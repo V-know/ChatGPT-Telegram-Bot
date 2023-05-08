@@ -149,7 +149,6 @@ async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         key = 'user:{}:requests'.format(user_id)
         count = cache.incr(key)
         cache.expire(key, 60)
-        print(count)
         if user_id != 467300857 and count > 3:
             reply = "请求太快了，请联系 @JarvisMessagerBot 或稍后再试！"
         else:
