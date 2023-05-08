@@ -2,10 +2,12 @@
 import json
 
 with open("main.log") as f:
+    i = 1
     for line in f.readlines():
         l = json.loads(line)
         result = l['choices'][0].get('text') if l['choices'][0].get('text') else l['choices'][0]['message']['content']
         print(f"{l['user']['name']} --- {l['user']['id']} --- {l['prompt']} --- {result}")
         print()
-        print("---------------------------------------------------------------------------------------------------")
+        print(i, "---------------------------------------------------------------------------------------------------")
         print()
+        i+=1
