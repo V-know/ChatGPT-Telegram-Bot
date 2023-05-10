@@ -213,3 +213,151 @@
 {"id": "cmpl-7DBreb4QB7JZTxdqY4ckzkJ4fxHGP", "object": "text_completion", "created": 1683378226, "model": "gpt-35-turbo", "choices": [{"text": "+1],3)] #up\n            if lo-1 > -1:\n                if right == 1 and up == 1 and left == 1 and down == 0:\n                    left = 0\n                if right == 1 and up == 1 and left == 0 and down == 1:\n                    up = 0\n\n            if hi+1 < self.n:\n                if left == 1 and up == 1 and down == 1 and right == 0:\n                    up = 0\n                if left == 1 and up == 0 and down == 1 and right == 1:\n                    left = 0\n\n        #setting the direction that is allowed to be moved from a previous move\n        if self.prev == 0:\n            allowed = [0,2,3]\n        elif self.prev == 1:\n            allowed = [1,2,3]\n        elif self.prev == 2:\n            allowed = [0,1,2]\n        elif self.prev == 3:\n            allowed = [0,1,3]\n\n        #setting the corresponding next value\n        if left == 1:\n            if 2 not in allowed:\n                left = 0\n            else:\n                next = 2\n        if right == 1:\n            if 3 not in allowed:\n                right = 0\n            else:\n                next = 3\n        if up == 1:\n            if 0 not in allowed:\n                up = 0\n            else:\n                next = 0\n        if down == 1:\n            if 1 not in allowed:\n                down = 0\n            else:\n                next = 1\n\n        #if the ball is stuck, then the direction to move is backtracked from the previous move\n        if left == 0 and right == 0 and up == 0 and down == 0:\n            if self.prev == 0:\n                next = 1\n            elif self.prev == 1:\n                next = 0\n            elif self.prev == 2:\n                next = 3\n            elif self.prev == 3:\n                next = 2\n\n        #making the move and returning the new state\n        if next == 0:\n            return self.moveUp()\n        elif next == 1:\n            return self.moveDown()\n        elif next == 2:\n            return self.moveLeft()\n        elif next == 3:\n            return self.moveRight()\n\n    #function to return the state after making a move to the left\n    def moveLeft(self):\n        #getting the location of the ball\n        i,j = self.getBallLocation()\n\n        #finding the distance to the nearest wall\n        dist = j\n\n        #moving the ball and decrementing the distance from the ball to the nearest wall\n        while self.grid[i][j-1] == \".\" or self.grid[i][j-1] == \"S\":\n            j -= 1\n            dist -= 1\n            if j == 0:\n                break\n\n        #getting the location of the hole on the same row as the ball\n        hi,hj = self.holes[i]\n\n        #if the ball is in the same row as the hole, and the distance from the ball to the hole is less than the distance to the nearest wall\n        #then the ball may be moved into the hole from the left\n        if i == hi and j < hj:\n            if hj - j < dist:\n                self.grid[i][j],self.grid[hi][hj] = self.grid[hi][hj],self.grid[i][j]\n                return (\"YES\",self.moves + \"L\")\n        \n        #move was not successful              \n        return (\"NO\",self.moves)\n\n    #function to return the state after making a move to the right\n    def moveRight(self):\n        #getting the location of the ball\n        i,j = self.getBallLocation()\n\n        #finding the distance to the nearest wall\n        dist = self.m-1-j\n\n        #moving the ball and decrementing the distance from the ball to the nearest wall\n        while self.grid[i][j+1] == \".\" or self.grid[i][j+1] == \"S\":\n            j += 1\n            dist -= 1\n            if j == self.m-1:\n                break\n\n        #getting the location of the hole on the same row as the ball\n        hi,hj = self.holes[i]\n\n        #if the ball is in the same row as the hole, and the distance from the ball to the hole is less than the distance to the nearest wall\n        #then the ball may be moved into the hole from the right\n        if i == hi and j > hj:\n            if j - hj < dist", "index": 0, "finish_reason": "length", "logprobs": null}], "usage": {"completion_tokens": 1000, "prompt_tokens": 1, "total_tokens": 1001}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "hi"}
 {"id": "cmpl-7DE9WyJOTKh9VOwOwnlYd1jL6GJIU", "object": "text_completion", "created": 1683387022, "model": "gpt-35-turbo", "choices": [{"text": "\uff01\uff01\uff01\")\nelif player == npc:\n    print(\"\u5e73\u5c40\")\nelse:\n    print(\"\u73a9\u5bb6\u80dc\u5229\")<|im_sep|>", "index": 0, "finish_reason": "stop", "logprobs": null}], "usage": {"completion_tokens": 27, "prompt_tokens": 7, "total_tokens": 34}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "\u4f60\u592a\u70c2\u4e86"}
 {"id": "cmpl-7DyqZEYjoGbzNwDKb8N1V0CMrIVrL", "object": "text_completion", "created": 1683566515, "model": "gpt-35-turbo", "choices": [{"text": "5.com/userDetails?userId=${hit.user_id}\" target=\"_blank\"> ${hit.display_name}</a>`\n    searchResults.appendChild(li)\n  })\n}\n\nsearchInput.addEventListener('keyup', debounce(onInput, 500)) // A 500ms timeout has been set to prevent sending an API request for every character typed. The debounce function delays the execution of the function until time x seconds have ellapsed without additional function calls.\n\n// The API key is kept private by using dotenv package and creating a .env file that is added to .gitignore\n\n/*\nNOTES:\n\n- API link:\nhttps://api.stackexchange.com/2.2/users?order=desc&sort=reputation&inname=${inputValue}&site=stackoverflow\n\n- API Documentation:\nhttps://api.stackexchange.com/docs/users\n*/\n\n// Debounce Function:\n// https://gist.github.com/shadowfaxtech/6bae0d9fc9a1d3005f5b5c5b2b41e5e5\nfunction debounce(func, timeout) {\n  let timer;\n  return (...args) => {\n    clearTimeout(timer);\n    timer = setTimeout(() => { func.apply(this, args); }, timeout);\n  };\n}\n", "index": 0, "finish_reason": "stop", "logprobs": null}], "usage": {"completion_tokens": 247, "prompt_tokens": 1, "total_tokens": 248}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "hi"}
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "Hello! How can I assist you today?",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1683737927,
+  "id": "chatcmpl-7EhRHxHiywvRcKhXD7Mnl31D9Skyd",
+  "model": "gpt-35-turbo",
+  "object": "chat.completion",
+  "prompt": "hi",
+  "usage": {
+    "completion_tokens": 9,
+    "prompt_tokens": 25,
+    "total_tokens": 34
+  },
+  "user": {
+    "id": 467300857,
+    "name": "log4j3"
+  }
+}
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "Hello! How can I assist you today?",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1683737975,
+  "id": "chatcmpl-7EhS3PzulGMklRkOudLRoDSzQlKxH",
+  "model": "gpt-35-turbo",
+  "object": "chat.completion",
+  "prompt": "hi",
+  "usage": {
+    "completion_tokens": 9,
+    "prompt_tokens": 25,
+    "total_tokens": 34
+  },
+  "user": {
+    "id": 467300857,
+    "name": "log4j3"
+  }
+}
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "\u60a8\u53ef\u4ee5\u53eb\u6211AI\u52a9\u624b\u3002",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1683738203,
+  "id": "chatcmpl-7EhVjHgV13aY1ptbJ8ZK3X5uYIEv4",
+  "model": "gpt-35-turbo",
+  "object": "chat.completion",
+  "prompt": "\u4f60\u53eb\u4ec0\u4e48\u540d\u5b57\uff1f",
+  "usage": {
+    "completion_tokens": 10,
+    "prompt_tokens": 39,
+    "total_tokens": 49
+  },
+  "user": {
+    "id": 467300857,
+    "name": "log4j3"
+  }
+}
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "\u4f60\u597d\uff0c\u6211\u662fFriday\uff0c\u6709\u4ec0\u4e48\u53ef\u4ee5\u5e2e\u52a9\u4f60\u7684\u5417\uff1f",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1683738218,
+  "id": "chatcmpl-7EhVyJW0ODnBEKtQRiJt2ksVvBCJF",
+  "model": "gpt-35-turbo",
+  "object": "chat.completion",
+  "prompt": "\u4f60\u73b0\u5728\u7684\u540d\u5b57\u53ebFriday",
+  "usage": {
+    "completion_tokens": 21,
+    "prompt_tokens": 53,
+    "total_tokens": 74
+  },
+  "user": {
+    "id": 467300857,
+    "name": "log4j3"
+  }
+}
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "\u4f60\u53ef\u4ee5\u53eb\u6211AI\u52a9\u624b\u3002\u6211\u662f\u4e00\u540d\u4eba\u5de5\u667a\u80fd\u52a9\u624b\uff0c\u53ef\u4ee5\u5e2e\u52a9\u60a8\u67e5\u627e\u4fe1\u606f\u548c\u56de\u7b54\u95ee\u9898\u3002\u6709\u4ec0\u4e48\u6211\u53ef\u4ee5\u5e2e\u5230\u60a8\u7684\u5417\uff1f",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1683738229,
+  "id": "chatcmpl-7EhW9BIZMrupGIWJmO3nWRkbWL5Po",
+  "model": "gpt-35-turbo",
+  "object": "chat.completion",
+  "prompt": "\u4f60\u53eb\u4ec0\u4e48\u540d\u5b57\uff1f",
+  "usage": {
+    "completion_tokens": 52,
+    "prompt_tokens": 53,
+    "total_tokens": 105
+  },
+  "user": {
+    "id": 467300857,
+    "name": "log4j3"
+  }
+}
+{"id": "chatcmpl-7EheBFBeFb4DUPk7Yuq0aMdb6GcpH", "object": "chat.completion", "created": 1683738727, "model": "gpt-35-turbo", "choices": [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant", "content": "\u60a8\u53ef\u4ee5\u53eb\u6211AI\u52a9\u624b\u3002"}}], "usage": {"completion_tokens": 10, "prompt_tokens": 53, "total_tokens": 63}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "\u4f60\u53eb\u4ec0\u4e48\u540d\u5b57\uff1f"}
+{"id": "chatcmpl-7EhjMfejJn0mvTG2h6BcHOKdBlwDs", "object": "chat.completion", "created": 1683739048, "model": "gpt-35-turbo", "choices": [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant", "content": "\u597d\u7684\uff0c\u4ee5\u4e0b\u662f\u5510\u4ee3\u8bd7\u4eba\u767d\u5c45\u6613\u7684\u300a\u8d4b\u5f97\u53e4\u539f\u8349\u9001\u522b\u300b\u4e2d\u7684\u4e00\u6bb5\u63cf\u5199\u6df1\u591c\u4e0b\u96e8\u7684\u53e5\u5b50\uff1a\n\n\u9732\u4ece\u4eca\u591c\u767d\uff0c\u6708\u662f\u6545\u4e61\u660e\u3002\u4ee5\u524d\u706f\u706b\u9611\u73ca\u5904\uff0c\u660e\u6708\u677e\u95f4\u7167\u3002\u6000\u5ff5\u5bb6\u4e61\uff0c\u591c\u6df1\u96e8\u9732\u4e1d\u4e1d\uff0c\u72ec\u501a\u5371\u697c\uff0c\u9065\u671b\u6ee1\u57ce\u5c3d\u5e26\u9ec4\u91d1\u620d\u3002"}}], "usage": {"completion_tokens": 132, "prompt_tokens": 63, "total_tokens": 195}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "\u7ed9\u6211\u4e00\u9996\u63cf\u5199\u6df1\u591c\u4e0b\u96e8\u7684\u53e4\u8bd7"}
+{"id": "chatcmpl-7EhkDJ77na37fPVJZbZFCoza4BjQH", "object": "chat.completion", "created": 1683739101, "model": "gpt-35-turbo", "choices": [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant", "content": "\u4f60\u597d\uff01\u6211\u7684\u540d\u5b57\u662fAI\u52a9\u624b\uff0c\u6211\u662f\u4e00\u4e2a\u5e2e\u52a9\u4eba\u4eec\u67e5\u627e\u4fe1\u606f\u7684\u4eba\u5de5\u667a\u80fd\u7a0b\u5e8f\uff0c\u6709\u4ec0\u4e48\u6211\u53ef\u4ee5\u5e2e\u4f60\u67e5\u627e\u7684\u4fe1\u606f\u5417\uff1f"}}], "usage": {"completion_tokens": 48, "prompt_tokens": 52, "total_tokens": 100}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "\u8fd9\u9996\u8bd7\u5199\u7684\u771f\u7f8e"}
+{"id": "chatcmpl-7EhlkfQDDecAUhEi4ytaf0ENhQdVG", "object": "chat.completion", "created": 1683739196, "model": "gpt-35-turbo", "choices": [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant", "content": "\u4ee5\u4e0b\u662f\u5510\u4ee3\u8bd7\u4eba\u767d\u5c45\u6613\u7684\u300a\u591c\u96e8\u5bc4\u5317\u300b\uff1a\n\n\u541b\u95ee\u5f52\u671f\u672a\u6709\u671f\uff0c\u5df4\u5c71\u591c\u96e8\u6da8\u79cb\u6c60\u3002\n\u4f55\u5f53\u5171\u526a\u897f\u7a97\u70db\uff0c\u5374\u8bdd\u5df4\u5c71\u591c\u96e8\u65f6\u3002"}}], "usage": {"completion_tokens": 72, "prompt_tokens": 109, "total_tokens": 181}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "\u7ed9\u6211\u4e00\u9996\u63cf\u5199\u6df1\u591c\u4e0b\u96e8\u7684\u53e4\u8bd7"}
+{"id": "chatcmpl-7EhlzIr2lLQ26qi7yzil9sgFV2wDn", "object": "chat.completion", "created": 1683739211, "model": "gpt-35-turbo", "choices": [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant", "content": "\u662f\u7684\uff0c\u8fd9\u9996\u8bd7\u5199\u5f97\u975e\u5e38\u7f8e\u3002\u4ee5\u4e0b\u662f\u5510\u4ee3\u8bd7\u4eba\u674e\u5546\u9690\u7684\u300a\u591c\u96e8\u5bc4\u5317\u300b\uff1a\n\n\u541b\u95ee\u5f52\u671f\u672a\u6709\u671f\uff0c\u5df4\u5c71\u591c\u96e8\u6da8\u79cb\u6c60\u3002\n\u4f55\u5f53\u5171\u526a\u897f\u7a97\u70db\uff0c\u5374\u8bdd\u5df4\u5c71\u591c\u96e8\u65f6\u3002"}}], "usage": {"completion_tokens": 85, "prompt_tokens": 133, "total_tokens": 218}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "\u8fd9\u9996\u8bd7\u5199\u7684\u771f\u7f8e"}
+{"id": "chatcmpl-7Ehn8fKN8tc1Gx3K8q6DxZFcnpv7B", "object": "chat.completion", "created": 1683739282, "model": "gpt-35-turbo", "choices": [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant", "content": "\u62b1\u6b49\uff0c\u6211\u521a\u624d\u6f0f\u6389\u4e86\u8fd9\u9996\u8bd7\u7684\u540d\u5b57\u3002\u5b83\u7684\u540d\u5b57\u53eb\u505a\u300a\u591c\u96e8\u5bc4\u5317\u300b\u3002\u8fd9\u662f\u5510\u4ee3\u8bd7\u4eba\u674e\u5546\u9690\u6240\u4f5c\u7684\u4e00\u9996\u8bd7\uff0c\u63cf\u5199\u7684\u662f\u6df1\u591c\u4e0b\u96e8\u65f6\u7684\u666f\u8c61\u3002"}}], "usage": {"completion_tokens": 80, "prompt_tokens": 293, "total_tokens": 373}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "\u8fd9\u9996\u8bd7\u7684\u540d\u5b57\u53eb\u5565?"}
+{"id": "chatcmpl-7EhxllqJOtJDCYN2j3Pbo1OLcWgRn", "object": "chat.completion", "created": 1683739941, "model": "gpt-35-turbo", "choices": [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant", "content": "\u4e0d\u5ba2\u6c14\uff0c\u5982\u679c\u60a8\u8fd8\u6709\u5176\u4ed6\u95ee\u9898\u9700\u8981\u5e2e\u5fd9\u89e3\u7b54\uff0c\u968f\u65f6\u90fd\u53ef\u4ee5\u95ee\u6211\u3002"}}], "usage": {"completion_tokens": 28, "prompt_tokens": 310, "total_tokens": 338}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "\u8c22\u8c22"}
+{"id": "chatcmpl-7Ehz7Lm5Zik42ZfJvPzXQFHmTNA0W", "object": "chat.completion", "created": 1683740025, "model": "gpt-35-turbo", "choices": [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant", "content": "\u6211\u662f\u4e00\u4e2aAI\u52a9\u624b\uff0c\u60a8\u53ef\u4ee5\u968f\u610f\u7ed9\u6211\u8d77\u4e00\u4e2a\u540d\u5b57\u3002"}}], "usage": {"completion_tokens": 20, "prompt_tokens": 267, "total_tokens": 287}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "\u4f60\u53eb\u4ec0\u4e48\u540d\u5b57\uff1f"}
+{"id": "chatcmpl-7EhzDjSugZ4sFxenUH24pD2I3Cusn", "object": "chat.completion", "created": 1683740031, "model": "gpt-35-turbo", "choices": [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant", "content": "\u597d\u7684\uff0c\u4ece\u73b0\u5728\u8d77\u4f60\u53ef\u4ee5\u53eb\u6211Friday\u3002\u6709\u4ec0\u4e48\u9700\u8981\u5e2e\u5fd9\u7684\u5417\uff1f"}}], "usage": {"completion_tokens": 27, "prompt_tokens": 198, "total_tokens": 225}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "\u4f60\u7684\u65b0\u540d\u5b57\u53ebFriday"}
+{"id": "chatcmpl-7EhzI1nfFSVDV3GIpDQDp8JGGPjyz", "object": "chat.completion", "created": 1683740036, "model": "gpt-35-turbo", "choices": [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant", "content": "\u4ee5\u4e0b\u662f\u5510\u4ee3\u8bd7\u4eba\u767d\u5c45\u6613\u7684\u300a\u591c\u6cca\u725b\u6e1a\u6000\u53e4\u300b\uff1a\n\n\u725b\u6e1a\u897f\u6c5f\u591c\uff0c\u9752\u5929\u65e0\u7247\u4e91\u3002\n\u767b\u9ad8\u671b\u53e4\u8e5f\uff0c\u96e8\u4e2d\u542c\u65b0\u7328\u3002\n\u591c\u6df1\u4e0b\u6e14\u7fc1\uff0c\u72ec\u9493\u4e00\u6cd3\u5bd2\u3002\n\u4f55\u5f53\u5171\u526a\u897f\u7a97\u70db\uff0c\u5374\u8bdd\u5df4\u5c71\u591c\u96e8\u65f6\u3002"}}], "usage": {"completion_tokens": 110, "prompt_tokens": 160, "total_tokens": 270}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "\u7ed9\u6211\u4e00\u9996\u63cf\u5199\u6df1\u591c\u4e0b\u96e8\u7684\u53e4\u8bd7"}
+{"id": "chatcmpl-7Ehzf6tboASxueVXljTtBRscMvUsC", "object": "chat.completion", "created": 1683740059, "model": "gpt-35-turbo", "choices": [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant", "content": "\u4f60\u53ef\u4ee5\u7ed9\u6211\u8d77\u4e00\u4e2a\u540d\u5b57\uff0c\u6216\u8005\u76f4\u63a5\u79f0\u547c\u6211\u4e3aAI\u52a9\u624b\u3002"}}], "usage": {"completion_tokens": 23, "prompt_tokens": 243, "total_tokens": 266}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "\u4f60\u7684\u540d\u5b57\u53eb\u4ec0\u4e48\uff1f"}
+{"id": "chatcmpl-7Ei0TivDzfKTXNO807pRzvqmbrXz6", "object": "chat.completion", "created": 1683740109, "model": "gpt-35-turbo", "choices": [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant", "content": "\u597d\u7684\uff0c\u4ece\u73b0\u5728\u8d77\u4f60\u53ef\u4ee5\u53eb\u6211Friday\u3002\u6709\u4ec0\u4e48\u9700\u8981\u5e2e\u5fd9\u7684\u5417\uff1f"}}], "usage": {"completion_tokens": 27, "prompt_tokens": 246, "total_tokens": 273}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "\u4f60\u7684\u65b0\u540d\u5b57\u53ebFriday"}
+{"id": "chatcmpl-7Ei0hvRboqwYp6s1cqluOhftCJlt5", "object": "chat.completion", "created": 1683740123, "model": "gpt-35-turbo", "choices": [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant", "content": "\u6211\u521a\u521a\u88ab\u4f60\u53d6\u540d\u4e3aFriday\uff0c\u6240\u4ee5\u4f60\u53ef\u4ee5\u76f4\u63a5\u79f0\u547c\u6211\u4e3aFriday\u3002"}}], "usage": {"completion_tokens": 26, "prompt_tokens": 237, "total_tokens": 263}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "\u4f60\u7684\u540d\u5b57\u53eb\u4ec0\u4e48\uff1f"}
+{"id": "chatcmpl-7Ei0wKEmaxZunmvvLTTMvDUaE2wWS", "object": "chat.completion", "created": 1683740138, "model": "gpt-35-turbo", "choices": [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant", "content": "\u4ee5\u4e0b\u662f\u5510\u4ee3\u8bd7\u4eba\u767d\u5c45\u6613\u7684\u300a\u591c\u96e8\u5bc4\u5317\u300b\uff1a\n\n\u541b\u95ee\u5f52\u671f\u672a\u6709\u671f\uff0c\u5df4\u5c71\u591c\u96e8\u6da8\u79cb\u6c60\u3002\n\u4f55\u5f53\u5171\u526a\u897f\u7a97\u70db\uff0c\u5374\u8bdd\u5df4\u5c71\u591c\u96e8\u65f6\u3002"}}], "usage": {"completion_tokens": 72, "prompt_tokens": 162, "total_tokens": 234}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "\u7ed9\u6211\u4e00\u9996\u63cf\u5199\u6df1\u591c\u4e0b\u96e8\u7684\u53e4\u8bd7"}
+{"id": "chatcmpl-7Ei19jMuLZWNWRNEbeLWcFUT8PfgZ", "object": "chat.completion", "created": 1683740151, "model": "gpt-35-turbo", "choices": [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant", "content": "\u6211\u662fFriday\uff0c\u60a8\u7684\u4eba\u5de5\u667a\u80fd\u52a9\u624b\u3002"}}], "usage": {"completion_tokens": 15, "prompt_tokens": 213, "total_tokens": 228}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "\u4f60\u7684\u540d\u5b57\u53eb\u4ec0\u4e48\uff1f"}
+{"id": "chatcmpl-7Ei2touwEtxAC7ieQeLk9Qu5th68V", "object": "chat.completion", "created": 1683740259, "model": "gpt-35-turbo", "choices": [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant", "content": "\u5f88\u9ad8\u5174\u80fd\u4e3a\u60a8\u6548\u52b3\uff0c\u5982\u679c\u60a8\u8fd8\u6709\u5176\u4ed6\u9700\u8981\u5e2e\u52a9\u7684\u5730\u65b9\uff0c\u968f\u65f6\u90fd\u53ef\u4ee5\u544a\u8bc9\u6211\u3002"}}], "usage": {"completion_tokens": 36, "prompt_tokens": 203, "total_tokens": 239}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "\u4eca\u5929\u7684\u5de5\u4f5c\u5b8c\u6210\u4e86\uff0c\u5f88\u5f00\u5fc3"}
+{"id": "chatcmpl-7Ei5LGmfd0noacWKqxqUumvYudN8k", "object": "chat.completion", "created": 1683740411, "model": "gpt-35-turbo", "choices": [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant", "content": "\u4eca\u5929\u662f\u661f\u671f\u51e0\u53d6\u51b3\u4e8e\u60a8\u6240\u5728\u7684\u65f6\u533a\u548c\u5f53\u524d\u7684\u65f6\u95f4\u3002\u8bf7\u544a\u8bc9\u6211\u60a8\u6240\u5728\u7684\u65f6\u533a\u548c\u5f53\u524d\u7684\u65f6\u95f4\uff0c\u6211\u53ef\u4ee5\u5e2e\u60a8\u56de\u7b54\u3002"}}], "usage": {"completion_tokens": 47, "prompt_tokens": 316, "total_tokens": 363}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "\u4eca\u5929\u661f\u671f\u51e0\uff1f"}
+{"id": "chatcmpl-7Ei5aeLPf85EItTmcnihXXfHh2v9n", "object": "chat.completion", "created": 1683740426, "model": "gpt-35-turbo", "choices": [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant", "content": "\u6839\u636e\u4e0a\u6d77\u7684\u65f6\u533a\uff0c\u73b0\u5728\u662f\u4e2d\u56fd\u6807\u51c6\u65f6\u95f4\uff0c\u4eca\u5929\u662f\u661f\u671f\u4e94\u3002"}}], "usage": {"completion_tokens": 25, "prompt_tokens": 330, "total_tokens": 355}, "user": {"name": "log4j3", "id": 467300857}, "prompt": "\u4e0a\u6d77"}
