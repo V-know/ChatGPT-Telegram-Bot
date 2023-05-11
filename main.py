@@ -132,6 +132,7 @@ def ChatCompletionsAI(user: User, prompt):
     # Init messages
     records = mysql.getMany(f"select * from records where user_id={user_id} and reset_at is null order by id desc",
                             context_count[level])
+
     messages = []
     if records:
         for record in records:
