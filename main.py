@@ -19,6 +19,7 @@ import logging
 import openai
 import json
 import redis
+import emoji
 import time
 
 from telegram import __version__ as TG_VER
@@ -55,7 +56,7 @@ logger.addHandler(fh)
 
 token = {0: 256, 1: 1024, 2: 1024}
 context_count = {0: 5, 1: 10, 2: 10}
-rate_per_minute = {0: 3, 1: 10, 2: 60}
+rate_per_5_minutes = {0: 10, 1: 50, 2: 300}
 
 
 def ai(user: User, prompt):
@@ -120,9 +121,12 @@ def ChatCompletionsAI(user: User, prompt):
     # Rate limit controller
     key = 'user:{}:requests'.format(user_id)
     count = cache.incr(key)
-    cache.expire(key, 60)
-    if count > rate_per_minute[level]:
-        reply = "请求太快了，请联系 @JarvisMessagerBot 或 稍后再试！"
+    cache.expire(key, 300)
+    if count > rate_per_5_minutes[level]:
+        reply = f"请求太快了!{emoji.emojize(':rocket:')}\n" \
+                f"您每5分钟最多可向我提供 {rate_per_5_minutes[level]} 个问题{emoji.emojize(':weary_face:')}\n" \
+                f"联系 @JarvisMessagerBot 获取更多!{emoji.emojize(':check_mark_button:')}\n" \
+                f"或稍后再试！"
         return reply
 
     # Init messages
