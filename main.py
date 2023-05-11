@@ -14,11 +14,12 @@ Press Ctrl-C on the command line or send a signal to the process to stop the
 bot.
 """
 
+from MySqlConn import Mysql, config
 import logging
 import openai
-import yaml
 import json
 import redis
+import time
 
 from telegram import __version__ as TG_VER
 
@@ -36,9 +37,8 @@ if __version_info__ < (20, 0, 0, "alpha", 1):
 from telegram import ForceReply, Update, User
 from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
 
-with open("config.yaml") as f:
-    config = yaml.load(f, Loader=yaml.FullLoader)
-
+# with open("config.yaml") as f:
+#     config = yaml.load(f, Loader=yaml.FullLoader)
 cache = redis.Redis(host='localhost', port=6379)
 # Enable logging
 logging.basicConfig(
@@ -52,6 +52,9 @@ formatter = logging.Formatter('%(message)s')
 fh.setFormatter(formatter)
 logger.setLevel(logging.INFO)
 logger.addHandler(fh)
+
+token = {0: 256, 1: 1024, 2: 1024}
+context_count = {0: 5, 1: 10, 2: 10}
 
 
 def ai(user: User, prompt):
@@ -101,7 +104,37 @@ def CompletionsAI(user: User, prompt):
 
 
 def ChatCompletionsAI(user: User, prompt):
-    max_tokens = 1000 if user.id == 467300857 else 256
+    mysql = Mysql()
+    user_id = user.id
+    user_checkin = mysql.getOne(f"select * from users where user_id={user_id}")
+    if not user_checkin:
+        date_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        sql = "insert into users (user_id, name, level, system_content, created_at) values (%s, %s, %s, %s, %s)"
+        value = [user_id, user.username, 0, "You are an AI assistant that helps people find information.", date_time]
+        mysql.insertOne(sql, value)
+    logged_in_user = mysql.getOne(f"select * from users where user_id={user_id}")
+    # VIP level
+    level = logged_in_user.get("level")
+
+    # Init messages
+    records = mysql.getMany(f"select * from records where user_id={user_id} and reset_at is null order by id desc",
+                            context_count[level])
+    # messages = [{"role": "system", "content": logged_in_user["system_content"]}]
+    messages = []
+    if records:
+        for record in records:
+            messages.append({"role": record["role"], "content": record["content"]})
+        messages.reverse()
+    messages.insert(0, {"role": "system", "content": logged_in_user["system_content"]})
+    messages.append({"role": "user", "content": prompt}),
+
+    # Record prompt
+    date_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+    sql = "insert into records (user_id, role, content, created_at) values (%s, %s, %s, %s)"
+    value = [user_id, "user", prompt, date_time]
+    mysql.insertOne(sql, value)
+
+    # Setup AI
     openai.api_key = config["AI"]["TOKEN"]
     openai.api_type = "azure"
     openai.api_base = "https://openaitrial0417.openai.azure.com/"
@@ -109,10 +142,9 @@ def ChatCompletionsAI(user: User, prompt):
 
     response = openai.ChatCompletion.create(
         engine="gpt-35-turbo",
-        messages=[{"role": "system", "content": "You are an AI assistant that helps people find information."},
-                  {"role": "user", "content": prompt}],
+        messages=messages,
         temperature=0.7,
-        max_tokens=max_tokens,
+        max_tokens=token[level],
         top_p=0.95,
         frequency_penalty=0,
         presence_penalty=0,
@@ -122,7 +154,15 @@ def ChatCompletionsAI(user: User, prompt):
                         "id": user.id
                         }
     response["prompt"] = prompt
-    logger.info(response)
+    logger.info(json.dumps(response))
+
+    # Record response
+    response_role = response.get('choices')[0].get('message').get('role')
+    response_content = response.get('choices')[0].get('message').get('content')
+    date_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+    value = [user_id, response_role, response_content, date_time]
+    mysql.insertOne(sql, value)
+    mysql.end()
     return response.get('choices')[0].get('message').get('content')
 
 
