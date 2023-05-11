@@ -55,6 +55,7 @@ logger.addHandler(fh)
 
 token = {0: 256, 1: 1024, 2: 1024}
 context_count = {0: 5, 1: 10, 2: 10}
+rate_per_minute = {0: 3, 1: 10, 2: 60}
 
 
 def ai(user: User, prompt):
@@ -116,10 +117,17 @@ def ChatCompletionsAI(user: User, prompt):
     # VIP level
     level = logged_in_user.get("level")
 
+    # Rate limit controller
+    key = 'user:{}:requests'.format(user_id)
+    count = cache.incr(key)
+    cache.expire(key, 60)
+    if count > rate_per_minute[level]:
+        reply = "请求太快了，请联系 @JarvisMessagerBot 或 稍后再试！"
+        return reply
+
     # Init messages
     records = mysql.getMany(f"select * from records where user_id={user_id} and reset_at is null order by id desc",
                             context_count[level])
-    # messages = [{"role": "system", "content": logged_in_user["system_content"]}]
     messages = []
     if records:
         for record in records:
@@ -186,13 +194,7 @@ async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Echo the user message."""
     user_id = update.effective_user.id
     if update.message:
-        key = 'user:{}:requests'.format(user_id)
-        count = cache.incr(key)
-        cache.expire(key, 60)
-        if user_id != 467300857 and count > 3:
-            reply = "请求太快了，请联系 @JarvisMessagerBot 或稍后再试！"
-        else:
-            reply = ChatCompletionsAI(update.effective_user, update.message.text)
+        reply = ChatCompletionsAI(update.effective_user, update.message.text)
         await update.message.reply_text(reply, parse_mode='Markdown')
 
 
