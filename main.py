@@ -177,7 +177,7 @@ def ChatCompletionsAI(user: User, prompt) -> str:
     mysql.insertOne(sql, value)
     mysql.end()
     reply = response.get('choices')[0].get('message').get('content')
-    if response.get("usage").get("completion_tokens") > token[level]:
+    if response.get("usage").get("completion_tokens") >= token[level]:
         reply = f"{reply}\n\n答案长度超过了您当前最大{token[level]}个Token的限制\n请联系 @JarvisMessagerBot 获取更多帮助!" \
                 f"{emoji.emojize(':check_mark_button:')}"
     return reply
