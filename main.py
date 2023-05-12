@@ -105,7 +105,7 @@ def CompletionsAI(user: User, prompt):
     return response.get("choices")[0].get("text")
 
 
-def ChatCompletionsAI(user: User, prompt):
+def ChatCompletionsAI(user: User, prompt) -> str:
     mysql = Mysql()
     user_id = user.id
     user_checkin = mysql.getOne(f"select * from users where user_id={user_id}")
@@ -125,7 +125,7 @@ def ChatCompletionsAI(user: User, prompt):
     if count > rate_limit[level]:
         reply = f"请求太快了!{emoji.emojize(':rocket:')}\n" \
                 f"您每3分钟最多可向我提供 {rate_limit[level]} 个问题{emoji.emojize(':weary_face:')}\n" \
-                f"联系 @JarvisMessagerBot 获取更多!{emoji.emojize(':check_mark_button:')}\n" \
+                f"联系 @JarvisMessagerBot 获取更多帮助!{emoji.emojize(':check_mark_button:')}\n" \
                 f"或稍后再试！"
         return reply
 
@@ -176,7 +176,11 @@ def ChatCompletionsAI(user: User, prompt):
     value = [user_id, response_role, response_content, date_time]
     mysql.insertOne(sql, value)
     mysql.end()
-    return response.get('choices')[0].get('message').get('content')
+    reply = response.get('choices')[0].get('message').get('content')
+    if response.get("usage").get("completion_tokens") > token[level]:
+        reply = f"{reply}\n\n答案长度超过了您当前最大{token[level]}个Token的限制\n请联系 @JarvisMessagerBot 获取更多帮助!" \
+                f"{emoji.emojize(':check_mark_button:')}"
+    return reply
 
 
 # Define a few command handlers. These usually take the two arguments update and
