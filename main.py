@@ -63,9 +63,11 @@ contact_admin = emoji.emojize(':SOS_button:求助')
 start_button = emoji.emojize(':rocket:Start')
 set_sys_content_button = emoji.emojize(':ID_button:设置身份')
 reset_context_button = emoji.emojize(":clockwise_vertical_arrows:遗忘会话")
+statistics_button = emoji.emojize(":chart_increasing:Statistics")
 reply_keyboard = [
     [reset_context_button, start_button],
     [set_sys_content_button, contact_admin],
+    [statistics_button],
 ]
 markup = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
 
@@ -151,13 +153,6 @@ def ChatCompletionsAI(user: User, prompt) -> str:
         messages.reverse()
     messages.insert(0, {"role": "system", "content": logged_in_user["system_content"]})
     messages.append({"role": "user", "content": prompt}),
-    print(messages)
-
-    # Record prompt
-    date_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-    sql = "insert into records (user_id, role, content, created_at) values (%s, %s, %s, %s)"
-    value = [user_id, "user", prompt, date_time]
-    mysql.insertOne(sql, value)
 
     # Setup AI
     openai.api_key = config["AI"]["TOKEN"]
@@ -181,11 +176,21 @@ def ChatCompletionsAI(user: User, prompt) -> str:
     response["prompt"] = prompt
     logger.info(json.dumps(response))
 
+    # Record prompt
+    completion_tokens = response["usage"]["completion_tokens"]
+    prompt_tokens = response["usage"]["prompt_tokens"]
+    # total_tokens = response["usage"]["total_tokens"]
+    date_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+    sql = "insert into records (user_id, role, content, created_at, tokens) " \
+          "values (%s, %s, %s, %s, %s)"
+    value = [user_id, "user", prompt, date_time, prompt_tokens]
+    mysql.insertOne(sql, value)
+
     # Record response
     response_role = response.get('choices')[0].get('message').get('role')
     response_content = response.get('choices')[0].get('message').get('content')
     date_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-    value = [user_id, response_role, response_content, date_time]
+    value = [user_id, response_role, response_content, date_time, completion_tokens]
     mysql.insertOne(sql, value)
     mysql.end()
     reply = response.get('choices')[0].get('message').get('content')
@@ -215,9 +220,26 @@ You can send them this link: https://t.me/RoboAceBot
     return CHOOSING
 
 
-async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Send a message when the command /help is issued."""
-    await update.message.reply_text("Help!", reply_markup=markup, parse_mode='Markdown')
+async def statistics(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    """Send a message when the command /start is issued."""
+    user = update.effective_user
+    mysql = Mysql()
+    user_id = user.id
+    prompt_tokens = mysql.getMany("select sum(tokens) as tokens from records where user_id=%s and role=%s", (user_id, "user"))
+    completion_tokens = mysql.getMany("select sum(tokens) as tokens from records where user_id=%s and role=%s", (user_id, ""))
+    await update.message.reply_html(
+        rf"""
+Hej  {user.mention_html()}!",
+您当前Token使用情况如下：
+查询：{}
+答案：{}
+总共：{}
+
+您生活愉快！
+        """,
+        reply_markup=markup, disable_web_page_preview=True
+    )
+    return CHOOSING
 
 
 async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -344,6 +366,7 @@ def main() -> None:
                 MessageHandler(filters.Regex(f'^({start_button}|/start|Start)$'), start, ),
                 MessageHandler(filters.Regex(f"^{reset_context_button}$"), reset_context),
                 MessageHandler(filters.Regex(f"^{set_sys_content_button}$"), set_system_content),
+                MessageHandler(filters.Regex(f"^{statistics_button}$"), statistics),
                 MessageHandler(filters.TEXT, answer_handler),
                 MessageHandler(filters.ATTACHMENT, non_text_handler),
             ],
