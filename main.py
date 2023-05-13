@@ -61,9 +61,9 @@ rate_limit = {0: 5, 1: 15, 2: 300}
 CHOOSING, TYPING_REPLY, TYPING_SYS_CONTENT = range(3)
 contact_admin = emoji.emojize(':SOS_button:求助')
 start_button = emoji.emojize(':rocket:Start')
-set_sys_content_button = emoji.emojize(':ID_button:设置身份')
-reset_context_button = emoji.emojize(":clockwise_vertical_arrows:遗忘会话")
-statistics_button = emoji.emojize(":chart_increasing:Statistics")
+set_sys_content_button = emoji.emojize(':ID_button:设置新身份')
+reset_context_button = emoji.emojize(":clockwise_vertical_arrows:遗忘历史会话")
+statistics_button = emoji.emojize(":chart_increasing:Statistics / 用量查询")
 reply_keyboard = [
     [reset_context_button, start_button],
     [set_sys_content_button, contact_admin],
@@ -207,13 +207,20 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user = update.effective_user
     await update.message.reply_html(
         rf"""
-        Hej  {user.mention_html()}!",
+        Hej  {user.mention_html()}!
 I'm an AI chatbot created to interact with you and make your day a little brighter. If you have any questions or just want to have a friendly chat, I'm here to help! 🤗
 
 Do you know what's great about me? I can help you with anything from giving advice to telling you a joke, and I'm available 24/7! 🕰️
 
 So why not share me with your friends? 😍 
 You can send them this link: https://t.me/RoboAceBot
+
+我是一个 AI 聊天机器人。我被创建出来是为了与你互动并让你的生活加美好。如果你有任何问题或只是想友好地聊天，我会在这里帮助你！🤗
+
+我可以帮助你做任何事情，从给你建议到讲笑话，而且我全天候在线！🕰️
+
+快把我分享给你的朋友们吧！😍
+你可以将此链接发送给他们：https://t.me/RoboAceBot
         """,
         reply_markup=markup, disable_web_page_preview=True
     )
@@ -267,9 +274,12 @@ async def reset_context(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
     mysql = Mysql()
     reset_at = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     mysql.update("update records set reset_at=%s where user_id=%s and reset_at is null", (reset_at, user_id))
+    user = mysql.getOne(f"select * from users where user_id={user_id}")
     mysql.end()
-    await update.message.reply_text("""
-    您的会话历史已清空，现在可以重新开始提问了！
+    await update.message.reply_text(f"""
+每次提问AI会参考您最近{context_count[user['level']]}次的对话记录为您提供答案！
+
+现在您的会话历史已清空，可以重新开始提问了！
     """, parse_mode="Markdown", disable_web_page_preview=True)
     return CHOOSING
 
@@ -289,8 +299,7 @@ async def set_system_content(update: Update, context: ContextTypes.DEFAULT_TYPE)
 您可以参考： [🧠ChatGPT 中文调教指南]https://github.com/PlexPt/awesome-chatgpt-prompts-zh
 
 如需取消重置，请直接回复：`取消` 或 `取消重置` ‍🤝‍
-    """,
-                                    parse_mode='Markdown', disable_web_page_preview=True)
+    """, parse_mode='Markdown', disable_web_page_preview=True)
     return TYPING_SYS_CONTENT
 
 
@@ -310,8 +319,7 @@ async def set_system_content_handler(update: Update, context: ContextTypes.DEFAU
 新的AI助手身份已确认。
 我将以新身份为背景来为您解答问题。
 您现在可以开始提问了！
-        """,
-                                        reply_markup=markup, parse_mode='Markdown')
+        """, reply_markup=markup, parse_mode='Markdown')
     return CHOOSING
 
 
