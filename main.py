@@ -225,17 +225,20 @@ async def statistics(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user = update.effective_user
     mysql = Mysql()
     user_id = user.id
-    prompt_tokens = mysql.getMany("select sum(tokens) as tokens from records where user_id=%s and role=%s", (user_id, "user"))
-    completion_tokens = mysql.getMany("select sum(tokens) as tokens from records where user_id=%s and role=%s", (user_id, ""))
+    prompt_tokens = mysql.getMany(
+        f"select sum(tokens) as tokens from records where user_id={user_id} and role='user'", 1)[0]
+    completion_tokens = mysql.getMany(
+        f"select sum(tokens) as tokens from records where user_id={user_id} and role='assistant'", 1)[0]
     await update.message.reply_html(
         rf"""
-Hej  {user.mention_html()}!",
-您当前Token使用情况如下：
-查询：{}
-答案：{}
-总共：{}
+Hej  {user.mention_html()}!
 
-您生活愉快！
+您当前Token使用情况如下：
+查询：{prompt_tokens["tokens"]} Tokens
+答案：{completion_tokens["tokens"]} Tokens
+总共：{prompt_tokens["tokens"] + completion_tokens["tokens"]} Tokens
+
+祝您生活愉快！
         """,
         reply_markup=markup, disable_web_page_preview=True
     )
