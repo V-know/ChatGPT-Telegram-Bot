@@ -138,7 +138,7 @@ def ChatCompletionsAI(user: User, prompt) -> str:
     if count > rate_limit[level]:
         reply = f"请求太快了!{emoji.emojize(':rocket:')}\n" \
                 f"您每3分钟最多可向我提供 {rate_limit[level]} 个问题{emoji.emojize(':weary_face:')}\n" \
-                f"联系 @JarvisMessagerBot 获取更多帮助!{emoji.emojize(':check_mark_button:')}\n" \
+                f"联系 @AiMessagerBot 获取更多帮助!{emoji.emojize(':check_mark_button:')}\n" \
                 f"或稍后再试！"
         return reply
 
@@ -195,7 +195,7 @@ def ChatCompletionsAI(user: User, prompt) -> str:
     mysql.end()
     reply = response.get('choices')[0].get('message').get('content')
     if response.get("usage").get("completion_tokens") >= token[level]:
-        reply = f"{reply}\n\n答案长度超过了您当前最大{token[level]}个Token的限制\n请联系 @JarvisMessagerBot 获取更多帮助!" \
+        reply = f"{reply}\n\n答案长度超过了您当前最大{token[level]}个Token的限制\n请联系 @AiMessagerBot 获取更多帮助!" \
                 f"{emoji.emojize(':check_mark_button:')}"
     return reply
 
@@ -257,7 +257,7 @@ async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 async def helper(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     print("Start!")
     await update.message.reply_text("""
-    请联系👉 @JarvisMessagerBot 👈获取更多帮助!
+    请联系👉 @AiMessagerBot 👈获取更多帮助!
     """, parse_mode="Markdown", disable_web_page_preview=True)
     return CHOOSING
 
