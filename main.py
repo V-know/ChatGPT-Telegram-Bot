@@ -238,7 +238,7 @@ Hej  {user.mention_html()}!
 答案：{completion_tokens["tokens"]} Tokens
 总共：{prompt_tokens["tokens"] + completion_tokens["tokens"]} Tokens
 
-祝您生活愉快！
+祝您生活愉快！🎉
         """,
         reply_markup=markup, disable_web_page_preview=True
     )
@@ -378,6 +378,7 @@ def main() -> None:
                 MessageHandler(filters.Regex(f'^({start_button}|/start|Start)$'), start, ),
                 MessageHandler(filters.Regex(f"^{reset_context_button}$"), reset_context),
                 MessageHandler(filters.Regex(f"^{set_sys_content_button}$"), set_system_content),
+                MessageHandler(filters.Regex(f"^{statistics_button}$"), statistics),
                 MessageHandler(filters.TEXT, answer_handler),
                 MessageHandler(filters.ATTACHMENT, non_text_handler),
             ],
