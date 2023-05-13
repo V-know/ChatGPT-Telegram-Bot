@@ -3,16 +3,6 @@
 # This program is dedicated to the public domain under the CC0 license.
 # -*- coding: UTF-8 -*-
 
-"""
-Simple Bot to reply to Telegram messages.
-First, a few handler functions are defined. Then, those functions are passed to
-the Application and registered at their respective places.
-Then, the bot is started and runs until we press Ctrl-C on the command line.
-Usage:
-Basic Echobot example, repeats messages.
-Press Ctrl-C on the command line or send a signal to the process to stop the
-bot.
-"""
 
 from MySqlConn import Mysql, config
 import logging
@@ -35,11 +25,21 @@ if __version_info__ < (20, 0, 0, "alpha", 1):
         f"{TG_VER} version of this example, "
         f"visit https://docs.python-telegram-bot.org/en/v{TG_VER}/examples.html"
     )
-from telegram import ForceReply, Update, User
-from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
+from typing import Dict
+from telegram import (
+    Update,
+    User,
+    ReplyKeyboardMarkup,
+    ReplyKeyboardRemove)
+from telegram.ext import (
+    Application,
+    CommandHandler,
+    ContextTypes,
+    MessageHandler,
+    PicklePersistence,
+    ConversationHandler,
+    filters)
 
-# with open("config.yaml") as f:
-#     config = yaml.load(f, Loader=yaml.FullLoader)
 cache = redis.Redis(host='localhost', port=6379)
 # Enable logging
 logging.basicConfig(
@@ -57,6 +57,19 @@ logger.addHandler(fh)
 token = {0: 256, 1: 1024, 2: 1024}
 context_count = {0: 5, 1: 10, 2: 10}
 rate_limit = {0: 5, 1: 15, 2: 300}
+
+CHOOSING, TYPING_REPLY, TYPING_SYS_CONTENT = range(3)
+contact_admin = emoji.emojize(':SOS_button:求助')
+start_button = emoji.emojize(':rocket:Start')
+set_sys_content_button = emoji.emojize(':ID_button:设置身份')
+reset_context_button = emoji.emojize(":clockwise_vertical_arrows:遗忘会话")
+statistics_button = emoji.emojize(":chart_increasing:Statistics")
+reply_keyboard = [
+    [reset_context_button, start_button],
+    [set_sys_content_button, contact_admin],
+    [statistics_button],
+]
+markup = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
 
 
 def ai(user: User, prompt):
@@ -141,12 +154,6 @@ def ChatCompletionsAI(user: User, prompt) -> str:
     messages.insert(0, {"role": "system", "content": logged_in_user["system_content"]})
     messages.append({"role": "user", "content": prompt}),
 
-    # Record prompt
-    date_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-    sql = "insert into records (user_id, role, content, created_at) values (%s, %s, %s, %s)"
-    value = [user_id, "user", prompt, date_time]
-    mysql.insertOne(sql, value)
-
     # Setup AI
     openai.api_key = config["AI"]["TOKEN"]
     openai.api_type = "azure"
@@ -169,11 +176,21 @@ def ChatCompletionsAI(user: User, prompt) -> str:
     response["prompt"] = prompt
     logger.info(json.dumps(response))
 
+    # Record prompt
+    completion_tokens = response["usage"]["completion_tokens"]
+    prompt_tokens = response["usage"]["prompt_tokens"]
+    # total_tokens = response["usage"]["total_tokens"]
+    date_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+    sql = "insert into records (user_id, role, content, created_at, tokens) " \
+          "values (%s, %s, %s, %s, %s)"
+    value = [user_id, "user", prompt, date_time, prompt_tokens]
+    mysql.insertOne(sql, value)
+
     # Record response
     response_role = response.get('choices')[0].get('message').get('role')
     response_content = response.get('choices')[0].get('message').get('content')
     date_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-    value = [user_id, response_role, response_content, date_time]
+    value = [user_id, response_role, response_content, date_time, completion_tokens]
     mysql.insertOne(sql, value)
     mysql.end()
     reply = response.get('choices')[0].get('message').get('content')
@@ -185,38 +202,195 @@ def ChatCompletionsAI(user: User, prompt) -> str:
 
 # Define a few command handlers. These usually take the two arguments update and
 # context.
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     """Send a message when the command /start is issued."""
     user = update.effective_user
     await update.message.reply_html(
-        rf"Hej  {user.mention_html()}!",
+        rf"""
+        Hej  {user.mention_html()}!",
+I'm an AI chatbot created to interact with you and make your day a little brighter. If you have any questions or just want to have a friendly chat, I'm here to help! 🤗
+
+Do you know what's great about me? I can help you with anything from giving advice to telling you a joke, and I'm available 24/7! 🕰️
+
+So why not share me with your friends? 😍 
+You can send them this link: https://t.me/RoboAceBot
+        """,
+        reply_markup=markup, disable_web_page_preview=True
     )
+    return CHOOSING
 
 
-async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Send a message when the command /help is issued."""
-    await update.message.reply_text("Help!")
+async def statistics(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    """Send a message when the command /start is issued."""
+    user = update.effective_user
+    mysql = Mysql()
+    user_id = user.id
+    prompt_tokens = mysql.getMany(
+        f"select sum(tokens) as tokens from records where user_id={user_id} and role='user'", 1)[0]
+    completion_tokens = mysql.getMany(
+        f"select sum(tokens) as tokens from records where user_id={user_id} and role='assistant'", 1)[0]
+    await update.message.reply_html(
+        rf"""
+Hej  {user.mention_html()}!
+
+您当前Token使用情况如下：
+查询：{prompt_tokens["tokens"]} Tokens
+答案：{completion_tokens["tokens"]} Tokens
+总共：{prompt_tokens["tokens"] + completion_tokens["tokens"]} Tokens
+
+祝您生活愉快！🎉
+        """,
+        reply_markup=markup, disable_web_page_preview=True
+    )
+    return CHOOSING
 
 
-async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     """Echo the user message."""
     user_id = update.effective_user.id
     if update.message:
         reply = ChatCompletionsAI(update.effective_user, update.message.text)
-        await update.message.reply_text(reply, parse_mode='Markdown')
+        await update.message.reply_text(reply, reply_markup=markup, parse_mode='Markdown')
+    return CHOOSING
+
+
+async def helper(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    print("Start!")
+    await update.message.reply_text("""
+    请联系👉 @JarvisMessagerBot 👈获取更多帮助!
+    """, parse_mode="Markdown", disable_web_page_preview=True)
+    return CHOOSING
+
+
+async def reset_context(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    user_id = update.effective_user.id
+    mysql = Mysql()
+    reset_at = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+    mysql.update("update records set reset_at=%s where user_id=%s and reset_at is null", (reset_at, user_id))
+    mysql.end()
+    await update.message.reply_text("""
+    您的会话历史已清空，现在可以重新开始提问了！
+    """, parse_mode="Markdown", disable_web_page_preview=True)
+    return CHOOSING
+
+
+async def set_system_content(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    user_id = update.effective_user.id
+    mysql = Mysql()
+    user = mysql.getOne("select * from users where user_id=%s", user_id)
+    mysql.end()
+    await update.message.reply_text(text=f"""
+您当前的系统AI助手身份设置为🤖：
+
+**{user["system_content"]}**
+
+请直接回复新的AI助手身份设置！
+
+您可以参考： [🧠ChatGPT 中文调教指南]https://github.com/PlexPt/awesome-chatgpt-prompts-zh
+
+如需取消重置，请直接回复：`取消` 或 `取消重置` ‍🤝‍
+    """,
+                                    parse_mode='Markdown', disable_web_page_preview=True)
+    return TYPING_SYS_CONTENT
+
+
+async def set_system_content_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    system_content = update.message.text.strip()
+    if system_content in ("取消", "取消重置"):
+        await update.message.reply_text(text="已取消。\n您可以继续向我提问了",
+                                        reply_markup=markup, parse_mode='Markdown')
+    else:
+        user_id = update.effective_user.id
+        mysql = Mysql()
+        mysql.update("update users set system_content=%s where user_id=%s", (system_content, user_id))
+        reset_at = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        mysql.update("update records set reset_at=%s where user_id=%s and reset_at is null", (reset_at, user_id))
+        mysql.end()
+        await update.message.reply_text(text=f"""
+新的AI助手身份已确认。
+我将以新身份为背景来为您解答问题。
+您现在可以开始提问了！
+        """,
+                                        reply_markup=markup, parse_mode='Markdown')
+    return CHOOSING
+
+
+async def non_text_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    """Stores the photos and asks for a location."""
+    user = update.message.from_user
+    if len(update.message.photo) != 0:
+        await update.message.reply_text(text='暂不开放图片发送功能，以免被苹果封！\n请使用文字或Emoji来表达你自己！')
+        photo_file = update.message.photo[-1].get_file()
+        # can't get photo's name
+        photo_file.download(f'./data/photos/{user.name}-{time.strftime("%Y%m%d-%H%M%S")}.jpg')
+        logger.info("Photo of %s: %s", user.first_name, 'user_photo.jpg')
+    else:
+        await update.message.reply_text(text='嗯，好像收到了什么奇怪的东西！\n请使用文字或Emoji来表达你自己！')
+        if update.message.document:
+            file = update.message.document
+            file.get_file().download(f'./data/documents/{user.name}-{file.file_name}')
+        if update.message.video:
+            video = update.message.video
+            video.get_file().download(f'./data/videos/{user.name}-{video.file_name}')
+    return TYPING_REPLY
+
+
+def facts_to_str(user_data: Dict[str, str]) -> str:
+    """Helper function for formatting the gathered user info."""
+    facts = [f'{key} - {value}' for key, value in user_data.items()]
+    return "\n".join(facts).join(['\n', '\n'])
+
+
+async def done(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    """Display the gathered info and end the conversation."""
+    if 'choice' in context.user_data:
+        del context.user_data['choice']
+
+    await update.message.reply_text(
+        f"I learned these facts about you: {facts_to_str(context.user_data)}Until next time!",
+        reply_markup=ReplyKeyboardRemove(),
+    )
+    return ConversationHandler.END
 
 
 def main() -> None:
     """Start the bot."""
+    # Create the Updater and pass it your bot's token.
+    persistence = PicklePersistence(filepath='conversationbot')
+
     # Create the Application and pass it your bot's token.
-    application = Application.builder().token(config["BOT"]["TOKEN"]).build()
+    application = Application.builder().token(config["BOT"]["TOKEN"]).persistence(persistence).build()
 
-    # on different commands - answer in Telegram
-    application.add_handler(CommandHandler("start", start))
-    application.add_handler(CommandHandler("help", help_command))
-
-    # on non command i.e. message - echo the message on Telegram
-    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, echo))
+    conv_handler = ConversationHandler(
+        entry_points=[CommandHandler('start', start)],
+        states={
+            CHOOSING: [
+                MessageHandler(filters.Regex(f'^{contact_admin}$'), helper, ),
+                MessageHandler(filters.Regex(f'^({start_button}|/start|Start)$'), start, ),
+                MessageHandler(filters.Regex(f"^{reset_context_button}$"), reset_context),
+                MessageHandler(filters.Regex(f"^{set_sys_content_button}$"), set_system_content),
+                MessageHandler(filters.Regex(f"^{statistics_button}$"), statistics),
+                MessageHandler(filters.TEXT, answer_handler),
+                MessageHandler(filters.ATTACHMENT, non_text_handler),
+            ],
+            TYPING_REPLY: [
+                MessageHandler(filters.Regex(f'^{contact_admin}$'), helper, ),
+                MessageHandler(filters.Regex(f'^({start_button}|/start|Start)$'), start, ),
+                MessageHandler(filters.Regex(f"^{reset_context_button}$"), reset_context),
+                MessageHandler(filters.Regex(f"^{set_sys_content_button}$"), set_system_content),
+                MessageHandler(filters.Regex(f"^{statistics_button}$"), statistics),
+                MessageHandler(filters.TEXT, answer_handler),
+                MessageHandler(filters.ATTACHMENT, non_text_handler),
+            ],
+            TYPING_SYS_CONTENT: [
+                MessageHandler(filters.TEXT, set_system_content_handler),
+            ],
+        },
+        fallbacks=[MessageHandler(filters.Regex('^Done$'), done)],
+        name="my_conversation",
+        persistent=True,
+    )
+    application.add_handler(conv_handler)
 
     # Run the bot until the user presses Ctrl-C
     application.run_polling()

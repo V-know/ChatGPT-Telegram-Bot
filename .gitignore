@@ -3,3 +3,4 @@ venv
 config.yaml
 __pycache__
 *.log
+conversationbot
