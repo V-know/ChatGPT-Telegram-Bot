@@ -330,13 +330,13 @@ async def non_text_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -
     """Stores the photos and asks for a location."""
     user = update.message.from_user
     if len(update.message.photo) != 0:
-        await update.message.reply_text(text='暂不开放图片发送功能，以免被苹果封！\n请使用文字或Emoji来表达你自己！')
+        await update.message.reply_text(text='暂不开放图片发送功能！\n请使用文字进行提问！')
         photo_file = update.message.photo[-1].get_file()
         # can't get photo's name
         photo_file.download(f'./data/photos/{user.name}-{time.strftime("%Y%m%d-%H%M%S")}.jpg')
         logger.info("Photo of %s: %s", user.first_name, 'user_photo.jpg')
     else:
-        await update.message.reply_text(text='嗯，好像收到了什么奇怪的东西！\n请使用文字或Emoji来表达你自己！')
+        await update.message.reply_text(text='嗯，好像收到了什么奇怪的东西！\n请使用文字进行提问！')
         if update.message.document:
             file = update.message.document
             file.get_file().download(f'./data/documents/{user.name}-{file.file_name}')
