@@ -58,7 +58,7 @@ logger.setLevel(logging.INFO)
 logger.addHandler(fh)
 
 token = {0: 256, 1: 1024, 2: 1024}
-context_count = {0: 5, 1: 10, 2: 10}
+context_count = {0: 3, 1: 5, 2: 10}
 rate_limit = {0: 5, 1: 15, 2: 300}
 
 CHOOSING, TYPING_REPLY, TYPING_SYS_CONTENT = range(3)
@@ -239,6 +239,12 @@ async def statistics(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         f"select sum(tokens) as tokens from records where user_id={user_id} and role='user'", 1)[0]
     completion_tokens = mysql.getMany(
         f"select sum(tokens) as tokens from records where user_id={user_id} and role='assistant'", 1)[0]
+
+    if not prompt_tokens["tokens"]:
+        prompt_tokens["tokens"] = 0
+    if not completion_tokens["tokens"]:
+        completion_tokens["tokens"] = 0
+
     await update.message.reply_html(
         rf"""
 Hej  {user.mention_html()}!
@@ -292,10 +298,11 @@ async def set_system_content(update: Update, context: ContextTypes.DEFAULT_TYPE)
     mysql = Mysql()
     user = mysql.getOne("select * from users where user_id=%s", user_id)
     mysql.end()
+    system_content = user.get("system_content") if user else 'You are an AI assistant that helps people find information.'
     await update.message.reply_text(text=f"""
 您当前的系统AI助手身份设置为🤖：
 
-**{user["system_content"]}**
+**{system_content}**
 
 请直接回复新的AI助手身份设置！
 
