@@ -11,6 +11,7 @@ import json
 import emoji
 import time
 import html
+import yaml
 import traceback
 
 from telegram import __version__ as TG_VER
@@ -28,9 +29,12 @@ if __version_info__ < (20, 0, 0, "alpha", 1):
     )
 from typing import Dict
 from telegram.constants import ParseMode
+from telegram.error import BadRequest
 from telegram import (
     Update,
     User,
+    InlineKeyboardMarkup,
+    InlineKeyboardButton,
     ReplyKeyboardMarkup,
     ReplyKeyboardRemove)
 from telegram.ext import (
@@ -40,6 +44,7 @@ from telegram.ext import (
     MessageHandler,
     PicklePersistence,
     ConversationHandler,
+    CallbackQueryHandler,
     filters)
 
 # Enable logging
@@ -60,17 +65,21 @@ context_count = {0: 3, 1: 5, 2: 10}
 rate_limit = {0: 5, 1: 15, 2: 300}
 
 CHOOSING, TYPING_REPLY, TYPING_SYS_CONTENT = range(3)
-contact_admin = emoji.emojize(':SOS_button:求助')
-start_button = emoji.emojize(':rocket:Start')
-set_sys_content_button = emoji.emojize(':ID_button:设置新身份')
-reset_context_button = emoji.emojize(":clockwise_vertical_arrows:遗忘历史会话")
-statistics_button = emoji.emojize(":chart_increasing:Statistics / 用量查询")
+contact_admin = "🆘求助"
+start_button = "🚀Start"
+set_sys_content_button = "🆔自定义角色"
+reset_context_button = "🔃重开会话"
+statistics_button = "📈用量查询"
+switch_role_button = "🙋多角色切换"
 reply_keyboard = [
-    [reset_context_button, start_button],
-    [set_sys_content_button, contact_admin],
-    [statistics_button],
+    [contact_admin, start_button],
+    [set_sys_content_button, switch_role_button],
+    [reset_context_button, statistics_button],
 ]
 markup = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
+
+with open("chat_modes.yml") as f:
+    chat_modes = yaml.load(f, Loader=yaml.FullLoader)
 
 
 def ai(user: User, prompt):
@@ -134,9 +143,9 @@ def ChatCompletionsAI(user: User, prompt) -> str:
 
     # Rate limit controller
     time_span = 3  # minutes
-    chat_count = mysql.getOne(f"select count(*) as count from records where role='user' and created_at >=NOW() - INTERVAL {time_span} MINUTE;")
+    chat_count = mysql.getOne(
+        f"select count(*) as count from records where role='user' and created_at >=NOW() - INTERVAL {time_span} MINUTE;")
 
-    print(chat_count.get("count"), rate_limit[level])
     if chat_count.get("count") > rate_limit[level]:
         reply = f"请求太快了!{emoji.emojize(':rocket:')}\n" \
                 f"您每 {time_span} 分钟最多可向我提问 {rate_limit[level]} 个问题{emoji.emojize(':weary_face:')}\n" \
@@ -333,6 +342,88 @@ async def set_system_content_handler(update: Update, context: ContextTypes.DEFAU
     return CHOOSING
 
 
+async def show_chat_modes_handle(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    text, reply_markup = get_chat_mode_menu(0)
+    await update.message.reply_text(text, reply_markup=reply_markup, parse_mode=ParseMode.HTML)
+
+
+def get_chat_mode_menu(page_index: int):
+    n_chat_modes_per_page = 5
+    text = f"Select <b>chat mode</b> ({len(chat_modes)} modes available):"
+
+    # buttons
+    chat_mode_keys = list(chat_modes.keys())
+    page_chat_mode_keys = chat_mode_keys[page_index * n_chat_modes_per_page:(page_index + 1) * n_chat_modes_per_page]
+
+    keyboard = []
+    for chat_mode_key in page_chat_mode_keys:
+        name = chat_modes[chat_mode_key]["name"]
+        keyboard.append([InlineKeyboardButton(name, callback_data=f"set_chat_mode|{chat_mode_key}")])
+
+    # pagination
+    if len(chat_mode_keys) > n_chat_modes_per_page:
+        is_first_page = (page_index == 0)
+        is_last_page = ((page_index + 1) * n_chat_modes_per_page >= len(chat_mode_keys))
+
+        if is_first_page:
+            keyboard.append([
+                InlineKeyboardButton("»", callback_data=f"show_chat_modes|{page_index + 1}")
+            ])
+        elif is_last_page:
+            keyboard.append([
+                InlineKeyboardButton("«", callback_data=f"show_chat_modes|{page_index - 1}"),
+            ])
+        else:
+            keyboard.append([
+                InlineKeyboardButton("«", callback_data=f"show_chat_modes|{page_index - 1}"),
+                InlineKeyboardButton("»", callback_data=f"show_chat_modes|{page_index + 1}")
+            ])
+
+    reply_markup = InlineKeyboardMarkup(keyboard)
+
+    return text, reply_markup
+
+
+async def show_chat_modes_callback_handle(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    query = update.callback_query
+    await query.answer()
+
+    page_index = int(query.data.split("|")[1])
+    if page_index < 0:
+        return
+
+    text, reply_markup = get_chat_mode_menu(page_index)
+    try:
+        await query.edit_message_text(text, reply_markup=reply_markup, parse_mode=ParseMode.HTML)
+    except BadRequest as e:
+        if str(e).startswith("Message is not modified"):
+            pass
+
+
+async def set_chat_mode_handle(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.callback_query.from_user.id
+
+    query = update.callback_query
+    await query.answer()
+
+    system_content = query.data.split("|")[1]
+
+    # db.set_user_attribute(user_id, "current_chat_mode", chat_mode)
+    # db.start_new_dialog(user_id)
+
+    mysql = Mysql()
+    mysql.update("update users set system_content=%s where user_id=%s", (chat_modes[system_content]['prompt_start'], user_id))
+    reset_at = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+    mysql.update("update records set reset_at=%s where user_id=%s and reset_at is null", (reset_at, user_id))
+    mysql.end()
+
+    await context.bot.send_message(
+        update.callback_query.message.chat.id,
+        f"{chat_modes[system_content]['welcome_message']}",
+        parse_mode=ParseMode.HTML
+    )
+
+
 async def non_text_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     """Stores the photos and asks for a location."""
     user = update.message.from_user
@@ -416,6 +507,7 @@ def main() -> None:
                 MessageHandler(filters.Regex(f"^{reset_context_button}$"), reset_context),
                 MessageHandler(filters.Regex(f"^{set_sys_content_button}$"), set_system_content),
                 MessageHandler(filters.Regex(f"^{statistics_button}$"), statistics),
+                MessageHandler(filters.Regex(f"^{switch_role_button}$"), show_chat_modes_handle),
                 MessageHandler(filters.TEXT, answer_handler),
                 MessageHandler(filters.ATTACHMENT, non_text_handler),
             ],
@@ -425,6 +517,7 @@ def main() -> None:
                 MessageHandler(filters.Regex(f"^{reset_context_button}$"), reset_context),
                 MessageHandler(filters.Regex(f"^{set_sys_content_button}$"), set_system_content),
                 MessageHandler(filters.Regex(f"^{statistics_button}$"), statistics),
+                MessageHandler(filters.Regex(f"^{switch_role_button}$"), show_chat_modes_handle),
                 MessageHandler(filters.TEXT, answer_handler),
                 MessageHandler(filters.ATTACHMENT, non_text_handler),
             ],
@@ -438,6 +531,8 @@ def main() -> None:
     )
     application.add_handler(conv_handler)
 
+    application.add_handler(CallbackQueryHandler(show_chat_modes_callback_handle, pattern="^show_chat_modes"))
+    application.add_handler(CallbackQueryHandler(set_chat_mode_handle, pattern="^set_chat_mode"))
     # ...and the error handler
     application.add_error_handler(error_handler)
 
