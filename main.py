@@ -8,7 +8,6 @@ from MySqlConn import Mysql, config
 import logging
 import openai
 import json
-import redis
 import emoji
 import time
 import html
@@ -43,7 +42,6 @@ from telegram.ext import (
     ConversationHandler,
     filters)
 
-cache = redis.Redis(host='localhost', port=6379)
 # Enable logging
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
@@ -135,12 +133,13 @@ def ChatCompletionsAI(user: User, prompt) -> str:
     level = logged_in_user.get("level")
 
     # Rate limit controller
-    key = 'user:{}:requests'.format(user_id)
-    count = cache.incr(key)
-    cache.expire(key, 180)
-    if count > rate_limit[level]:
+    time_span = 3  # minutes
+    chat_count = mysql.getOne(f"select count(*) as count from records where role='user' and created_at >=NOW() - INTERVAL {time_span} MINUTE;")
+
+    print(chat_count.get("count"), rate_limit[level])
+    if chat_count.get("count") > rate_limit[level]:
         reply = f"请求太快了!{emoji.emojize(':rocket:')}\n" \
-                f"您每3分钟最多可向我提供 {rate_limit[level]} 个问题{emoji.emojize(':weary_face:')}\n" \
+                f"您每 {time_span} 分钟最多可向我提问 {rate_limit[level]} 个问题{emoji.emojize(':weary_face:')}\n" \
                 f"联系 @AiMessagerBot 获取更多帮助!{emoji.emojize(':check_mark_button:')}\n" \
                 f"或稍后再试！"
         return reply
@@ -298,7 +297,8 @@ async def set_system_content(update: Update, context: ContextTypes.DEFAULT_TYPE)
     mysql = Mysql()
     user = mysql.getOne("select * from users where user_id=%s", user_id)
     mysql.end()
-    system_content = user.get("system_content") if user else 'You are an AI assistant that helps people find information.'
+    system_content = user.get(
+        "system_content") if user else 'You are an AI assistant that helps people find information.'
     await update.message.reply_text(text=f"""
 您当前的系统AI助手身份设置为🤖：
 
