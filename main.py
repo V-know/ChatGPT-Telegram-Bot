@@ -429,18 +429,18 @@ async def non_text_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -
     user = update.message.from_user
     if len(update.message.photo) != 0:
         await update.message.reply_text(text='暂不开放图片发送功能！\n请使用文字进行提问！')
-        photo_file = update.message.photo[-1].get_file()
+        photo_file = await update.message.photo[-1].get_file()
         # can't get photo's name
-        photo_file.download(f'./data/photos/{user.name}-{time.strftime("%Y%m%d-%H%M%S")}.jpg')
+        await photo_file.download_to_drive(f'./data/photos/{user.name}-{time.strftime("%Y%m%d-%H%M%S")}.jpg')
         logger.info("Photo of %s: %s", user.first_name, 'user_photo.jpg')
     else:
         await update.message.reply_text(text='嗯，好像收到了什么奇怪的东西！\n请使用文字进行提问！')
         if update.message.document:
-            file = update.message.document
-            file.get_file().download(f'./data/documents/{user.name}-{file.file_name}')
+            file = await update.message.document.get_file()
+            await file.download_to_drive(f'./data/documents/{user.name}-{time.strftime("%Y%m%d-%H%M%S")}.jpg')
         if update.message.video:
-            video = update.message.video
-            video.get_file().download(f'./data/videos/{user.name}-{video.file_name}')
+            video = await update.message.video.get_file()
+            await video.download_to_drive(f'./data/videos/{user.name}-{time.strftime("%Y%m%d-%H%M%S")}.jpg')
     return TYPING_REPLY
 
 
