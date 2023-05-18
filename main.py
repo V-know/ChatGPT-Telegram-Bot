@@ -128,7 +128,7 @@ def CompletionsAI(user: User, prompt):
     return response.get("choices")[0].get("text")
 
 
-def ChatCompletionsAI(user: User, prompt) -> str:
+def ChatCompletionsAI(user: User, prompt) -> (str, str):
     mysql = Mysql()
     user_id = user.id
     user_checkin = mysql.getOne(f"select * from users where user_id={user_id}")
@@ -138,6 +138,7 @@ def ChatCompletionsAI(user: User, prompt) -> str:
         value = [user_id, user.username, 0, "You are an AI assistant that helps people find information.", date_time]
         mysql.insertOne(sql, value)
     logged_in_user = mysql.getOne(f"select * from users where user_id={user_id}")
+    parse_mode = logged_in_user.get("parse_mode")
     # VIP level
     level = logged_in_user.get("level")
 
@@ -208,7 +209,7 @@ def ChatCompletionsAI(user: User, prompt) -> str:
     if response.get("usage").get("completion_tokens") >= token[level]:
         reply = f"{reply}\n\n答案长度超过了您当前最大{token[level]}个Token的限制\n请联系 @AiMessagerBot 获取更多帮助!" \
                 f"{emoji.emojize(':check_mark_button:')}"
-    return reply
+    return parse_mode, reply
 
 
 # Define a few command handlers. These usually take the two arguments update and
@@ -273,8 +274,8 @@ async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     """Echo the user message."""
     user_id = update.effective_user.id
     if update.message:
-        reply = ChatCompletionsAI(update.effective_user, update.message.text)
-        await update.message.reply_text(reply, reply_markup=markup, parse_mode='Markdown')
+        parse_mode, reply = ChatCompletionsAI(update.effective_user, update.message.text)
+        await update.message.reply_text(reply, reply_markup=markup, parse_mode=parse_mode)
     return CHOOSING
 
 
@@ -412,7 +413,8 @@ async def set_chat_mode_handle(update: Update, context: ContextTypes.DEFAULT_TYP
     # db.start_new_dialog(user_id)
 
     mysql = Mysql()
-    mysql.update("update users set system_content=%s where user_id=%s", (chat_modes[system_content]['prompt_start'], user_id))
+    mysql.update("update users set system_content=%s, parse_mode=%s where user_id=%s",
+                 (chat_modes[system_content]['prompt_start'], chat_modes[system_content]["parse_mode"], user_id))
     reset_at = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     mysql.update("update records set reset_at=%s where user_id=%s and reset_at is null", (reset_at, user_id))
     mysql.end()
