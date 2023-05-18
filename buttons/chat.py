@@ -100,7 +100,6 @@ def ChatCompletionsAI(user: User, prompt) -> (str, str):
 
 async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     """Echo the user message."""
-    user_id = update.effective_user.id
     if update.message:
         parse_mode, reply = ChatCompletionsAI(update.effective_user, update.message.text)
         await update.message.reply_text(reply, reply_markup=markup, parse_mode=parse_mode)
