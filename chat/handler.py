@@ -70,7 +70,6 @@ async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
                                                     message_id=placeholder_message.message_id, parse_mode=parse_mode)
             except BadRequest as e:
                 if str(e).startswith("Message is not modified"):
-                    print("--------")
                     continue
                 else:
                     await context.bot.edit_message_text(answer, chat_id=placeholder_message.chat_id,
