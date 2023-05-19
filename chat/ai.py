@@ -24,10 +24,10 @@ async def ChatCompletionsAI(logged_in_user, messages) -> (str, str):
         stop=None)
 
     answer = ""
-    completion_tokens = 0
     async for r in response:
         delta = r.choices[0].delta
         if delta.get("content"):
             answer += delta["content"]
-            completion_tokens += 1
-            yield answer
+            yield answer, "in_progress"
+        elif r.choices[0]["finish_reason"] == "stop":
+            yield answer, "completed"

@@ -63,8 +63,13 @@ async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         messages.append({"role": "user", "content": prompt})
         prompt_tokens += count_tokens(prompt)
 
-        answers = ChatCompletionsAI(logged_in_user, messages)
-        async for answer in answers:
+        replies = ChatCompletionsAI(logged_in_user, messages)
+        prev_answer = ""
+        async for reply in replies:
+            answer, status = reply
+            if abs(len(answer) - len(prev_answer)) < 15 and status != "completed":
+                continue
+            prev_answer = answer
             try:
                 await context.bot.edit_message_text(answer, chat_id=placeholder_message.chat_id,
                                                     message_id=placeholder_message.message_id, parse_mode=parse_mode)
@@ -75,7 +80,7 @@ async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
                     await context.bot.edit_message_text(answer, chat_id=placeholder_message.chat_id,
                                                         message_id=placeholder_message.message_id)
 
-            await asyncio.sleep(0.01)  # wait a bit to avoid flooding
+            # await asyncio.sleep(0.01)  # wait a bit to avoid flooding
 
         date_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         sql = "insert into records (user_id, role, content, created_at, tokens) " \
