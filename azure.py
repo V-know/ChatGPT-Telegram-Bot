@@ -13,12 +13,19 @@ openai.api_key = config["AI"]["TOKEN"]
 response = openai.ChatCompletion.create(
     engine="gpt-35-turbo",
     messages=[{"role": "system", "content": "You are an AI assistant that helps people find information."},
-              {"role": "user", "content": "hi"}],
+              {"role": "user", "content": "你好！"}],
     temperature=0.5,
     max_tokens=800,
     top_p=0.95,
     frequency_penalty=0,
+    stream=True,
     presence_penalty=0,
     stop=None)
 
-print(response.get('choices')[0].get('message').get('content'))
+# print(response.get('choices')[0].get('message').get('content'))
+# print(response)
+i = 0
+for r in response:
+    i += 1
+    print(i)
+    print(r)
