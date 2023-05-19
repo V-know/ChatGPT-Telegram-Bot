@@ -1,7 +1,9 @@
 from telegram import Update
 from telegram.ext import ContextTypes
+from telegram.error import BadRequest
 
 from chat.ai import ChatCompletionsAI
+import asyncio
 import time
 import emoji
 import re
@@ -63,8 +65,18 @@ async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 
         answers = ChatCompletionsAI(logged_in_user, messages)
         async for answer in answers:
-            await context.bot.edit_message_text(answer, chat_id=placeholder_message.chat_id,
-                                                message_id=placeholder_message.message_id, parse_mode=parse_mode)
+            try:
+                await context.bot.edit_message_text(answer, chat_id=placeholder_message.chat_id,
+                                                    message_id=placeholder_message.message_id, parse_mode=parse_mode)
+            except BadRequest as e:
+                if str(e).startswith("Message is not modified"):
+                    print("--------")
+                    continue
+                else:
+                    await context.bot.edit_message_text(answer, chat_id=placeholder_message.chat_id,
+                                                        message_id=placeholder_message.message_id)
+
+            await asyncio.sleep(0.01)  # wait a bit to avoid flooding
 
         date_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         sql = "insert into records (user_id, role, content, created_at, tokens) " \
