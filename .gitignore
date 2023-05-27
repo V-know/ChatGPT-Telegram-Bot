@@ -4,3 +4,4 @@ config.yaml
 __pycache__
 *.log
 conversationbot
+.DS_Store
