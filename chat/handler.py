@@ -3,11 +3,10 @@ from telegram.ext import ContextTypes
 from telegram.error import BadRequest
 
 from chat.ai import ChatCompletionsAI
-import asyncio
 import time
 import emoji
 import re
-from MySqlConn import Mysql
+from db.MySqlConn import Mysql
 
 from config import (
     token,

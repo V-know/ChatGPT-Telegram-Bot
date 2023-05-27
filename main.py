@@ -4,7 +4,7 @@
 # -*- coding: UTF-8 -*-
 
 
-from MySqlConn import config
+from db.MySqlConn import config
 from telegram import __version__ as TG_VER
 
 try:

@@ -9,7 +9,7 @@
 
 一个拥有丝滑AI体验的Telegram Bot
 
-## Feature
+## ⚡Feature
 
 [✓] 支持Azure OpenAI接口(原生OpenAI接口 Coming soon)
 
@@ -27,18 +27,21 @@
 
 [✓] More ...
 
-## TODO
+## 👨‍💻TODO
+
 [x] 支持原生OpenAI接口（WIP）
 
 [x] 允许用户在Bot中使用自己的OpenAI Key,以获得更多自由
 
 [x] 完善ErrorHandler
 
-## 快速体验
+[x] 容器化
+
+## 🤖快速体验
 
 Telegram Bot: [RoboAceBot](https://t.me/RoboAceBot)
 
-## 部署
+## 🛠️部署
 
 ### 安装依赖
 
@@ -52,10 +55,14 @@ pip install -r requirements.txt
 
 | Parameter         | Description                                                        |
 |-------------------|--------------------------------------------------------------------|
-| BOT.BOKEN         | 从[@botFathher](https://t.me/BotFather)创建bot并获取Token                |
+| BOT.TOKEN         | 从[@botFather](https://t.me/BotFather)创建bot并获取Token                 |
 | DEVELOPER_CHAT_ID | bot出错时，接收信息的TG帐号ID, ID可以从[@get_id_bot](https://t.me/get_id_bot) 获取 |
 
-## 启动
+如果你使用的是Azure的OpenAI，你可在这个链接里获取所需的所有内容：
+
+[开始通过 Azure OpenAI 服务使用 ChatGPT 和 GPT-4](https://learn.microsoft.com/zh-cn/azure/cognitive-services/openai/chatgpt-quickstart?pivots=programming-language-python&tabs=command-line)
+
+## 🚀启动
 
 ```shell
 python main.py | tee >> debug.log

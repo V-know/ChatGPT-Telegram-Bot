@@ -12,7 +12,7 @@ import html
 import traceback
 from typing import Dict
 
-from MySqlConn import config
+from db.MySqlConn import config
 from config import (
     TYPING_REPLY,
     logger)
