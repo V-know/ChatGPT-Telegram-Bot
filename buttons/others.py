@@ -42,9 +42,9 @@ def ai(user: User, prompt):
 def CompletionsAI(user: User, prompt):
     max_tokens = 1000 if user.id == 467300857 else 256
     openai.api_key = config["AI"]["TOKEN"]
-    openai.api_type = "azure"
-    openai.api_base = "https://openaitrial0417.openai.azure.com/"
-    openai.api_version = "2023-03-15-preview"
+    openai.api_type = config["AI"]["TYPE"]
+    openai.api_base = config["AI"]["BASE"]
+    openai.api_version = config["AI"]["VERSION"]
 
     response = openai.Completion.create(
         engine="gpt-35-turbo",

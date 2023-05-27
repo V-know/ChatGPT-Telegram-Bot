@@ -1,0 +1,16 @@
+BOT:
+    TOKEN: 55***88  # Get your bot token from @BotFater
+AI:
+    VERSION: "2023-03-15-preview"
+    TYPE: "azure"
+    BASE: "https://***.openai.azure.com/"
+    TOKEN: "be***b63f"
+MYSQL:
+    DBHOST: 127.0.0.1
+    DBPORT: 3306
+    DBUSER: root
+    DBPWD: dbpassword
+    DBNAME: database_name
+    DBCHAR: utf8mb4
+
+DEVELOPER_CHAT_ID: your_tg_chat_id
