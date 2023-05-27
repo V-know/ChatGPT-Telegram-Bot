@@ -1,6 +1,6 @@
 from telegram import Update
 from telegram.ext import ContextTypes
-from MySqlConn import Mysql
+from db.MySqlConn import Mysql
 from config import (
     markup,
     CHOOSING)

@@ -1,6 +1,6 @@
 from config import token
 import openai
-from MySqlConn import config
+from db.MySqlConn import config
 
 
 async def ChatCompletionsAI(logged_in_user, messages) -> (str, str):

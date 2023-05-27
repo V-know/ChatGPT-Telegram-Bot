@@ -5,19 +5,16 @@
 ３、在输入的值中不需要使用转意函数，系统会自动处理
 """
 
-# from pymysql import cursors
 import pymysql
 import yaml
 from dbutils.pooled_db import PooledDB
-
-# from PooledDB import PooledDB
 
 """
 Config是一些数据库的配置文件
 """
 
 # Load data from config.yaml file
-with open("config.yaml") as f:
+with open("../config.yaml") as f:
     config = yaml.load(f, Loader=yaml.FullLoader)
     mysql = config["MYSQL"]
 

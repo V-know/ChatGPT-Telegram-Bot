@@ -8,7 +8,7 @@ from telegram import (
 
 import yaml
 import time
-from MySqlConn import Mysql
+from db.MySqlConn import Mysql
 
 
 async def show_chat_modes_handle(update: Update, context: ContextTypes.DEFAULT_TYPE):
