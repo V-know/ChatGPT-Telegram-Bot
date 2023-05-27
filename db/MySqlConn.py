@@ -14,7 +14,7 @@ Config是一些数据库的配置文件
 """
 
 # Load data from config.yaml file
-with open("../config.yaml") as f:
+with open("config.yaml") as f:
     config = yaml.load(f, Loader=yaml.FullLoader)
     mysql = config["MYSQL"]
 
