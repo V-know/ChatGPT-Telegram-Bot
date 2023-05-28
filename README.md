@@ -57,6 +57,11 @@ pip install -r requirements.txt
 |-------------------|--------------------------------------------------------------------|
 | BOT.TOKEN         | 从[@botFather](https://t.me/BotFather)创建bot并获取Token                 |
 | DEVELOPER_CHAT_ID | bot出错时，接收信息的TG帐号ID, ID可以从[@get_id_bot](https://t.me/get_id_bot) 获取 |
+| MYSQL             | MySQL连接相关的参数                                                       |
+| TIME_SPAN         | 计算rate limit所用的时间窗口大小，单位：分钟                                        |
+| RATE_LIMIT        | key为用户等级，value为TIME_SPAN时间内可以聊天的最大数量                               |
+| CONTEXT_COUNT     | key为用户等级，value为每次聊天所包含的上下文数量                                       |
+| MAX_TOKEN         | key为用户等级, value为每次聊天AI返回节点的最大Token数                                |
 
 如果你使用的是Azure的OpenAI，你可在这个链接里获取所需的所有内容：
 
@@ -67,3 +72,7 @@ pip install -r requirements.txt
 ```shell
 python main.py | tee >> debug.log
 ```
+
+## ❤️写在最后
+
+希望本项目在给你丝滑AI体验的同时，能帮助更多人接触并开始创建和使用自己的Telegram Bot

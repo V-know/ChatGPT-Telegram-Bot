@@ -1,16 +1,32 @@
 BOT:
-    TOKEN: 55***88  # Get your bot token from @BotFater
+  TOKEN: 55***88  # Get your bot token from @BotFater
 AI:
-    VERSION: "2023-03-15-preview"
-    TYPE: "azure"
-    BASE: "https://***.openai.azure.com/"
-    TOKEN: "be***b63f"
+  VERSION: "2023-03-15-preview"
+  TYPE: "azure"
+  BASE: "https://***.openai.azure.com/"
+  TOKEN: "be***b63f"
 MYSQL:
-    DBHOST: 127.0.0.1
-    DBPORT: 3306
-    DBUSER: root
-    DBPWD: dbpassword
-    DBNAME: database_name
-    DBCHAR: utf8mb4
+  DBHOST: 127.0.0.1
+  DBPORT: 3306
+  DBUSER: root
+  DBPWD: dbpassword
+  DBNAME: database_name
+  DBCHAR: utf8mb4
 
-DEVELOPER_CHAT_ID: your_tg_chat_id
+RATE_LIMIT:
+  0: 10
+  1: 30
+  2: 300
+
+CONTEXT_COUNT:
+  0: 3
+  1: 5
+  2: 10
+
+MAX_TOKEN:
+  0: 256
+  1: 1024
+  2: 1024
+
+TIME_SPAN: 3 #Minutes
+DEVELOPER_CHAT_ID: 467300857
