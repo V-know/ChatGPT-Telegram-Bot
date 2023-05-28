@@ -18,52 +18,6 @@ from config import (
     logger)
 
 
-def ai(user: User, prompt):
-    openai.api_key = config["AI"]["TOKEN"]
-    max_tokens = 1000 if user.id == 467300857 else 256
-    response = openai.Completion.create(
-        model="text-davinci-003",
-        prompt=prompt,
-        temperature=0.7,
-        max_tokens=max_tokens,
-        top_p=1,
-        frequency_penalty=0,
-        presence_penalty=0
-    )
-    response["user"] = {"name": user.username,
-                        "id": user.id
-                        }
-    response["prompt"] = prompt
-    logger.info(json.dumps(response))
-
-    return response.get('choices')[0].get('text')
-
-
-def CompletionsAI(user: User, prompt):
-    max_tokens = 1000 if user.id == 467300857 else 256
-    openai.api_key = config["AI"]["TOKEN"]
-    openai.api_type = config["AI"]["TYPE"]
-    openai.api_base = config["AI"]["BASE"]
-    openai.api_version = config["AI"]["VERSION"]
-
-    response = openai.Completion.create(
-        engine="gpt-35-turbo",
-        prompt=prompt,
-        temperature=0.8,
-        max_tokens=max_tokens,
-        top_p=1,
-        frequency_penalty=0,
-        presence_penalty=0,
-        stop=None)
-    response["user"] = {"name": user.username,
-                        "id": user.id
-                        }
-    response["prompt"] = prompt
-    logger.info(response)
-
-    return response.get("choices")[0].get("text")
-
-
 async def non_text_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     """Stores the photos and asks for a location."""
     user = update.message.from_user

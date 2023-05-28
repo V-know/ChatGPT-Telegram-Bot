@@ -3,7 +3,8 @@ BOT:
 AI:
   VERSION: "2023-03-15-preview"
   TYPE: "azure"
-  BASE: "https://***.openai.azure.com/"
+  ENGINE: "your azure openai deployment name"
+  BASE: "https://docs-test-001.openai.azure.com/"
   TOKEN: "be***b63f"
 MYSQL:
   DBHOST: 127.0.0.1
