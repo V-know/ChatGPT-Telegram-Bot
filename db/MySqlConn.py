@@ -6,17 +6,8 @@
 """
 
 import pymysql
-import yaml
 from dbutils.pooled_db import PooledDB
-
-"""
-Config是一些数据库的配置文件
-"""
-
-# Load data from config.yaml file
-with open("config.yaml") as f:
-    config = yaml.load(f, Loader=yaml.FullLoader)
-    mysql = config["MYSQL"]
+from config import config
 
 
 class Mysql(object):
@@ -49,12 +40,12 @@ class Mysql(object):
                               maxusage=None,  # 一个链接最多被重复使用的次数，None表示无限制
                               setsession=["set global time_zone = '+8:00'", "set time_zone = '+8:00'"],  # 开始会话前执行的命令列表。
                               ping=0,  # ping MySQL服务端，检查是否服务可用。
-                              host=mysql["DBHOST"],
-                              port=mysql["DBPORT"],
-                              user=mysql["DBUSER"],
-                              password=mysql["DBPWD"],
-                              database=mysql["DBNAME"],
-                              charset=mysql["DBCHAR"],
+                              host=config["MYSQL"]["DBHOST"],
+                              port=config["MYSQL"]["DBPORT"],
+                              user=config["MYSQL"]["DBUSER"],
+                              password=config["MYSQL"]["DBPWD"],
+                              database=config["MYSQL"]["DBNAME"],
+                              charset=config["MYSQL"]["DBCHAR"],
                               cursorclass=pymysql.cursors.DictCursor)
         return __pool.connection()
 

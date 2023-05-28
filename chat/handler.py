@@ -13,6 +13,7 @@ from config import (
     markup,
     CHOOSING,
     rate_limit,
+    time_span,
     context_count)
 
 
@@ -34,7 +35,6 @@ async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     level = logged_in_user.get("level")
 
     # Rate limit controller
-    time_span = 3  # minutes
     chat_count = mysql.getOne(
         f"select count(*) as count from records where role='user' and created_at >=NOW() - INTERVAL {time_span} MINUTE;")
 
@@ -44,6 +44,7 @@ async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
                 f"联系 @AiMessagerBot 获取更多帮助!{emoji.emojize(':check_mark_button:')}\n" \
                 f"或稍后再试！"
         await update.message.reply_text(reply, reply_markup=markup)
+        return CHOOSING
 
     placeholder_message = await update.message.reply_text("...")
     # Init messages

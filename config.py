@@ -1,5 +1,6 @@
 from telegram import ReplyKeyboardMarkup
 import logging
+import yaml
 
 # Enable logging
 logging.basicConfig(
@@ -14,9 +15,13 @@ fh.setFormatter(formatter)
 logger.setLevel(logging.INFO)
 logger.addHandler(fh)
 
-token = {0: 256, 1: 1024, 2: 1024}
-context_count = {0: 3, 1: 5, 2: 10}
-rate_limit = {0: 5, 1: 15, 2: 300}
+# Load data from config.yaml file
+with open("config.yaml") as f:
+    config = yaml.load(f, Loader=yaml.FullLoader)
+time_span = config["TIME_SPAN"]
+token = config["MAX_TOKEN"]
+context_count = config["CONTEXT_COUNT"]
+rate_limit = config["RATE_LIMIT"]
 
 CHOOSING, TYPING_REPLY, TYPING_SYS_CONTENT = range(3)
 contact_admin = "🆘求助"
@@ -31,4 +36,3 @@ reply_keyboard = [
     [reset_context_button, statistics_button],
 ]
 markup = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
-
