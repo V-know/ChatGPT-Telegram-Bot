@@ -2,14 +2,13 @@ from telegram.ext import ContextTypes, ConversationHandler
 from telegram.constants import ParseMode
 from telegram import (
     Update,
-    ReplyKeyboardRemove,
-    User)
+    ReplyKeyboardRemove)
 
 import time
 import json
-import openai
 import html
 import traceback
+from pathlib import Path
 from typing import Dict
 
 from db.MySqlConn import config
@@ -18,23 +17,31 @@ from config import (
     logger)
 
 
+def get_project_root() -> Path:
+    return Path(__file__).resolve().parent.parent
+
+
 async def non_text_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     """Stores the photos and asks for a location."""
+    project_root = get_project_root()
     user = update.message.from_user
     if len(update.message.photo) != 0:
         await update.message.reply_text(text='暂不开放图片发送功能！\n请使用文字进行提问！')
         photo_file = await update.message.photo[-1].get_file()
         # can't get photo's name
-        await photo_file.download_to_drive(f'./data/photos/{user.name}-{time.strftime("%Y%m%d-%H%M%S")}.jpg')
+        await photo_file.download_to_drive(
+            f'{project_root}/data/photos/{user.name}-{time.strftime("%Y%m%d-%H%M%S")}.jpg')
         logger.info("Photo of %s: %s", user.first_name, 'user_photo.jpg')
     else:
         await update.message.reply_text(text='嗯，好像收到了什么奇怪的东西！\n请使用文字进行提问！')
         if update.message.document:
             file = await update.message.document.get_file()
-            await file.download_to_drive(f'./data/documents/{user.name}-{time.strftime("%Y%m%d-%H%M%S")}.jpg')
+            await file.download_to_drive(
+                f'{project_root}/data/documents/{user.name}-{time.strftime("%Y%m%d-%H%M%S")}.jpg')
         if update.message.video:
             video = await update.message.video.get_file()
-            await video.download_to_drive(f'./data/videos/{user.name}-{time.strftime("%Y%m%d-%H%M%S")}.jpg')
+            await video.download_to_drive(
+                f'{project_root}/data/videos/{user.name}-{time.strftime("%Y%m%d-%H%M%S")}.jpg')
     return TYPING_REPLY
 
 
