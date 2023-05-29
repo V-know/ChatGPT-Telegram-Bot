@@ -7,74 +7,76 @@
 [![license](https://img.shields.io/badge/License-MIT-brightgreen.svg)](LICENSE)
 [![bot](https://img.shields.io/badge/TelegramBot-@RoboAceBot-blueviolet.svg)](https://t.me/RoboAceBot)
 
-一个拥有丝滑AI体验的Telegram Bot
+English | [中文](README-zh.md)
+
+A Telegram bot with a smooth AI experience.
 
 ## ⚡Feature
 
-[✓] 同时支持Azure OpenAI和原生OpenAI接口
+[✓] Support for both Azure OpenAI and native OpenAI.
 
-[✓] 实时（流式）返回AI响应的答案，体验更快捷、更丝滑
+[✓] Real-time (streaming) response to AI, with faster and smoother experience.
 
-[✓] 预设15种Bot身份，可快速切换
+[✓] 15 preset bot identities that can be quickly switched.
 
-[✓] 支持自定义Bot身份，满足个性化需求
+[✓] Support for custom bot identities to meet personalized needs.
 
-[✓] 支持上下文件内容一键清空，随时重开会话
+[✓] Support to clear the contents of the chat with a single click, and restart the conversation at any time.
 
-[✓] Telegram Bot 原生按钮支持，直观快捷实现需要功能
+[✓]Native Telegram bot button support, making it easy and intuitive to implement required functions.
 
-[✓] 用户等级划分，不同等级享有不同单次会话Token数量、上下文数量和会话频率
+[✓] User level division, with different levels enjoying different single session token numbers, context numbers, and session frequencies.
 
-[✓] More ...
+[✓] More...
 
 ## 👨‍💻TODO
 
-[x] 允许用户在Bot中使用自己的OpenAI Key,以获得更多自由
+[x] Allow users to use their own OpenAI Key in the bot to gain more freedom.
 
-[x] 完善ErrorHandler
+[x] Improve ErrorHandler.
 
-[x] 容器化
+[x] Containerization.
 
-## 🤖快速体验
+## 🤖Quick Experience
 
 Telegram Bot: [RoboAceBot](https://t.me/RoboAceBot)
 
-## 🛠️部署
+## 🛠️Deployment
 
-### 安装依赖
+### Install Dependencies
 
 ```shell
 pip install -r requirements.txt
 ```
 
-### 添加配置
+### Add Configuration
 
-需要的所有配置都在`config.yaml`中，文件格式内容，请参考`config.yaml.example`
+All the required configurations are in `config.yaml`, please refer to `config.yaml.example` for file format and content.
 
-| Parameter           | Optional | Description                                                                                                 |
-|---------------------|----------|-------------------------------------------------------------------------------------------------------------|
-| `BOT`.`TOKEN`       | No       | 从[@botFather](https://t.me/BotFather)创建bot并获取Token                                                          |
-| `DEVELOPER_CHAT_ID` | No       | bot出错时，接收信息的TG帐号ID, ID可以从[@get_id_bot](https://t.me/get_id_bot) 获取                                          |
-| `MYSQL`             | No       | MySQL连接相关的参数                                                                                                |
-| `TIME_SPAN`         | No       | 计算rate limit所用的时间窗口大小，单位：分钟                                                                                 |
-| `RATE_LIMIT`        | No       | `key`为用户等级，`value`为TIME_SPAN时间内可以聊天的最大数量                                                                    |
-| `CONTEXT_COUNT`     | No       | `key`为用户等级，`value`为每次聊天所包含的上下文数量                                                                            |
-| `MAX_TOKEN`         | No       | `key`为用户等级, `value`为每次聊天AI返回节点的最大Token数                                                                     |
-| `AI`.`TYPE`         | Yes      | 使用的是AI类型，有`openai`和`azure`两个选项，默认为`openai`                                                                  |                           
-| `AI`.`BASE`         | Yes      | 从 Azure 门户检查资源时，可在“密钥和终结点”部分中找到此值。 或者，可以在“Azure OpenAI Studio”>“操场”>“代码视图”中找到该值, 仅当`AI`.`TYPE`为`zaure`里需要设置 |
-| `AI`.`ENGINE`       | Yes      | Azure OpenAI的Deployment名, 仅当`AI`.`TYPE`为`zaure`里需要设置                                                        |
-| `AI`.`VERSION`      | Yes      | Azure OpenAI的版本号, 仅当`AI`.`TYPE`为`zaure`里需要设置                                                                |
+| Parameter           | Optional | Description                                                                                                                                                                                                                                                 |
+|---------------------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `BOT`.`TOKEN`       | No       | Create a bot from [@botFather](https://t.me/BotFather) and get the Token.                                                                                                                                                                                   |
+| `DEVELOPER_CHAT_ID` | No       | Telegram account ID that receives messages when the bot encounters an error. You can use [@get_id_bot](https://t.me/get_id_bot) to get your ID.                                                                                                             |
+| `MYSQL`             | No       | Parameters related to MySQL connection.                                                                                                                                                                                                                     |
+| `TIME_SPAN`         | No       | The time window size used to calculate the ratelimit, in minutes.                                                                                                                                                                                           |
+| `RATE_LIMIT`        | No       | `key` is the user level, and `value` is the maximum number of chats that can be made within the TIME_SPAN time period.                                                                                                                                      |
+| `CONTEXT_COUNT`     | No       | `key` is the user level, and `value` is the number of contexts included in each chat.                                                                                                                                                                       |
+| `MAX_TOKEN`         | No       | `key` is the user level, and `value` is the maximum number of tokens returned by the AI per chat.                                                                                                                                                           |
+| `AI`.`TYPE`         | Yes      | The type of AI used, with two options: `openai` and `azure`. The default is `openai`.                                                                                                                                                                       |                           
+| `AI`.`BASE`         | Yes      | When checking resources from the Azure portal, this value can be found in the "Keys and Endpoints" section. Alternatively, this value can be found in "Azure OpenAI Studio" > "Playground" > "Code View". Only needs to be set when `AI`.`TYPE` is `azure`. |
+| `AI`.`ENGINE`       | Yes      | The deployment name of Azure OpenAI, only needs to be set when `AI`.`TYPE` is `azure`.                                                                                                                                                                      |
+| `AI`.`VERSION`      | Yes      | The version number of Azure OpenAI, only needs to be set when `AI`.`TYPE`is `azure`.                                                                                                                                                                        |
 
-如果你使用的是Azure的OpenAI，你可在这个链接里获取所需的所有内容：
+If you are using Azure's OpenAI, you can obtain all the required content at this link:
 
-[开始通过 Azure OpenAI 服务使用 ChatGPT 和 GPT-4](https://learn.microsoft.com/zh-cn/azure/cognitive-services/openai/chatgpt-quickstart?pivots=programming-language-python&tabs=command-line)
+[Get started using ChatGPT and GPT-4 with Azure OpenAI Services](https://learn.microsoft.com/zh-cn/azure/cognitive-services/openai/chatgpt-quickstart?pivots=programming-language-python&tabs=command-line)
 
-## 🚀启动
+## 🚀Start
 
 ```shell
 python main.py | tee >> debug.log
 ```
 
-## ❤️写在最后
+## ❤️In Conclusion
 
-希望本项目在给你丝滑AI体验的同时，能帮助更多人接触并开始创建和使用自己的Telegram Bot
+I hope this project can provide you with a smooth AI experience and help more people create and use their own Telegram bots.
