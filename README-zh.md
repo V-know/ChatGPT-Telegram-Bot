@@ -49,6 +49,22 @@ Telegram Bot: [RoboAceBot](https://t.me/RoboAceBot)
 pip install -r requirements.txt
 ```
 
+### 配置数据库
+
+#### 安装数据库
+
+你可以使用下面的命令快速创建本地MySQL数据库
+
+```shell
+dcker-compose up -d -f docker-dompose.yaml
+```
+
+#### 初始化数据库
+
+```shell
+mysql -u username -p -e "source data/database.sql"
+```
+
 ### 添加配置
 
 需要的所有配置都在`config.yaml`中，文件格式内容，请参考`config.yaml.example`

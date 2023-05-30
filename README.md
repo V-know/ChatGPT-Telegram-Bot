@@ -49,6 +49,22 @@ Telegram Bot: [RoboAceBot](https://t.me/RoboAceBot)
 pip install -r requirements.txt
 ```
 
+### Configure Database
+
+#### Install Database
+
+You can quickly create a local MySQL database using:
+
+```shell
+docker-compose up -d -f docker-compose.yaml
+```
+
+#### Initialize Database
+
+```shell
+mysql -u username -p -e "source data/database.sql"
+```
+
 ### Add Configuration
 
 All the required configurations are in `config.yaml`, please refer to `config.yaml.example` for file format and content.
