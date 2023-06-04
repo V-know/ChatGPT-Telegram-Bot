@@ -7,6 +7,8 @@ from telegram import (
 import time
 import json
 import html
+import openai
+import asyncio
 import traceback
 from pathlib import Path
 from typing import Dict
@@ -74,7 +76,7 @@ async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE) -> N
     tb_string = "".join(tb_list)
 
     # Build the message with some markup and additional information about what happened.
-    # You might need to add some logic to deal with messages longer than the 4096 character limit.
+    # You might need to add some logic to deal with messages longer than the 4096-character limit.
     update_str = update.to_dict() if isinstance(update, Update) else str(update)
     message = (
         f"An exception was raised while handling an update\n"
@@ -87,6 +89,19 @@ async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE) -> N
     )
 
     # Finally, send the message
+    error_reply = ""
+    if type(context.error) == openai.error.InvalidRequestError:
+        error_reply = "The response was filtered due to the prompt triggering Azure OpenAI’s content management " \
+                      "policy. Please modify your prompt and retry. To learn more about our content filtering " \
+                      "policies please read our documentation: https://go.microsoft.com/fwlink/?linkid=2198766"
+    elif type(context.error) in [openai.error.Timeout, asyncio.exceptions.TimeoutError]:
+        error_reply = "请求超时，请重新提问！"
+
+    if error_reply:
+        await update.message.reply_text(error_reply, parse_mode="Markdown", disable_web_page_preview=True)
+        await context.bot.send_message(
+            chat_id=config["DEVELOPER_CHAT_ID"], text=error_reply, parse_mode=ParseMode.HTML
+        )
     await context.bot.send_message(
         chat_id=config["DEVELOPER_CHAT_ID"], text=message, parse_mode=ParseMode.HTML
     )
