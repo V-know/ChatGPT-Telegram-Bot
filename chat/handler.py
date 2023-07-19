@@ -96,7 +96,7 @@ async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             reply = f"{answer}\n\n答案长度超过了您当前最大{token[level]}个Token的限制\n请联系 @AiMessagerBot 获取更多帮助!" \
                     f"{emoji.emojize(':check_mark_button:')}"
             await context.bot.edit_message_text(reply, chat_id=placeholder_message.chat_id,
-                                                message_id=placeholder_message.message_id)
+                                                message_id=placeholder_message.message_id, reply_markup=reply_markup)
     return CHOOSING
 
 

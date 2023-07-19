@@ -37,12 +37,17 @@ from config import (
     switch_role_button,
     CHOOSING, TYPING_REPLY, TYPING_SYS_CONTENT
 )
+from buttons.inline import (
+    show_chat_modes_handle,
+    show_chat_modes_callback_handle,
+    set_chat_mode_handle,
+    cancel_chat_mode_handle
+)
 from buttons.help import helper
 from buttons.start import start
 from buttons.role import set_system_content, reset_context, set_system_content_handler
 from buttons.statistics import statistics
 from chat.handler import answer_handler
-from buttons.inline import show_chat_modes_handle, show_chat_modes_callback_handle, set_chat_mode_handle
 from buttons.others import non_text_handler, done, error_handler
 
 
@@ -89,6 +94,7 @@ def main() -> None:
 
     application.add_handler(CallbackQueryHandler(show_chat_modes_callback_handle, pattern="^show_chat_modes"))
     application.add_handler(CallbackQueryHandler(set_chat_mode_handle, pattern="^set_chat_mode"))
+    application.add_handler(CallbackQueryHandler(cancel_chat_mode_handle, pattern="^cancel"))
     # ...and the error handler
     application.add_error_handler(error_handler)
 
