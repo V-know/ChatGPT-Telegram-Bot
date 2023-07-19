@@ -12,8 +12,8 @@ from db.MySqlConn import Mysql
 
 
 async def show_chat_modes_handle(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    text, reply_markup = get_chat_mode_menu(0)
-    await update.message.reply_text(text, reply_markup=reply_markup, parse_mode=ParseMode.HTML)
+    text, inline_reply_markup = get_chat_mode_menu(0)
+    await update.message.reply_text(text, reply_markup=inline_reply_markup, parse_mode=ParseMode.HTML)
 
 
 with open("chat_modes.yml") as f:
@@ -52,9 +52,9 @@ def get_chat_mode_menu(page_index: int):
                 InlineKeyboardButton("»", callback_data=f"show_chat_modes|{page_index + 1}")
             ])
 
-    reply_markup = InlineKeyboardMarkup(keyboard)
+    inline_reply_markup = InlineKeyboardMarkup(keyboard)
 
-    return text, reply_markup
+    return text, inline_reply_markup
 
 
 async def show_chat_modes_callback_handle(update: Update, context: ContextTypes.DEFAULT_TYPE):

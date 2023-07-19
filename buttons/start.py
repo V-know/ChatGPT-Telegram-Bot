@@ -3,7 +3,7 @@ from telegram.ext import ContextTypes
 import time
 
 from config import (
-    markup,
+    reply_markup,
     CHOOSING)
 from db.MySqlConn import Mysql
 
@@ -42,6 +42,6 @@ You can send them this link: https://t.me/RoboAceBot
 快把我分享给你的朋友们吧！😍
 你可以将此链接发送给他们：https://t.me/RoboAceBot
         """,
-        reply_markup=markup, disable_web_page_preview=True
+        reply_markup=reply_markup, disable_web_page_preview=True
     )
     return CHOOSING

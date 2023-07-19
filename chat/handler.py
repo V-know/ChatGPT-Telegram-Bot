@@ -10,7 +10,7 @@ from db.MySqlConn import Mysql
 
 from config import (
     token,
-    markup,
+    reply_markup,
     CHOOSING,
     rate_limit,
     time_span,
@@ -43,7 +43,7 @@ async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
                 f"您每 {time_span} 分钟最多可向我提问 {rate_limit[level]} 个问题{emoji.emojize(':weary_face:')}\n" \
                 f"联系 @AiMessagerBot 获取更多帮助!{emoji.emojize(':check_mark_button:')}\n" \
                 f"或稍后再试！"
-        await update.message.reply_text(reply, reply_markup=markup)
+        await update.message.reply_text(reply, reply_markup=reply_markup)
         return CHOOSING
 
     placeholder_message = await update.message.reply_text("...")
