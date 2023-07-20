@@ -1,11 +1,11 @@
 from telegram import Update
 from telegram.ext import ContextTypes
 from telegram.error import BadRequest
+import asyncio
 
 from chat.ai import ChatCompletionsAI
 import time
 import emoji
-import re
 from db.MySqlConn import Mysql
 
 from config import (
@@ -56,31 +56,39 @@ async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         if records:
             for record in records:
                 messages.append({"role": record["role"], "content": record["content"]})
-                prompt_tokens += count_tokens(record["content"])
+                prompt_tokens += len(record["content"])
             messages.reverse()
         messages.insert(0, {"role": "system", "content": logged_in_user["system_content"]})
-        prompt_tokens += count_tokens(logged_in_user["system_content"])
+        prompt_tokens += len(logged_in_user["system_content"])
         messages.append({"role": "user", "content": prompt})
-        prompt_tokens += count_tokens(prompt)
+        prompt_tokens += len(prompt)
 
         replies = ChatCompletionsAI(logged_in_user, messages)
         prev_answer = ""
+        index = 0
         async for reply in replies:
+            index += 1
             answer, status = reply
-            if abs(len(answer) - len(prev_answer)) < 15 and status != "completed":
+            if abs(len(answer) - len(prev_answer)) < 30 and status is None:
                 continue
             prev_answer = answer
             try:
+                if status == "length":
+                    answer = f"{answer}\n\n答案长度超过了您当前单条答案最大{token[level]}个Token的限制\n请联系 @AiMessagerBot 获取更多帮助!" \
+                             f"{emoji.emojize(':check_mark_button:')}"
+                elif status == "content_filter":
+                    answer = f"{answer}\n\n作为一名AI助手，请向我提问合适的问题！\n请联系 @AiMessagerBot 获取更多帮助!" \
+                             f"{emoji.emojize(':check_mark_button:')}"
                 await context.bot.edit_message_text(answer, chat_id=placeholder_message.chat_id,
-                                                    message_id=placeholder_message.message_id, parse_mode=parse_mode)
+                                                    message_id=placeholder_message.message_id,
+                                                    parse_mode=parse_mode)
             except BadRequest as e:
                 if str(e).startswith("Message is not modified"):
                     continue
                 else:
                     await context.bot.edit_message_text(answer, chat_id=placeholder_message.chat_id,
                                                         message_id=placeholder_message.message_id)
-
-            # await asyncio.sleep(0.01)  # wait a bit to avoid flooding
+            await asyncio.sleep(0.01)  # wait a bit to avoid flooding
 
         date_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         sql = "insert into records (user_id, role, content, created_at, tokens) " \
@@ -88,24 +96,8 @@ async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         value = [user_id, "user", prompt, date_time, prompt_tokens]
         mysql.insertOne(sql, value)
 
-        date_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-        value = [user_id, 'assistant', answer, date_time, count_tokens(answer)]
+        # date_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        value = [user_id, 'assistant', answer, date_time, len(answer)]
         mysql.insertOne(sql, value)
         mysql.end()
-        if count_tokens(answer) >= token[level]:
-            reply = f"{answer}\n\n答案长度超过了您当前最大{token[level]}个Token的限制\n请联系 @AiMessagerBot 获取更多帮助!" \
-                    f"{emoji.emojize(':check_mark_button:')}"
-            await context.bot.edit_message_text(reply, chat_id=placeholder_message.chat_id,
-                                                message_id=placeholder_message.message_id, reply_markup=reply_markup)
     return CHOOSING
-
-
-def count_tokens(text):
-    # 使用正则表达式匹配中文汉字、英文单词和标点符号
-    pattern = r"[\u4e00-\u9fa5]|[a-zA-Z]+|[^\s\w]"
-    tokens = re.findall(pattern, text)
-
-    # 计算token数量
-    token_count = len(tokens)
-
-    return token_count

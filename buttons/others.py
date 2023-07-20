@@ -100,7 +100,7 @@ async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE) -> N
     if error_reply:
         await update.message.reply_text(error_reply, parse_mode="Markdown", disable_web_page_preview=True)
     else:
-        print(config["DEVELOPER_CHAT_ID"])
+        await update.message.reply_text("哎呀，请求太火爆了，请休息一下，等会儿再试试吧!", parse_mode="Markdown", disable_web_page_preview=True)
         await context.bot.send_message(
             chat_id=config["DEVELOPER_CHAT_ID"], text=message
         )
