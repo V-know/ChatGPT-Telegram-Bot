@@ -35,4 +35,8 @@ reply_keyboard = [
     [set_sys_content_button, switch_role_button],
     [reset_context_button, statistics_button],
 ]
-markup = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
+reply_markup = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
+
+cancel_button = "🚫取消"
+cancel_keyboard = [[cancel_button]]
+cancel_markup = ReplyKeyboardMarkup(cancel_keyboard, one_time_keyboard=True)

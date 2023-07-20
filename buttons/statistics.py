@@ -2,7 +2,7 @@ from telegram import Update
 from telegram.ext import ContextTypes
 from db.MySqlConn import Mysql
 from config import (
-    markup,
+    reply_markup,
     CHOOSING)
 
 
@@ -32,6 +32,6 @@ Hej  {user.mention_html()}!
 
 祝您生活愉快！🎉
         """,
-        reply_markup=markup, disable_web_page_preview=True
+        reply_markup=reply_markup, disable_web_page_preview=True
     )
     return CHOOSING

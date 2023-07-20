@@ -4,7 +4,8 @@ import time
 from db.MySqlConn import Mysql
 
 from config import (
-    markup,
+    reply_markup,
+    cancel_markup,
     context_count,
     CHOOSING,
     TYPING_SYS_CONTENT)
@@ -27,7 +28,7 @@ async def set_system_content(update: Update, context: ContextTypes.DEFAULT_TYPE)
 您可以参考： [🧠ChatGPT 中文调教指南]https://github.com/PlexPt/awesome-chatgpt-prompts-zh
 
 如需取消重置，请直接回复：`取消` 或 `取消重置` ‍🤝‍
-    """, parse_mode='Markdown', disable_web_page_preview=True)
+    """, parse_mode='Markdown', disable_web_page_preview=True, reply_markup=cancel_markup)
     return TYPING_SYS_CONTENT
 
 
@@ -48,9 +49,9 @@ async def reset_context(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
 
 async def set_system_content_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     system_content = update.message.text.strip()
-    if system_content in ("取消", "取消重置"):
+    if system_content in ("取消", "取消重置", "🚫取消"):
         await update.message.reply_text(text="已取消。\n您可以继续向我提问了",
-                                        reply_markup=markup, parse_mode='Markdown')
+                                        reply_markup=reply_markup, parse_mode='Markdown')
     else:
         user_id = update.effective_user.id
         mysql = Mysql()
@@ -62,5 +63,5 @@ async def set_system_content_handler(update: Update, context: ContextTypes.DEFAU
 新的AI助手身份已确认。
 我将以新身份为背景来为您解答问题。
 您现在可以开始提问了！
-        """, reply_markup=markup, parse_mode='Markdown')
+        """, reply_markup=reply_markup, parse_mode='Markdown')
     return CHOOSING

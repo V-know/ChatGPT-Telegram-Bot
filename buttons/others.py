@@ -1,5 +1,4 @@
 from telegram.ext import ContextTypes, ConversationHandler
-from telegram.constants import ParseMode
 from telegram import (
     Update,
     ReplyKeyboardRemove)
@@ -101,6 +100,7 @@ async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE) -> N
     if error_reply:
         await update.message.reply_text(error_reply, parse_mode="Markdown", disable_web_page_preview=True)
     else:
+        print(config["DEVELOPER_CHAT_ID"])
         await context.bot.send_message(
-            chat_id=config["DEVELOPER_CHAT_ID"], text=message, parse_mode=ParseMode.HTML
+            chat_id=config["DEVELOPER_CHAT_ID"], text=message
         )
