@@ -2,6 +2,7 @@ from telegram import Update
 from telegram.ext import ContextTypes
 from telegram.error import BadRequest
 import asyncio
+import re
 
 from chat.ai import ChatCompletionsAI
 import time
@@ -56,12 +57,12 @@ async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         if records:
             for record in records:
                 messages.append({"role": record["role"], "content": record["content"]})
-                prompt_tokens += len(record["content"])
+                prompt_tokens += count_tokens(record["content"])
             messages.reverse()
         messages.insert(0, {"role": "system", "content": logged_in_user["system_content"]})
-        prompt_tokens += len(logged_in_user["system_content"])
+        prompt_tokens += count_tokens(logged_in_user["system_content"])
         messages.append({"role": "user", "content": prompt})
-        prompt_tokens += len(prompt)
+        prompt_tokens += count_tokens(prompt)
 
         replies = ChatCompletionsAI(logged_in_user, messages)
         prev_answer = ""
@@ -69,7 +70,7 @@ async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         async for reply in replies:
             index += 1
             answer, status = reply
-            if abs(len(answer) - len(prev_answer)) < 30 and status is None:
+            if abs(count_tokens(answer) - count_tokens(prev_answer)) < 30 and status is None:
                 continue
             prev_answer = answer
             try:
@@ -97,7 +98,18 @@ async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         mysql.insertOne(sql, value)
 
         # date_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-        value = [user_id, 'assistant', answer, date_time, len(answer)]
+        value = [user_id, 'assistant', answer, date_time, count_tokens(answer)]
         mysql.insertOne(sql, value)
         mysql.end()
     return CHOOSING
+
+
+def count_tokens(text):
+    # 使用正则表达式匹配中文汉字、英文单词和标点符号
+    pattern = r"[\u4e00-\u9fa5]|[a-zA-Z]+|[^\s\w]"
+    tokens = re.findall(pattern, text)
+
+    # 计算token数量
+    token_count = len(tokens)
+
+    return token_count
