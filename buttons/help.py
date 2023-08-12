@@ -4,7 +4,6 @@ from config import CHOOSING
 
 
 async def helper(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    print("Start!")
     await update.message.reply_text("""
 如遇功能异常，请输入： /start 或重启 Bot 进行重置
 

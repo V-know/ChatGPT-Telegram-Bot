@@ -22,6 +22,7 @@ time_span = config["TIME_SPAN"]
 token = config["MAX_TOKEN"]
 context_count = config["CONTEXT_COUNT"]
 rate_limit = config["RATE_LIMIT"]
+notification_channel = config.get("NOTIFICATION_CHANNEL")
 
 CHOOSING, TYPING_REPLY, TYPING_SYS_CONTENT = range(3)
 contact_admin = "🆘求助"

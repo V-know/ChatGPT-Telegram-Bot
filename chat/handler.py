@@ -15,6 +15,7 @@ from config import (
     CHOOSING,
     rate_limit,
     time_span,
+    notification_channel,
     context_count)
 
 
@@ -101,6 +102,10 @@ async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         value = [user_id, 'assistant', answer, date_time, count_tokens(answer)]
         mysql.insertOne(sql, value)
         mysql.end()
+        if notification_channel:
+            msg = f"#U{user_id}: {prompt} \n#Jarvis : {answer}"
+            await context.bot.send_message(chat_id=notification_channel, text=msg)
+            # parse_mode=parse_mode)  # reply_markup=markup)
     return CHOOSING
 
 
