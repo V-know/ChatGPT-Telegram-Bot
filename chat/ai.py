@@ -1,5 +1,6 @@
 from config import token
 import openai
+from litellm import acompletion
 from db.MySqlConn import config
 
 OPENAI_CHAT_COMPLETION_OPTIONS = {
@@ -26,7 +27,7 @@ async def ChatCompletionsAI(logged_in_user, messages) -> (str, str):
     else:
         OPENAI_CHAT_COMPLETION_OPTIONS["model"] = "gpt-3.5-turbo"
 
-    response = await openai.ChatCompletion.acreate(
+    response = await acompletion(
         messages=messages,
         max_tokens=token[level],
         **OPENAI_CHAT_COMPLETION_OPTIONS)
