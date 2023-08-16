@@ -27,3 +27,4 @@ tqdm==4.64.1
 urllib3==1.26.14
 wakatime==13.1.0
 yarl==1.8.2
+litellm==0.1.400
