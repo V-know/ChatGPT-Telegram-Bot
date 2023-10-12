@@ -56,7 +56,7 @@ def get_chat_mode_menu(page_index: int):
                 InlineKeyboardButton("«", callback_data=f"show_chat_modes|{page_index - 1}"),
                 InlineKeyboardButton("»", callback_data=f"show_chat_modes|{page_index + 1}")
             ])
-    keyboard.append([InlineKeyboardButton("🚫取消切换", callback_data="cancel")])
+    keyboard.append([InlineKeyboardButton("🚫Cancelled", callback_data="cancel")])
 
     inline_reply_markup = InlineKeyboardMarkup(keyboard)
 
@@ -102,8 +102,12 @@ async def set_chat_mode_handle(update: Update, context: ContextTypes.DEFAULT_TYP
 
 
 async def cancel_chat_mode_handle(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.effective_user.id
+    mysql = Mysql()
+    user = mysql.getOne("select * from users where user_id=%s", user_id)
+    mysql.end()
     await context.bot.send_message(
         update.callback_query.message.chat.id,
-        text="已取消。\n您可以继续向我提问了",
+        text="已取消。\n您可以继续向我提问了" if user["lang"] == "cn" else "Canceld. \nYou can continue to ask me questions now.",
         parse_mode=ParseMode.MARKDOWN, reply_markup=reply_markup
     )

@@ -23,7 +23,7 @@ async def statistics(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
     await update.message.reply_html(
         rf"""
-Hej  {user.mention_html()}!
+Hi  {user.mention_html()}!
 
 您当前Token使用情况如下：
 查询：{prompt_tokens["tokens"]} Tokens
