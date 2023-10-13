@@ -39,6 +39,6 @@ reply_keyboard = [
 ]
 reply_markup = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
 
-cancel_button = "🚫取消"
+cancel_button = "🚫Cancel"
 cancel_keyboard = [[cancel_button]]
 cancel_markup = ReplyKeyboardMarkup(cancel_keyboard, one_time_keyboard=True)

@@ -108,6 +108,6 @@ async def cancel_chat_mode_handle(update: Update, context: ContextTypes.DEFAULT_
     mysql.end()
     await context.bot.send_message(
         update.callback_query.message.chat.id,
-        text="已取消。\n您可以继续向我提问了" if user["lang"] == "cn" else "Canceld. \nYou can continue to ask me questions now.",
+        text="已取消。\n您可以继续向我提问了" if user["lang"] == "cn" else "Cancelled. \nYou can continue to ask me questions now.",
         parse_mode=ParseMode.MARKDOWN, reply_markup=reply_markup
     )
