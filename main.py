@@ -35,14 +35,16 @@ from config import (
     reset_context_button,
     statistics_button,
     switch_role_button,
+    language_button,
     CHOOSING, TYPING_REPLY, TYPING_SYS_CONTENT
 )
 from buttons.inline import (
     show_chat_modes_handle,
     show_chat_modes_callback_handle,
     set_chat_mode_handle,
-    cancel_chat_mode_handle
+    cancel_chat_mode_handle,
 )
+from buttons.language import show_languages, show_languages_callback_handle
 from buttons.help import helper
 from buttons.start import start
 from buttons.role import set_system_content, reset_context, set_system_content_handler
@@ -65,6 +67,7 @@ def main() -> None:
             CHOOSING: [
                 MessageHandler(filters.Regex(f'^{contact_admin}$'), helper, ),
                 MessageHandler(filters.Regex(f'^({start_button}|/start|Start)$'), start, ),
+                MessageHandler(filters.Regex(f'^{language_button}$'), show_languages, ),
                 MessageHandler(filters.Regex(f"^{reset_context_button}$"), reset_context),
                 MessageHandler(filters.Regex(f"^{set_sys_content_button}$"), set_system_content),
                 MessageHandler(filters.Regex(f"^{statistics_button}$"), statistics),
@@ -75,6 +78,7 @@ def main() -> None:
             TYPING_REPLY: [
                 MessageHandler(filters.Regex(f'^{contact_admin}$'), helper, ),
                 MessageHandler(filters.Regex(f'^({start_button}|/start|Start)$'), start, ),
+                MessageHandler(filters.Regex(f'^{language_button}$'), show_languages, ),
                 MessageHandler(filters.Regex(f"^{reset_context_button}$"), reset_context),
                 MessageHandler(filters.Regex(f"^{set_sys_content_button}$"), set_system_content),
                 MessageHandler(filters.Regex(f"^{statistics_button}$"), statistics),
@@ -95,6 +99,7 @@ def main() -> None:
     application.add_handler(CallbackQueryHandler(show_chat_modes_callback_handle, pattern="^show_chat_modes"))
     application.add_handler(CallbackQueryHandler(set_chat_mode_handle, pattern="^set_chat_mode"))
     application.add_handler(CallbackQueryHandler(cancel_chat_mode_handle, pattern="^cancel"))
+    application.add_handler(CallbackQueryHandler(show_languages_callback_handle, pattern="^lang"))
     # ...and the error handler
     application.add_error_handler(error_handler)
 

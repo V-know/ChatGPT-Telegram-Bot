@@ -31,8 +31,9 @@ set_sys_content_button = "🆔Customize Role"
 reset_context_button = "🔃Restart Session"
 statistics_button = "📈Statistics"
 switch_role_button = "🙋Switch Roles"
+language_button = "🔤Language"
 reply_keyboard = [
-    [contact_admin, start_button],
+    [language_button, contact_admin, start_button],
     [set_sys_content_button, switch_role_button],
     [reset_context_button, statistics_button],
 ]
