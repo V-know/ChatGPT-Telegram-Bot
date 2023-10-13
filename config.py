@@ -25,12 +25,12 @@ rate_limit = config["RATE_LIMIT"]
 notification_channel = config.get("NOTIFICATION_CHANNEL")
 
 CHOOSING, TYPING_REPLY, TYPING_SYS_CONTENT = range(3)
-contact_admin = "🆘求助"
+contact_admin = "🆘Help"
 start_button = "🚀Start"
-set_sys_content_button = "🆔自定义角色"
-reset_context_button = "🔃重开会话"
-statistics_button = "📈用量查询"
-switch_role_button = "🙋多角色切换"
+set_sys_content_button = "🆔Customize Role"
+reset_context_button = "🔃Restart Session"
+statistics_button = "📈Statistics"
+switch_role_button = "🙋Switch Roles"
 reply_keyboard = [
     [contact_admin, start_button],
     [set_sys_content_button, switch_role_button],
