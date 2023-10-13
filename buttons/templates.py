@@ -58,3 +58,25 @@ You can start asking questions now!
 我将以新身份为背景来为您解答问题。
 您现在可以开始提问了！
 """}
+
+statistics_response = {"en": Template("""
+Hi $user!
+
+Your current Token usage is as follows:
+
+Query: $prompt_tokens Tokens
+Answer: $completion_tokens Tokens
+Total: $total_tokens Tokens
+
+Have a nice day!🎉
+"""), "cn":Template("""
+Hi  $user!
+
+您当前Token使用情况如下：
+
+查询：$prompt_tokens Tokens
+答案：$completion_tokens Tokens
+总共：$total_tokens Tokens
+
+祝您生活愉快！🎉
+""")}

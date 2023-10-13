@@ -1,5 +1,7 @@
 from telegram import Update
 from telegram.ext import ContextTypes
+
+from buttons.templates import statistics_response
 from db.MySqlConn import Mysql
 from config import (
     reply_markup,
@@ -16,22 +18,20 @@ async def statistics(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     completion_tokens = mysql.getMany(
         f"select sum(tokens) as tokens from records where user_id={user_id} and role='assistant'", 1)[0]
 
+    user_info = mysql.getOne("select * from users where user_id=%s", user_id)
+    mysql.end()
+
     if not prompt_tokens["tokens"]:
         prompt_tokens["tokens"] = 0
     if not completion_tokens["tokens"]:
         completion_tokens["tokens"] = 0
 
     await update.message.reply_html(
-        rf"""
-Hi  {user.mention_html()}!
-
-您当前Token使用情况如下：
-查询：{prompt_tokens["tokens"]} Tokens
-答案：{completion_tokens["tokens"]} Tokens
-总共：{prompt_tokens["tokens"] + completion_tokens["tokens"]} Tokens
-
-祝您生活愉快！🎉
-        """,
+        statistics_response[user_info["lang"]]
+        .safe_substitute(user=user.mention_html(),
+                         prompt_tokens=prompt_tokens["tokens"],
+                         completion_tokens=completion_tokens["tokens"],
+                         totla_takens=prompt_tokens["tokens"] + completion_tokens["tokens"]),
         reply_markup=reply_markup, disable_web_page_preview=True
     )
     return CHOOSING
