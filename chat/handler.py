@@ -7,8 +7,9 @@ import re
 from chat.ai import ChatCompletionsAI
 import time
 import emoji
-from db.MySqlConn import Mysql
 
+from db.MySqlConn import Mysql
+from buttons.templates import token_limit
 from config import (
     token,
     reply_markup,
@@ -76,10 +77,9 @@ async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             prev_answer = answer
             try:
                 if status == "length":
-                    answer = f"{answer}\n\n答案长度超过了您当前单条答案最大{token[level]}个Token的限制\n请联系 @AiMessagerBot 获取更多帮助!" \
-                             f"{emoji.emojize(':check_mark_button:')}"
+                    answer = token_limit[user_checkin["lang"]].safe_substitute(answer=answer, max_token=token[level])
                 elif status == "content_filter":
-                    answer = f"{answer}\n\n作为一名AI助手，请向我提问合适的问题！\n请联系 @AiMessagerBot 获取更多帮助!" \
+                    answer = f"{answer}\n\nAs an AI assistant, please ask me appropriate questions!！\nPlease contact @AiMessagerBot for more help!" \
                              f"{emoji.emojize(':check_mark_button:')}"
                 await context.bot.edit_message_text(answer, chat_id=placeholder_message.chat_id,
                                                     message_id=placeholder_message.message_id,

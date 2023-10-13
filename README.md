@@ -27,6 +27,8 @@ A Telegram bot with a smooth AI experience.
 
 [✓] User level division, with different levels enjoying different single session token numbers, context numbers, and session frequencies.
 
+[✓] Support English and Chinese on UI
+
 [✓] More...
 
 ## 👨‍💻TODO
@@ -62,7 +64,7 @@ docker-compose up -d -f docker-compose.yaml
 #### Initialize Database
 
 ```shell
-mysql -u username -p -e "source data/database.sql"
+mysql -u username -p -e "source db/database.sql"
 ```
 
 ### Add Configuration

@@ -27,6 +27,8 @@
 
 [✓] 用户等级划分，不同等级享有不同单次会话Token数量、上下文数量和会话频率
 
+[✓] 支持中/英双语切换
+
 [✓] More ...
 
 ## 👨‍💻TODO
@@ -62,7 +64,7 @@ dcker-compose up -d -f docker-dompose.yaml
 #### 初始化数据库
 
 ```shell
-mysql -u username -p -e "source data/database.sql"
+mysql -u username -p -e "source db/database.sql"
 ```
 
 ### 添加配置
