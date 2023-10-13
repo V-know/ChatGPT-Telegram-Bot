@@ -31,7 +31,7 @@ async def statistics(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         .safe_substitute(user=user.mention_html(),
                          prompt_tokens=prompt_tokens["tokens"],
                          completion_tokens=completion_tokens["tokens"],
-                         totla_takens=prompt_tokens["tokens"] + completion_tokens["tokens"]),
+                         total_tokens=prompt_tokens["tokens"] + completion_tokens["tokens"]),
         reply_markup=reply_markup, disable_web_page_preview=True
     )
     return CHOOSING
