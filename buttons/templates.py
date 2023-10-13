@@ -69,7 +69,7 @@ Answer: $completion_tokens Tokens
 Total: $total_tokens Tokens
 
 Have a nice day!🎉
-"""), "cn":Template("""
+"""), "cn": Template("""
 Hi  $user!
 
 您当前Token使用情况如下：
@@ -79,4 +79,18 @@ Hi  $user!
 总共：$total_tokens Tokens
 
 祝您生活愉快！🎉
+""")}
+
+token_limit = {
+    "en": Template("""
+$answer
+
+The length of the answer has exceeded your current maximum limit of $max_token tokens per answer.
+Please contact @AiMessagerBot for more help!✅
+"""),
+    "cn": Template("""
+$answer
+
+答案长度超过了您当前单条答案最大 $max_token 个Token的限制
+请联系 @AiMessagerBot 获取更多帮助! ✅" 
 """)}
