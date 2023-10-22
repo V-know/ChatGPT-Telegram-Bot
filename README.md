@@ -58,7 +58,7 @@ pip install -r requirements.txt
 You can quickly create a local MySQL database using:
 
 ```shell
-docker-compose up -d -f docker-compose.yaml
+docker-compose up -d -f db/docker-compose.yaml
 ```
 
 #### Initialize Database

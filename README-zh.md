@@ -58,7 +58,7 @@ pip install -r requirements.txt
 你可以使用下面的命令快速创建本地MySQL数据库
 
 ```shell
-dcker-compose up -d -f docker-dompose.yaml
+dcker-compose up -d -f db/docker-dompose.yaml
 ```
 
 #### 初始化数据库
