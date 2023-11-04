@@ -64,7 +64,7 @@ docker-compose up -d -f db/docker-compose.yaml
 #### Initialize Database
 
 ```shell
-mysql -u username -p -e "source db/database.sql"
+mysql -uusername -p -e "source db/database.sql"
 ```
 
 ### Add Configuration
