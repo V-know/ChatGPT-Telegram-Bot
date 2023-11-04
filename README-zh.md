@@ -64,7 +64,7 @@ dcker-compose up -d -f db/docker-dompose.yaml
 #### 初始化数据库
 
 ```shell
-mysql -u username -p -e "source db/database.sql"
+mysql -uusername -p -e "source db/database.sql"
 ```
 
 ### 添加配置

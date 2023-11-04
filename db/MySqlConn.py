@@ -38,7 +38,7 @@ class Mysql(object):
                               # 链接池中最多共享的链接数量，0和None表示全部共享。PS: 无用，因为pymysql和MySQLdb等模块的 threadsafety都为1，所有值无论设置为多少，_maxcached永远为0，所以永远是所有链接都共享。
                               blocking=True,  # 连接池中如果没有可用连接后，是否阻塞等待。True，等待；False，不等待然后报错
                               maxusage=None,  # 一个链接最多被重复使用的次数，None表示无限制
-                              setsession=["set global time_zone = '+8:00'", "set time_zone = '+8:00'"],  # 开始会话前执行的命令列表。
+                              # setsession=["set global time_zone = '+8:00'", "set time_zone = '+8:00'"],  # You don't need this line if your db's timezone is correct.开始会话前执行的命令列表。
                               ping=0,  # ping MySQL服务端，检查是否服务可用。
                               host=config["MYSQL"]["DBHOST"],
                               port=config["MYSQL"]["DBPORT"],
