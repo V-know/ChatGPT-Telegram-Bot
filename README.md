@@ -31,6 +31,10 @@ A Telegram bot with a smooth AI experience.
 
 [✓] More...
 
+<p align="center">
+  <img src="https://media.giphy.com/media/gqKOf9LOL6xYK1Bmbv/giphy.gif" />
+</p> 
+
 ## 👨‍💻TODO
 
 [x] Allow users to use their own OpenAI Key in the bot to gain more freedom.

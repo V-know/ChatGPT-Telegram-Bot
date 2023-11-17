@@ -31,6 +31,10 @@
 
 [✓] More ...
 
+<p align="center">
+  <img src="https://media.giphy.com/media/gqKOf9LOL6xYK1Bmbv/giphy.gif" />
+</p> 
+
 ## 👨‍💻TODO
 
 [x] 允许用户在Bot中使用自己的OpenAI Key,以获得更多自由
