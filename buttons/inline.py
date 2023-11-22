@@ -14,10 +14,6 @@ from config import reply_markup
 
 async def show_chat_modes_handle(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text, inline_reply_markup = get_chat_mode_menu(0)
-    # placeholder_message = await update.message.reply_text("...", reply_markup=ReplyKeyboardRemove())
-    #
-    # await context.bot.deleteMessage(chat_id=placeholder_message.chat_id,
-    #                                 message_id=placeholder_message.message_id)
     await update.message.reply_text(text, reply_markup=inline_reply_markup, parse_mode=ParseMode.HTML)
 
 
@@ -71,9 +67,9 @@ async def show_chat_modes_callback_handle(update: Update, context: ContextTypes.
     if page_index < 0:
         return
 
-    text, reply_markup = get_chat_mode_menu(page_index)
+    text, markup = get_chat_mode_menu(page_index)
     try:
-        await query.edit_message_text(text, reply_markup=reply_markup, parse_mode=ParseMode.HTML)
+        await query.edit_message_text(text, reply_markup=markup, parse_mode=ParseMode.HTML)
     except BadRequest as e:
         if str(e).startswith("Message is not modified"):
             pass
