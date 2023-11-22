@@ -69,6 +69,7 @@ async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         replies = ChatCompletionsAI(logged_in_user, messages)
         prev_answer = ""
         index = 0
+        answer = ""
         async for reply in replies:
             index += 1
             answer, status = reply
@@ -98,7 +99,6 @@ async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         value = [user_id, "user", prompt, date_time, prompt_tokens]
         mysql.insertOne(sql, value)
 
-        # date_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         value = [user_id, 'assistant', answer, date_time, count_tokens(answer)]
         mysql.insertOne(sql, value)
         mysql.end()
