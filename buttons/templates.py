@@ -85,12 +85,22 @@ token_limit = {
     "en": Template("""
 $answer
 
+--------------------------------------
+
 The length of the answer has exceeded your current maximum limit of $max_token tokens per answer.
-Please contact @AiMessagerBot for more help!✅
+
+As long as you star the robot's GitHub Repo: 🌟 https://github.com/V-know/ChatGPT-Telegram-Bot 🌟 and make a screenshot, send it to @AiMessagerBot, the maximum length of your single response will increase to at least 512 tokens, the supported context length will double, and the maximum frequency of asking questions will also increase.".
+
+Please contact @AiMessagerBot for more Tokens!✅
 """),
     "cn": Template("""
 $answer
 
+--------------------------------------
+
 答案长度超过了您当前单条答案最大 $max_token 个Token的限制
-请联系 @AiMessagerBot 获取更多帮助! ✅" 
+
+如果你已经给机器人的 GitHub Repo: 🌟 https://github.com/V-know/ChatGPT-Telegram-Bot 🌟 点了 Star,请将其截图发送至 @AiMessagerBot， 你的单条回复的最大长度将增加到至少 512个 Token, 并且支持的上下文长度将翻倍, 提问最大频率也将增加。
+
+请联系 @AiMessagerBot 获取更多权益! ✅
 """)}

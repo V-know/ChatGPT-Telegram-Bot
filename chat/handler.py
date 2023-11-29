@@ -90,7 +90,7 @@ async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
                              f"{emoji.emojize(':check_mark_button:')}"
                 await context.bot.edit_message_text(answer, chat_id=placeholder_message.chat_id,
                                                     message_id=placeholder_message.message_id,
-                                                    parse_mode=parse_mode)
+                                                    parse_mode=parse_mode, disable_web_page_preview=True)
             except BadRequest as e:
                 if str(e).startswith("Message is not modified"):
                     continue
