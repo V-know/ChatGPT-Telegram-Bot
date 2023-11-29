@@ -2,7 +2,8 @@ create database ai;
 
 CREATE TABLE `users` (
   `ID` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) DEFAULT NULL,
+  `name` varchar(128) DEFAULT NULL,
+  `nick_name` varchar(128) DEFAULT NULL,
   `user_id` bigint DEFAULT NULL,
   `level` tinyint DEFAULT NULL,
   `parse_mode` varchar(10) DEFAULT 'Markdown',
