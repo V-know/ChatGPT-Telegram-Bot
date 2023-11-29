@@ -14,13 +14,16 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     mysql = Mysql()
     user = update.effective_user
     user_id = user.id
+    nick_name = user.full_name
 
     user_checkin = mysql.getOne(f"select * from users where user_id={user_id}")
     if not user_checkin:
         date_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-        sql = "insert into users (user_id, name, level, system_content, created_at) values (%s, %s, %s, %s, %s)"
-        value = [user_id, user.username, 0, "You are an AI assistant that helps people find information.", date_time]
+        sql = "insert into users (user_id, name, nick_name level, system_content, created_at) values (%s, %s, %s, %s, %s, %s)"
+        value = [user_id, user.username, nick_name, 0, "You are an AI assistant that helps people find information.", date_time]
         mysql.insertOne(sql, value)
+    if not user_checkin.get("nick_name"):
+        mysql.update("update users set nick_name=%s where user_id=%s", (nick_name, user_id))
     mysql.end()
 
     """Send a message when the command /start is issued."""

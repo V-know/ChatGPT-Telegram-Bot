@@ -21,15 +21,15 @@ async def show_languages(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def show_languages_callback_handle(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.callback_query.from_user.id
+    nick_name = update.effective_user.full_name
 
     query = update.callback_query
     # CallbackQueries need to be answered, even if no notification to the user is needed
     await query.answer()
 
-    user_id = update.effective_user.id
     lang = query.data.split("_")[1]
     mysql = Mysql()
-    mysql.update("update users set lang=%s where user_id=%s", (lang, user_id))
+    mysql.update("update users set nick_name=%s, lang=%s where user_id=%s", (nick_name, lang, user_id))
     mysql.end()
 
     await query.edit_message_text(

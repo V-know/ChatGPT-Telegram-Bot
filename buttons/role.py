@@ -39,17 +39,20 @@ async def reset_context(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
 
 async def set_system_content_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user_id = update.effective_user.id
+    nick_name = update.effective_user.full_name
     mysql = Mysql()
     user = mysql.getOne("select * from users where user_id=%s", user_id)
     mysql.end()
     system_content = update.message.text.strip()
     if system_content in ("取消", "取消重置", "🚫取消", "cancel", "reset"):
-        await update.message.reply_text(text="已取消。\n您可以继续向我提问了" if user["lang"] == "cn" else "Canceld. \nYou can continue to ask me questions now.",
-                                        reply_markup=reply_markup, parse_mode='Markdown')
+        await update.message.reply_text(
+            text="已取消。\n您可以继续向我提问了" if user["lang"] == "cn" else "Canceld. \nYou can continue to ask me questions now.",
+            reply_markup=reply_markup, parse_mode='Markdown')
     else:
         user_id = update.effective_user.id
         mysql = Mysql()
-        mysql.update("update users set system_content=%s where user_id=%s", (system_content, user_id))
+        mysql.update("update users set system_content=%s, nick_name=%s where user_id=%s",
+                     (system_content, nick_name, user_id))
         reset_at = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         mysql.update("update records set reset_at=%s where user_id=%s and reset_at is null", (reset_at, user_id))
         mysql.end()

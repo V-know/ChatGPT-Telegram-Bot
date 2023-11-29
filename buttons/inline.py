@@ -77,6 +77,7 @@ async def show_chat_modes_callback_handle(update: Update, context: ContextTypes.
 
 async def set_chat_mode_handle(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.callback_query.from_user.id
+    nick_name = update.effective_user.full_name
 
     query = update.callback_query
     await query.answer()
@@ -84,8 +85,9 @@ async def set_chat_mode_handle(update: Update, context: ContextTypes.DEFAULT_TYP
     system_content = query.data.split("|")[1]
 
     mysql = Mysql()
-    mysql.update("update users set system_content=%s, parse_mode=%s where user_id=%s",
-                 (chat_modes[system_content]['prompt_start'], chat_modes[system_content]["parse_mode"], user_id))
+    mysql.update("update users set system_content=%s, parse_mode=%s, nick_name=%s where user_id=%s",
+                 (chat_modes[system_content]['prompt_start'], chat_modes[system_content]["parse_mode"], nick_name,
+                  user_id))
     reset_at = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     mysql.update("update records set reset_at=%s where user_id=%s and reset_at is null", (reset_at, user_id))
     mysql.end()
@@ -104,6 +106,7 @@ async def cancel_chat_mode_handle(update: Update, context: ContextTypes.DEFAULT_
     mysql.end()
     await context.bot.send_message(
         update.callback_query.message.chat.id,
-        text="已取消。\n您可以继续向我提问了" if user["lang"] == "cn" else "Cancelled. \nYou can continue to ask me questions now.",
+        text="已取消。\n您可以继续向我提问了" if user[
+                                                    "lang"] == "cn" else "Cancelled. \nYou can continue to ask me questions now.",
         parse_mode=ParseMode.MARKDOWN, reply_markup=reply_markup
     )
