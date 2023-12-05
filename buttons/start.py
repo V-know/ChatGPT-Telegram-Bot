@@ -19,7 +19,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user_checkin = mysql.getOne(f"select * from users where user_id={user_id}")
     if not user_checkin:
         date_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-        sql = "insert into users (user_id, name, nick_name level, system_content, created_at) values (%s, %s, %s, %s, %s, %s)"
+        sql = "insert into users (user_id, name, nick_name, level, system_content, created_at) values (%s, %s, %s, %s, %s, %s)"
         value = [user_id, user.username, nick_name, 0, "You are an AI assistant that helps people find information.", date_time]
         mysql.insertOne(sql, value)
     if not user_checkin.get("nick_name"):
