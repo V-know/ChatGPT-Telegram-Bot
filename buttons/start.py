@@ -22,7 +22,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         sql = "insert into users (user_id, name, nick_name, level, system_content, created_at) values (%s, %s, %s, %s, %s, %s)"
         value = [user_id, user.username, nick_name, 0, "You are an AI assistant that helps people find information.", date_time]
         mysql.insertOne(sql, value)
-    if not user_checkin.get("nick_name"):
+    if user_checkin and not user_checkin.get("nick_name"):
         mysql.update("update users set nick_name=%s where user_id=%s", (nick_name, user_id))
     mysql.end()
 

@@ -35,7 +35,7 @@ async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
                  date_time]
         mysql.insertOne(sql, value)
 
-    if not user_checkin.get("nick_name"):
+    if user_checkin and not user_checkin.get("nick_name"):
         mysql.update("update users set nick_name=%s where user_id=%s", (nick_name, user_id))
 
     logged_in_user = mysql.getOne(f"select * from users where user_id={user_id}")
