@@ -107,6 +107,7 @@ docker run --rm --name chatgpt-telegram-bot -v ./config.yaml:/app/config.yaml vi
 ### Docker Compose
 ```shell
 docker-compose up -d
+```
 
 ## ❤️In Conclusion
 
