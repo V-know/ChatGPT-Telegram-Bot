@@ -98,7 +98,15 @@ mysql -uusername -p -e "source db/database.sql"
 ```shell
 python main.py | tee >> debug.log
 ```
+### Docker build & Run
+```shell
+docker run --rm --name chatgpt-telegram-bot -v ./config.yaml:/app/config.yaml vividone/chatgpt-telegram-bot:latest 
+```
 
+### Docker Compose
+```shell
+docker-compose up -d
+```
 ## ❤️写在最后
 
 希望本项目在给你丝滑AI体验的同时，能帮助更多人接触并开始创建和使用自己的Telegram Bot

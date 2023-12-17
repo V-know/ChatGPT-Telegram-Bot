@@ -99,6 +99,15 @@ If you are using Azure's OpenAI, you can obtain all the required content at this
 python main.py | tee >> debug.log
 ```
 
+### Docker build & Run
+```shell
+docker run --rm --name chatgpt-telegram-bot -v ./config.yaml:/app/config.yaml vividone/chatgpt-telegram-bot:latest 
+```
+
+### Docker Compose
+```shell
+docker-compose up -d
+
 ## ❤️In Conclusion
 
 I hope this project can provide you with a smooth AI experience and help more people create and use their own Telegram bots.
