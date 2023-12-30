@@ -29,6 +29,8 @@
 
 [✓] 支持中/英双语切换
 
+[x] 容器化
+
 [✓] More ...
 
 <p align="center">
@@ -40,8 +42,6 @@
 [x] 允许用户在Bot中使用自己的OpenAI Key,以获得更多自由
 
 [x] 完善ErrorHandler
-
-[x] 容器化
 
 ## 🤖快速体验
 

@@ -29,6 +29,8 @@ A Telegram bot with a smooth AI experience.
 
 [✓] Support English and Chinese on UI
 
+[x] Containerization.
+
 [✓] More...
 
 <p align="center">
@@ -40,8 +42,6 @@ A Telegram bot with a smooth AI experience.
 [x] Allow users to use their own OpenAI Key in the bot to gain more freedom.
 
 [x] Improve ErrorHandler.
-
-[x] Containerization.
 
 ## 🤖Quick Experience
 
