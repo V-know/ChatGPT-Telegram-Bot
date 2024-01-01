@@ -29,7 +29,7 @@ A Telegram bot with a smooth AI experience.
 
 [✓] Support English and Chinese on UI
 
-[x] Containerization.
+[✓] Containerization.
 
 [✓] More...
 
