@@ -86,8 +86,9 @@ mysql -uusername -p -e "source db/database.sql"
 | `MAX_TOKEN`         | No       | `key`为用户等级, `value`为每次聊天AI返回节点的最大Token数                                                                     |
 | `AI`.`TYPE`         | Yes      | 使用的是AI类型，有`openai`和`azure`两个选项，默认为`openai`                                                                  |                           
 | `AI`.`BASE`         | Yes      | 从 Azure 门户检查资源时，可在“密钥和终结点”部分中找到此值。 或者，可以在“Azure OpenAI Studio”>“操场”>“代码视图”中找到该值, 仅当`AI`.`TYPE`为`zaure`里需要设置 |
-| `AI`.`ENGINE`       | Yes      | Azure OpenAI的Deployment名, 仅当`AI`.`TYPE`为`zaure`里需要设置                                                        |
-| `AI`.`VERSION`      | Yes      | Azure OpenAI的版本号, 仅当`AI`.`TYPE`为`zaure`里需要设置                                                                |
+| `AI`.`ENGINE`       | Yes      | Azure OpenAI的Deployment名, 仅当`AI`.`TYPE`为`zaure`时需要设置                                                        |
+| `AI`.`VERSION`      | Yes      | Azure OpenAI的版本号, 仅当`AI`.`TYPE`为`zaure`时需要设置                                                                |
+| `AI`.`MODEL`        | Yes      | OpenAI所使用的 Model 名, 仅当`AI`.`TYPE`为`openai`时需要设置                                                             |
 
 如果你使用的是Azure的OpenAI，你可在这个链接里获取所需的所有内容：
 

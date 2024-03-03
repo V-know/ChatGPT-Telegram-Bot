@@ -24,6 +24,9 @@ async def ChatCompletionsAI(logged_in_user, messages) -> (str, str):
         openai.api_type = config["AI"]["TYPE"]
         openai.api_base = config["AI"]["BASE"]
         openai.api_version = config["AI"]["VERSION"]
+    else:
+        OPENAI_CHAT_COMPLETION_OPTIONS["model"] = config["AI"]["MODEL"]
+        openai.api_base = config["AI"]["BASE"]
 
     response = await openai.ChatCompletion.acreate(
         messages=messages,
