@@ -8,7 +8,9 @@ OPENAI_CHAT_COMPLETION_OPTIONS = {
     "frequency_penalty": 0,
     "presence_penalty": 0,
     "stream": True,
-    "stop": None
+    "stop": None,
+    "model": "gpt-3.5-turbo" if config["AI"]["TYPE"] != "azure" else None,
+    "engine": None if config["AI"]["TYPE"] != "azure" else config["AI"]["ENGINE"]
 }
 
 
@@ -22,9 +24,6 @@ async def ChatCompletionsAI(logged_in_user, messages) -> (str, str):
         openai.api_type = config["AI"]["TYPE"]
         openai.api_base = config["AI"]["BASE"]
         openai.api_version = config["AI"]["VERSION"]
-        OPENAI_CHAT_COMPLETION_OPTIONS["engine"] = config["AI"]["ENGINE"]
-    else:
-        OPENAI_CHAT_COMPLETION_OPTIONS["model"] = "gpt-3.5-turbo"
 
     response = await openai.ChatCompletion.acreate(
         messages=messages,
