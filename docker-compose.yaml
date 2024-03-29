@@ -1,6 +1,6 @@
 version: '3.9'  # 使用的 Docker Compose 文件版本
 services:
   bot:
-    image: vividone/chatgpt-telegram-bot:latest
+    image: ghcr.io/v-know/chatgpt-telegram-bot:latest
     volumes:
       - ./config.yaml:/app/config.yaml
