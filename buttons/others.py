@@ -90,11 +90,11 @@ async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE) -> N
 
     # Finally, send the message
     error_reply = ""
-    if type(context.error) == openai.error.InvalidRequestError:
+    if type(context.error) == openai.ErrorObject.error.InvalidRequestError:
         error_reply = "The response was filtered due to the prompt triggering Azure OpenAI’s content management " \
                       "policy. Please modify your prompt and retry. To learn more about our content filtering " \
                       "policies please read our documentation: https://go.microsoft.com/fwlink/?linkid=2198766"
-    elif type(context.error) in [openai.error.Timeout, asyncio.exceptions.TimeoutError]:
+    elif type(context.error) in [openai.ErrorObject.error.Timeout, asyncio.exceptions.TimeoutError]:
         error_reply = "Time out. Retry please!"
 
     if error_reply:
