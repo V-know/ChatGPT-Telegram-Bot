@@ -7,6 +7,6 @@ WORKDIR $APP_HOME
 
 ADD . $APP_HOME
 
-RUN pip install -r $APP_HOME/requirements.txt
+RUN pip install cryptography && pip install -r $APP_HOME/requirements.txt
 
 ENTRYPOINT ["python", "main.py"]
