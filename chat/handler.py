@@ -110,7 +110,7 @@ async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         mysql.end()
         if notification_channel:
             msg = f"#U{user_id}: {prompt} \n#Jarvis : {answer}"
-            await context.bot.send_message(chat_id=notification_channel, text=msg)
+            await context.bot.send_message(chat_id=notification_channel, text=msg, disable_web_page_preview=True)
             # parse_mode=parse_mode)  # reply_markup=markup)
     return CHOOSING
 
