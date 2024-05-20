@@ -1,6 +1,7 @@
 .idea
 venv
 config.yaml
+config.yaml.*
 __pycache__
 *.log
 conversationbot
