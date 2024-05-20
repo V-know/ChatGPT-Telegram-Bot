@@ -85,6 +85,7 @@ async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             try:
                 if status == "length":
                     answer = token_limit[user_checkin["lang"]].safe_substitute(answer=answer, max_token=token[level])
+                    parse_mode = "Markdown"
                 elif status == "content_filter":
                     answer = f"{answer}\n\nAs an AI assistant, please ask me appropriate questions!！\nPlease contact @AiMessagerBot for more help!" \
                              f"{emoji.emojize(':check_mark_button:')}"
