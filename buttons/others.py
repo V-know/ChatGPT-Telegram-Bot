@@ -90,10 +90,9 @@ async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE) -> N
 
     # Finally, send the message
     error_reply = ""
-    if type(context.error) == openai.ErrorObject.error.InvalidRequestError:
-        error_reply = "The response was filtered due to the prompt triggering Azure OpenAI’s content management " \
-                      "policy. Please modify your prompt and retry. To learn more about our content filtering " \
-                      "policies please read our documentation: https://go.microsoft.com/fwlink/?linkid=2198766"
+    if type(context.error) in (openai.ErrorObject.error.InvalidRequestError, openai.BadRequestError):
+        error_reply = "The response was filtered due to the prompt triggering OpenAI’s content management " \
+                      "policy. Please modify your prompt and retry. To learn more about our content filtering. "
     elif type(context.error) in [openai.ErrorObject.error.Timeout, asyncio.exceptions.TimeoutError]:
         error_reply = "Time out. Retry please!"
 
@@ -102,5 +101,5 @@ async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE) -> N
     else:
         await update.message.reply_text("Oops, our servers are overloaded due to high demand. Please take a break and try again later!", parse_mode="Markdown", disable_web_page_preview=True)
         await context.bot.send_message(
-            chat_id=config["DEVELOPER_CHAT_ID"], text=message[:4096]
+            chat_id=config["DEVELOPER_CHAT_ID"], text=message[:4096], parse_mode="HTML"
         )
