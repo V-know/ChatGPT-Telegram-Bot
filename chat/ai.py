@@ -15,15 +15,18 @@ OPENAI_CHAT_COMPLETION_OPTIONS = {
 
 async def ChatCompletionsAI(logged_in_user, messages) -> (str, str):
     level = logged_in_user.get("level")
-    azureOpenAIConfig = {'api_key': config["AI"]["TOKEN"],
-                         'azure_endpoint': config["AI"]["BASE"],
-                         'api_version': config["AI"]["VERSION"]}
+    open_ai_config = {'api_key': config["AI"]["TOKEN"]}
+
+    if config["AI"]["TYPE"] == "azure":
+        open_ai_config.update({
+            'azure_endpoint': config["AI"]["BASE"],
+            'api_version': config["AI"]["VERSION"]
+        })
+        client = AzureOpenAI(**open_ai_config)
+    else:
+        client = OpenAI(**open_ai_config)
 
     answer = ""
-    if config["AI"]["TYPE"] == "azure":
-        client = AzureOpenAI(**azureOpenAIConfig)
-    else:
-        client = OpenAI(**azureOpenAIConfig)
     with client.chat.completions.with_streaming_response.create(
             messages=messages,
             max_tokens=token[level],
