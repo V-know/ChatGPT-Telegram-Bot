@@ -1,30 +1,17 @@
 from config import token
-from openai import AzureOpenAI, OpenAI
 from db.MySqlConn import config
-
-OPENAI_CHAT_COMPLETION_OPTIONS = {
-    "temperature": 0.7,
-    "top_p": 1,
-    "frequency_penalty": 0,
-    "presence_penalty": 0,
-    "stream": True,
-    "stop": None,
-    "model": config["AI"]["MODEL"]
-}
+from ai.openai import OpenAIClient
+from ai.azure import AzureAIClient
+from ai import OPENAI_CHAT_COMPLETION_OPTIONS
 
 
 async def ChatCompletionsAI(logged_in_user, messages) -> (str, str):
     level = logged_in_user.get("level")
-    open_ai_config = {'api_key': config["AI"]["TOKEN"]}
 
     if config["AI"]["TYPE"] == "azure":
-        open_ai_config.update({
-            'azure_endpoint': config["AI"]["BASE"],
-            'api_version': config["AI"]["VERSION"]
-        })
-        client = AzureOpenAI(**open_ai_config)
+        client = AzureAIClient().client
     else:
-        client = OpenAI(**open_ai_config)
+        client = OpenAIClient().client
 
     answer = ""
     with client.chat.completions.with_streaming_response.create(

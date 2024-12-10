@@ -75,20 +75,19 @@ mysql -uusername -p -e "source db/database.sql"
 
 需要的所有配置都在`config.yaml`中，文件格式内容，请参考`config.yaml.example`
 
-| Parameter           | Optional | Description                                                                                                 |
-|---------------------|----------|-------------------------------------------------------------------------------------------------------------|
-| `BOT`.`TOKEN`       | No       | 从[@botFather](https://t.me/BotFather)创建bot并获取Token                                                          |
-| `DEVELOPER_CHAT_ID` | No       | bot出错时，接收信息的TG帐号ID, ID可以从[@get_id_bot](https://t.me/get_id_bot) 获取                                          |
-| `MYSQL`             | No       | MySQL连接相关的参数                                                                                                |
-| `TIME_SPAN`         | No       | 计算rate limit所用的时间窗口大小，单位：分钟                                                                                 |
-| `RATE_LIMIT`        | No       | `key`为用户等级，`value`为TIME_SPAN时间内可以聊天的最大数量                                                                    |
-| `CONTEXT_COUNT`     | No       | `key`为用户等级，`value`为每次聊天所包含的上下文数量                                                                            |
-| `MAX_TOKEN`         | No       | `key`为用户等级, `value`为每次聊天AI返回节点的最大Token数                                                                     |
-| `AI`.`TYPE`         | Yes      | 使用的是AI类型，有`openai`和`azure`两个选项，默认为`openai`                                                                  |                           
+| Parameter           | Optional | Description                                                                                                |
+|---------------------|----------|------------------------------------------------------------------------------------------------------------|
+| `BOT`.`TOKEN`       | No       | 从[@botFather](https://t.me/BotFather)创建bot并获取Token                                                         |
+| `DEVELOPER_CHAT_ID` | No       | bot出错时，接收信息的TG帐号ID, ID可以从[@get_id_bot](https://t.me/get_id_bot) 获取                                         |
+| `MYSQL`             | No       | MySQL连接相关的参数                                                                                               |
+| `TIME_SPAN`         | No       | 计算rate limit所用的时间窗口大小，单位：分钟                                                                                |
+| `RATE_LIMIT`        | No       | `key`为用户等级，`value`为TIME_SPAN时间内可以聊天的最大数量                                                                   |
+| `CONTEXT_COUNT`     | No       | `key`为用户等级，`value`为每次聊天所包含的上下文数量                                                                           |
+| `MAX_TOKEN`         | No       | `key`为用户等级, `value`为每次聊天AI返回节点的最大Token数                                                                    |
+| `AI`.`TYPE`         | Yes      | 使用的是AI类型，有`openai`和`azure`两个选项，默认为`openai`                                                                 |                           
 | `AI`.`BASE`         | Yes      | 从 Azure 门户检查资源时，可在“密钥和终结点”部分中找到此值。 或者，可以在“Azure OpenAI Studio”>“操场”>“代码视图”中找到该值, 仅当`AI`.`TYPE`为`zaure`里需要设置 |
-| `AI`.`MODEL`        | Yes      | Azure OpenAI的Deployment名, 仅当`AI`.`TYPE`为`zaure`时需要设置                                                        |
-| `AI`.`VERSION`      | Yes      | Azure OpenAI的版本号, 仅当`AI`.`TYPE`为`zaure`时需要设置                                                                |
-| `AI`.`MODEL`        | Yes      | OpenAI所使用的 Model 名, 仅当`AI`.`TYPE`为`openai`时需要设置                                                             |
+| `AI`.`VERSION`      | Yes      | Azure OpenAI的版本号, 仅当`AI`.`TYPE`为`zaure`时需要设置                                                               |
+| `AI`.`MODEL`        | Yes      | Azure OpenAI的Deployment名, 或OpenAI所使用的 Model 名                               |
 
 如果你使用的是Azure的OpenAI，你可在这个链接里获取所需的所有内容：
 

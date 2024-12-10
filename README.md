@@ -86,9 +86,8 @@ All the required configurations are in `config.yaml`, please refer to `config.ya
 | `MAX_TOKEN`         | No       | `key` is the user level, and `value` is the maximum number of tokens returned by the AI per chat.                                                                                                                                                           |
 | `AI`.`TYPE`         | Yes      | The type of AI used, with two options: `openai` and `azure`. The default is `openai`.                                                                                                                                                                       |                           
 | `AI`.`BASE`         | Yes      | When checking resources from the Azure portal, this value can be found in the "Keys and Endpoints" section. Alternatively, this value can be found in "Azure OpenAI Studio" > "Playground" > "Code View". Only needs to be set when `AI`.`TYPE` is `azure`. |
-| `AI`.`MODEL`        | Yes      | The deployment name of Azure OpenAI, only needs to be set when `AI`.`TYPE` is `azure`.                                                                                                                                                                      |
 | `AI`.`VERSION`      | Yes      | The version number of Azure OpenAI, only needs to be set when `AI`.`TYPE`is `azure`.                                                                                                                                                                        |
-| `AI`.`MODEL`        | Yes      | The Model of OpenAI, only needs to be set when `AI`.`TYPE`is `openai`.                                                                                                                                                                                |
+| `AI`.`MODEL`        | Yes      | The deployment name of Azure OpenAI, or the Model of OpenAI.                                                                                                                                              |
 
 If you are using Azure's OpenAI, you can obtain all the required content at this link:
 
