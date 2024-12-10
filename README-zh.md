@@ -113,3 +113,7 @@ docker-compose up -d
 ## ❤️写在最后
 
 希望本项目在给你丝滑AI体验的同时，能帮助更多人接触并开始创建和使用自己的Telegram Bot
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=v-know/chatgpt-telegram-bot&type=Date)](https://star-history.com/#v-know/chatgpt-telegram-bot&Date)
