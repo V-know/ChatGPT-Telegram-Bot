@@ -1,7 +1,10 @@
+import aiohttp
+import time
 from telegram import Update
 from telegram.ext import ContextTypes
 from db.MySqlConn import Mysql
 
+from buttons import get_project_root
 from buttons.templates import image
 from chat.ai import GenerateImage
 from config import (
@@ -9,6 +12,14 @@ from config import (
     cancel_markup,
     CHOOSING,
     TYPING_IMAGE_PROMPT)
+
+
+async def download_image(image_url: str, save_path: str) -> None:
+    async with aiohttp.ClientSession() as session:
+        async with session.get(image_url) as response:
+            if response.status == 200:
+                with open(save_path, 'wb') as f:
+                    f.write(await response.read())
 
 
 async def set_image_prompt(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -42,4 +53,8 @@ async def set_image_prompt_handler(update: Update, context: ContextTypes.DEFAULT
         await context.bot.edit_message_text("Here is your generated image:", chat_id=placeholder_message.chat_id,
                                             message_id=placeholder_message.message_id)
         await context.bot.send_photo(chat_id=chat_id, photo=image_url, reply_markup=reply_markup, parse_mode='Markdown')
+
+        project_root = get_project_root()
+        save_path = f'{project_root}/data/pictures/{nick_name}-{time.strftime("%Y%m%d-%H%M%S")}.jpg'
+        await download_image(image_url, save_path)
     return CHOOSING

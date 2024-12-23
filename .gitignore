@@ -7,3 +7,4 @@ __pycache__
 conversationbot
 .DS_Store
 test.py
+data
