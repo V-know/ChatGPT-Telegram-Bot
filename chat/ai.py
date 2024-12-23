@@ -5,16 +5,20 @@ from ai.azure import AzureAIClient
 from ai import OPENAI_CHAT_COMPLETION_OPTIONS
 
 
+def init_client():
+    if config["AI"]["TYPE"] == "azure":
+        client = AzureAIClient()
+    else:
+        client = OpenAIClient()
+    return client
+
+
 async def ChatCompletionsAI(logged_in_user, messages) -> (str, str):
     level = logged_in_user.get("level")
 
-    if config["AI"]["TYPE"] == "azure":
-        client = AzureAIClient().client
-    else:
-        client = OpenAIClient().client
-
+    ai = init_client()
     answer = ""
-    with client.chat.completions.with_streaming_response.create(
+    with ai.client.chat.completions.with_streaming_response.create(
             messages=messages,
             max_tokens=token[level],
             **OPENAI_CHAT_COMPLETION_OPTIONS) as response:
@@ -24,3 +28,9 @@ async def ChatCompletionsAI(logged_in_user, messages) -> (str, str):
                 if delta.content:
                     answer += delta.content
                 yield answer, r.choices[0].finish_reason
+
+
+async def GenerateImage(prompt):
+    ai = init_client()
+    image_url = ai.generate_image(prompt)
+    return image_url

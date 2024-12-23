@@ -53,14 +53,7 @@ def facts_to_str(user_data: Dict[str, str]) -> str:
 
 
 async def done(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Display the gathered info and end the conversation."""
-    if 'choice' in context.user_data:
-        del context.user_data['choice']
-
-    await update.message.reply_text(
-        f"I learned these facts about you: {facts_to_str(context.user_data)}Until next time!",
-        reply_markup=ReplyKeyboardRemove(),
-    )
+    await update.message.reply_text("Conversation canceled.", reply_markup=ReplyKeyboardRemove())
     return ConversationHandler.END
 
 

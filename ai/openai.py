@@ -1,4 +1,3 @@
-from config import token
 from openai import OpenAI
 from db.MySqlConn import config
 from ai import OPENAI_CHAT_COMPLETION_OPTIONS
@@ -9,7 +8,7 @@ class OpenAIClient:
         self.open_ai_config = {'api_key': config["AI"]["TOKEN"]}
         self.client = OpenAI(**self.open_ai_config)
 
-    def generate_image(self, prompt):
+    def generate_image(self, prompt) -> str:
         response = self.client.images.generate(
             model="dall-e-3",
             prompt=prompt,

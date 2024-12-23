@@ -35,8 +35,9 @@ from config import (
     reset_context_button,
     statistics_button,
     switch_role_button,
+    image_button,
     language_button,
-    CHOOSING, TYPING_REPLY, TYPING_SYS_CONTENT
+    CHOOSING, TYPING_REPLY, TYPING_SYS_CONTENT, TYPING_IMAGE_PROMPT
 )
 from buttons.inline import (
     show_chat_modes_handle,
@@ -44,6 +45,7 @@ from buttons.inline import (
     set_chat_mode_handle,
     cancel_chat_mode_handle,
 )
+from buttons.image import set_image_prompt, set_image_prompt_handler
 from buttons.language import show_languages, show_languages_callback_handle
 from buttons.help import helper
 from buttons.start import start
@@ -72,6 +74,7 @@ def main() -> None:
                 MessageHandler(filters.Regex(f"^{set_sys_content_button}$"), set_system_content),
                 MessageHandler(filters.Regex(f"^{statistics_button}$"), statistics),
                 MessageHandler(filters.Regex(f"^{switch_role_button}$"), show_chat_modes_handle),
+                MessageHandler(filters.Regex(f"^{image_button}$"), set_image_prompt),
                 MessageHandler(filters.TEXT, answer_handler),
                 MessageHandler(filters.ATTACHMENT, non_text_handler),
             ],
@@ -83,11 +86,15 @@ def main() -> None:
                 MessageHandler(filters.Regex(f"^{set_sys_content_button}$"), set_system_content),
                 MessageHandler(filters.Regex(f"^{statistics_button}$"), statistics),
                 MessageHandler(filters.Regex(f"^{switch_role_button}$"), show_chat_modes_handle),
+                MessageHandler(filters.Regex(f"^{image_button}$"), set_image_prompt),
                 MessageHandler(filters.TEXT, answer_handler),
                 MessageHandler(filters.ATTACHMENT, non_text_handler),
             ],
             TYPING_SYS_CONTENT: [
                 MessageHandler(filters.TEXT, set_system_content_handler),
+            ],
+            TYPING_IMAGE_PROMPT: [
+                MessageHandler(filters.TEXT, set_image_prompt_handler),
             ],
         },
         fallbacks=[MessageHandler(filters.Regex('^Done$'), done)],
