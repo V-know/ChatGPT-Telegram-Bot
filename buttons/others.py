@@ -9,17 +9,13 @@ import html
 import openai
 import asyncio
 import traceback
-from pathlib import Path
 from typing import Dict
 
 from db.MySqlConn import config
+from buttons import get_project_root
 from config import (
     TYPING_REPLY,
     logger)
-
-
-def get_project_root() -> Path:
-    return Path(__file__).resolve().parent.parent
 
 
 async def non_text_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -53,14 +49,7 @@ def facts_to_str(user_data: Dict[str, str]) -> str:
 
 
 async def done(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Display the gathered info and end the conversation."""
-    if 'choice' in context.user_data:
-        del context.user_data['choice']
-
-    await update.message.reply_text(
-        f"I learned these facts about you: {facts_to_str(context.user_data)}Until next time!",
-        reply_markup=ReplyKeyboardRemove(),
-    )
+    await update.message.reply_text("Conversation canceled.", reply_markup=ReplyKeyboardRemove())
     return ConversationHandler.END
 
 
@@ -99,7 +88,9 @@ async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE) -> N
     if error_reply:
         await update.message.reply_text(error_reply, parse_mode="Markdown", disable_web_page_preview=True)
     else:
-        await update.message.reply_text("Oops, our servers are overloaded due to high demand. Please take a break and try again later!", parse_mode="Markdown", disable_web_page_preview=True)
+        await update.message.reply_text(
+            "Oops, our servers are overloaded due to high demand. Please take a break and try again later!",
+            parse_mode="Markdown", disable_web_page_preview=True)
         await context.bot.send_message(
             chat_id=config["DEVELOPER_CHAT_ID"], text=message[:4096], parse_mode="HTML"
         )

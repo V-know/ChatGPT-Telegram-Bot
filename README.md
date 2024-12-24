@@ -17,6 +17,8 @@ A Telegram bot with a silky smooth AI experience.
 
 [✓] Real-time (streaming) response to AI, with faster and smoother experience.
 
+[✓] Generate picture based on OpenAI DALL·E 3 model.
+
 [✓] 15 preset bot identities that can be quickly switched.
 
 [✓] Support for custom bot identities to meet personalized needs.

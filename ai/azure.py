@@ -13,8 +13,6 @@ class AzureAIClient:
 
         self.client = AzureOpenAI(**self.open_ai_config)
 
-    def get_client(self):
-        return self.client
 
     # For testing purposes
     def chat_completions(self, messages: list):

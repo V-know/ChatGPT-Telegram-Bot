@@ -18,6 +18,9 @@ run: $(VENV)/bin/activate
 image: $(VENV)/bin/activate
 	docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/v-know/chatgpt-telegram-bot:latest --push .
 
+preflight: $(VENV)/bin/activate
+	docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/v-know/chatgpt-telegram-bot:preflight --push .
+
 # 显示帮助信息
 help:
 	@echo "Available targets:"

@@ -1,4 +1,3 @@
-from config import token
 from openai import OpenAI
 from db.MySqlConn import config
 from ai import OPENAI_CHAT_COMPLETION_OPTIONS
@@ -9,20 +8,17 @@ class OpenAIClient:
         self.open_ai_config = {'api_key': config["AI"]["TOKEN"]}
         self.client = OpenAI(**self.open_ai_config)
 
-    def get_client(self):
-        return self.client
-
-    def generate_image(self, model, prompt, size, quality, n):
+    def generate_image(self, prompt) -> str:
         response = self.client.images.generate(
-            model=model,
+            model="dall-e-3",
             prompt=prompt,
-            size=size,
-            quality=quality,
-            n=n,
+            size="1024x1024",
+            quality="standard",
+            n=1
         )
 
         image_url = response.data[0].url
-        return response.data, image_url
+        return image_url
 
     # For testing purposes
     def chat_completions(self, messages: list):

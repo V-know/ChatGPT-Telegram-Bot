@@ -29,5 +29,10 @@ MAX_TOKEN:
   1: 1024
   2: 1024
 
+IMAGE_RATE_LIMIT:
+  0: 5  # Level 0 users can call 5 times per day
+  1: 10 # Level 1 users can call 10 times per day
+  2: 20 # Level 2 users can call 20 times per day
+
 TIME_SPAN: 3 #Minutes
 DEVELOPER_CHAT_ID: 467300857

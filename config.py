@@ -23,8 +23,9 @@ token = config["MAX_TOKEN"]
 context_count = config["CONTEXT_COUNT"]
 rate_limit = config["RATE_LIMIT"]
 notification_channel = config.get("NOTIFICATION_CHANNEL")
+image_rate_limit = config["IMAGE_RATE_LIMIT"]
 
-CHOOSING, TYPING_REPLY, TYPING_SYS_CONTENT = range(3)
+CHOOSING, TYPING_REPLY, TYPING_SYS_CONTENT, TYPING_IMAGE_PROMPT = range(4)
 contact_admin = "🆘Help"
 start_button = "🚀Start"
 set_sys_content_button = "🆔Customize Role"
@@ -32,9 +33,10 @@ reset_context_button = "🔃Restart Session"
 statistics_button = "📈Statistics"
 switch_role_button = "🙋Switch Roles"
 language_button = "🔤Language"
+image_button = "🖼Image"
 reply_keyboard = [
-    [language_button, contact_admin, start_button],
-    [set_sys_content_button, switch_role_button],
+    [language_button, image_button, start_button],
+    [set_sys_content_button, contact_admin, switch_role_button],
     [reset_context_button, statistics_button],
 ]
 reply_markup = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)

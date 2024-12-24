@@ -18,7 +18,7 @@ contact 👉 @AiMessagerBot 👈 for more help!
 
 role = {
     "en": Template("""
-As an AI assistant, my role is now set as🤖：:
+As an AI assistant, my role is now set as🤖:
 
 **$system_content**
 
@@ -100,3 +100,29 @@ $answer
 
 请联系 @AiMessagerBot 获取更多权益! ✅
 """)}
+
+image = {
+    "en": """
+Image generator based on OpenAI DALL·E 3 model.
+Please enter your prompt, I will generate an image.
+""",
+    "cn": """
+基于 OpenAI DALL·E 3 模型的图像生成器。
+请输入你的提示，我将生成一张图片。
+"""}
+
+image_limit = {
+    "en": """
+Your daily image generation request limit has been reached.
+""",
+    "cn": """
+您今天的图片生成请求次数已达上限。
+"""}
+
+cancel_notification = {
+    "en": """
+Canceled. You can continue to ask me questions now.
+""",
+    "cn": """
+已取消。您可以继续向我提问了。
+"""}
