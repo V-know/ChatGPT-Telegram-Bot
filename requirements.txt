@@ -36,4 +36,4 @@ tqdm==4.66.3
 typing_extensions==4.11.0
 urllib3==1.26.19
 wakatime==13.1.0
-yarl==1.8.2
+yarl>=1.12.0,<2.0
