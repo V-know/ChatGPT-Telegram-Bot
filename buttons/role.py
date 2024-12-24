@@ -3,7 +3,7 @@ from telegram.ext import ContextTypes
 import time
 from db.MySqlConn import Mysql
 
-from buttons.templates import role, context_info, identity_confirmed
+from buttons.templates import role, context_info, identity_confirmed, cancel_notification
 from config import (
     reply_markup,
     cancel_markup,
@@ -46,8 +46,7 @@ async def set_system_content_handler(update: Update, context: ContextTypes.DEFAU
     system_content = update.message.text.strip()
     if system_content in ("取消", "取消重置", "🚫取消", "cancel", "reset"):
         await update.message.reply_text(
-            text="已取消。\n您可以继续向我提问了" if user["lang"] == "cn" else "Canceld. \nYou can continue to ask me questions now.",
-            reply_markup=reply_markup, parse_mode='Markdown')
+            text=cancel_notification[user["lang"]], reply_markup=reply_markup, parse_mode='Markdown')
     else:
         user_id = update.effective_user.id
         mysql = Mysql()

@@ -6,7 +6,7 @@ from telegram.ext import ContextTypes
 from db.MySqlConn import Mysql
 
 from buttons import get_project_root
-from buttons.templates import image
+from buttons.templates import image, image_limit, cancel_notification
 from chat.ai import GenerateImage
 from config import (
     reply_markup,
@@ -49,22 +49,17 @@ async def set_image_prompt_handler(update: Update, context: ContextTypes.DEFAULT
         (user_id, start_of_day, end_of_day)
     )
 
-    level = logged_in_user.get("level")
-    if call_count.get("count") >= image_rate_limit[level]:
-        await update.message.reply_text(
-            text="您今天的图片生成请求次数已达上限。" if logged_in_user[
-                                                            "lang"] == "cn" else "You have reached the daily limit for image generation requests.",
-            reply_markup=reply_markup, parse_mode='Markdown')
-        return CHOOSING
-
-    # system_content = update.message.text.strip()
     image_prompt = update.message.text.strip()
     if image_prompt in ("取消", "取消重置", "🚫取消", "cancel", "reset", "🚫Cancel"):
         await update.message.reply_text(
-            text="已取消。\n您可以继续向我提问了" if logged_in_user[
-                                                        "lang"] == "cn" else "Canceled. \nYou can continue to ask me questions now.",
-            reply_markup=reply_markup, parse_mode='Markdown')
+            text=cancel_notification[logged_in_user["lang"]], reply_markup=reply_markup, parse_mode='Markdown')
+        return CHOOSING
     else:
+        level = logged_in_user.get("level")
+        if call_count.get("count") >= image_rate_limit[level]:
+            await update.message.reply_text(
+                text=image_limit[logged_in_user["lang"]], reply_markup=reply_markup, parse_mode='Markdown')
+            return CHOOSING
 
         placeholder_message = await update.message.reply_text("...")
         image_url = await GenerateImage(image_prompt)
@@ -79,8 +74,9 @@ async def set_image_prompt_handler(update: Update, context: ContextTypes.DEFAULT
         save_path = f'{project_root}/data/pictures/{image_name}'
 
         date_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-        mysql.insertOne("insert into image_requests (user_id, prompt, image_name, created_at) values (%s, %s,  %s,  %s)",
-                        (user_id, image_prompt, image_name, date_time))
+        mysql.insertOne(
+            "insert into image_requests (user_id, prompt, image_name, created_at) values (%s, %s,  %s,  %s)",
+            (user_id, image_prompt, image_name, date_time))
 
         mysql.end()
         await download_image(image_url, save_path)

@@ -110,3 +110,19 @@ Please enter your prompt, I will generate an image.
 基于 OpenAI DALL·E 3 模型的图像生成器。
 请输入你的提示，我将生成一张图片。
 """}
+
+image_limit = {
+    "en": """
+Your daily image generation request limit has been reached.
+""",
+    "cn": """
+您今天的图片生成请求次数已达上限。
+"""}
+
+cancel_notification = {
+    "en": """
+Canceled. You can continue to ask me questions now.
+""",
+    "cn": """
+已取消。您可以继续向我提问了。
+"""}
