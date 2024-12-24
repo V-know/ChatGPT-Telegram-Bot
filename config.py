@@ -23,6 +23,7 @@ token = config["MAX_TOKEN"]
 context_count = config["CONTEXT_COUNT"]
 rate_limit = config["RATE_LIMIT"]
 notification_channel = config.get("NOTIFICATION_CHANNEL")
+image_rate_limit = config["IMAGE_RATE_LIMIT"]
 
 CHOOSING, TYPING_REPLY, TYPING_SYS_CONTENT, TYPING_IMAGE_PROMPT = range(4)
 contact_admin = "🆘Help"

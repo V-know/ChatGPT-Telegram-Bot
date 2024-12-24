@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 import aiohttp
 import time
 from telegram import Update
@@ -11,6 +12,7 @@ from config import (
     reply_markup,
     cancel_markup,
     CHOOSING,
+    image_rate_limit,
     TYPING_IMAGE_PROMPT)
 
 
@@ -36,16 +38,34 @@ async def set_image_prompt_handler(update: Update, context: ContextTypes.DEFAULT
     user_id = update.effective_user.id
     nick_name = update.effective_user.full_name
     mysql = Mysql()
-    user = mysql.getOne("select * from users where user_id=%s", user_id)
-    mysql.end()
+    logged_in_user = mysql.getOne("select * from users where user_id=%s", user_id)
+
+    # Check rate limit
+    today = datetime.now().date()
+    start_of_day = datetime.combine(today, datetime.min.time())
+    end_of_day = datetime.combine(today, datetime.max.time())
+    call_count = mysql.getOne(
+        "select count(*) as count from image_requests where user_id=%s and created_at between %s and %s",
+        (user_id, start_of_day, end_of_day)
+    )
+
+    level = logged_in_user.get("level")
+    if call_count.get("count") >= image_rate_limit[level]:
+        await update.message.reply_text(
+            text="您今天的图片生成请求次数已达上限。" if logged_in_user[
+                                                            "lang"] == "cn" else "You have reached the daily limit for image generation requests.",
+            reply_markup=reply_markup, parse_mode='Markdown')
+        return CHOOSING
+
     # system_content = update.message.text.strip()
     image_prompt = update.message.text.strip()
     if image_prompt in ("取消", "取消重置", "🚫取消", "cancel", "reset", "🚫Cancel"):
         await update.message.reply_text(
-            text="已取消。\n您可以继续向我提问了" if user[
+            text="已取消。\n您可以继续向我提问了" if logged_in_user[
                                                         "lang"] == "cn" else "Canceled. \nYou can continue to ask me questions now.",
             reply_markup=reply_markup, parse_mode='Markdown')
     else:
+
         placeholder_message = await update.message.reply_text("...")
         image_url = await GenerateImage(image_prompt)
         chat_id = update.effective_chat.id
@@ -55,6 +75,13 @@ async def set_image_prompt_handler(update: Update, context: ContextTypes.DEFAULT
         await context.bot.send_photo(chat_id=chat_id, photo=image_url, reply_markup=reply_markup, parse_mode='Markdown')
 
         project_root = get_project_root()
-        save_path = f'{project_root}/data/pictures/{nick_name}-{time.strftime("%Y%m%d-%H%M%S")}.jpg'
+        image_name = f'{nick_name}-{time.strftime("%Y%m%d-%H%M%S")}.jpg'
+        save_path = f'{project_root}/data/pictures/{image_name}'
+
+        date_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        mysql.insertOne("insert into image_requests (user_id, prompt, image_name, created_at) values (%s, %s,  %s,  %s)",
+                        (user_id, image_prompt, image_name, date_time))
+
+        mysql.end()
         await download_image(image_url, save_path)
     return CHOOSING
