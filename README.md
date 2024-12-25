@@ -35,9 +35,8 @@ A Telegram bot with a silky smooth AI experience.
 
 [✓] More...
 
-<p align="center">
-  <img src="https://media.giphy.com/media/gqKOf9LOL6xYK1Bmbv/giphy.gif" />
-</p> 
+<video src="demo.mp4" width="640" height="480" controls autoplay loop muted></video>
+
 
 ## 👨‍💻TODO
 
