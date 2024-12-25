@@ -35,9 +35,7 @@
 
 [✓] More ...
 
-<p align="center">
-  <img src="https://media.giphy.com/media/gqKOf9LOL6xYK1Bmbv/giphy.gif" />
-</p> 
+![demo](demo.gif)
 
 ## 👨‍💻TODO
 
