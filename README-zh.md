@@ -35,7 +35,7 @@
 
 [✓] More ...
 
-<video src="demo.mp4" width="640" height="480" controls autoplay loop muted></video>
+![demo](demo.gif)
 
 ## 👨‍💻TODO
 
