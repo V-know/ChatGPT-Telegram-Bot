@@ -12,7 +12,7 @@ CREATE TABLE `users` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=132 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 CREATE INDEX idx_user_id ON records(user_id);
 
@@ -25,7 +25,7 @@ CREATE TABLE `records` (
   `created_at` datetime NOT NULL,
   `reset_at` datetime DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=1974 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 create index idx_user_id on users (user_id);
 
@@ -40,6 +40,6 @@ create table image_requests
     updated_at timestamp   null,
     constraint image_requests_ibfk_1
         foreign key (user_id) references users (user_id)
-) ENGINE=InnoDB AUTO_INCREMENT=1974 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 create index user_id on image_requests (user_id);
