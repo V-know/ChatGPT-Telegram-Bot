@@ -13,6 +13,7 @@ from config import (
     cancel_markup,
     CHOOSING,
     image_rate_limit,
+    notification_channel,
     TYPING_IMAGE_PROMPT)
 
 
@@ -67,7 +68,8 @@ async def set_image_prompt_handler(update: Update, context: ContextTypes.DEFAULT
 
         await context.bot.edit_message_text("Here is your generated image:", chat_id=placeholder_message.chat_id,
                                             message_id=placeholder_message.message_id)
-        await context.bot.send_photo(chat_id=chat_id, photo=image_url, reply_markup=reply_markup, parse_mode='Markdown')
+        await context.bot.send_photo(chat_id=chat_id, photo=image_url, reply_markup=reply_markup, parse_mode='Markdown',
+                                     disable_web_page_preview=True)
 
         project_root = get_project_root()
         image_name = f'{nick_name}-{time.strftime("%Y%m%d-%H%M%S")}.jpg'
@@ -79,5 +81,8 @@ async def set_image_prompt_handler(update: Update, context: ContextTypes.DEFAULT
             (user_id, image_prompt, image_name, date_time))
 
         mysql.end()
+        if notification_channel:
+            msg = f"#U{user_id} {nick_name}: {image_prompt}"
+            await context.bot.send_photo(chat_id=notification_channel, photo=image_url, caption=msg, )
         await download_image(image_url, save_path)
     return CHOOSING
