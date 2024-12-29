@@ -13,6 +13,7 @@ from config import (
     cancel_markup,
     CHOOSING,
     image_rate_limit,
+    notification_channel,
     TYPING_IMAGE_PROMPT)
 
 
@@ -79,5 +80,8 @@ async def set_image_prompt_handler(update: Update, context: ContextTypes.DEFAULT
             (user_id, image_prompt, image_name, date_time))
 
         mysql.end()
+        if notification_channel:
+            msg = f"#U{user_id} {nick_name}: {image_prompt}"
+            await context.bot.send_photo(chat_id=notification_channel, photo=image_url, caption=msg,)
         await download_image(image_url, save_path)
     return CHOOSING
