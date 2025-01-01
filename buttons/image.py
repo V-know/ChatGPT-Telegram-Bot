@@ -68,8 +68,7 @@ async def set_image_prompt_handler(update: Update, context: ContextTypes.DEFAULT
 
         await context.bot.edit_message_text("Here is your generated image:", chat_id=placeholder_message.chat_id,
                                             message_id=placeholder_message.message_id)
-        await context.bot.send_photo(chat_id=chat_id, photo=image_url, reply_markup=reply_markup, parse_mode='Markdown',
-                                     disable_web_page_preview=True)
+        await context.bot.send_photo(chat_id=chat_id, photo=image_url, reply_markup=reply_markup, parse_mode='Markdown')
 
         project_root = get_project_root()
         image_name = f'{nick_name}-{time.strftime("%Y%m%d-%H%M%S")}.jpg'
