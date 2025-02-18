@@ -6,5 +6,5 @@ __pycache__
 *.log
 conversationbot
 .DS_Store
-test.py
+test.*.py
 data

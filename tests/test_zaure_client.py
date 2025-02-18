@@ -2,6 +2,7 @@ import unittest
 from unittest.mock import patch, MagicMock
 from ai.azure import AzureAIClient
 
+
 class TestAzureAIClient(unittest.TestCase):
     @patch('ai.azure.AzureOpenAI')
     def test_chat_completions(self, MockAzureOpenAI):
@@ -22,6 +23,7 @@ class TestAzureAIClient(unittest.TestCase):
 
         # Verify the results
         self.assertEqual(result.choices[0].message["content"], "Recursion is fun.")
+
 
 if __name__ == '__main__':
     unittest.main()
