@@ -13,8 +13,18 @@ class AzureAIClient:
 
         self.client = AzureOpenAI(**self.open_ai_config)
 
+    def generate_image(self, prompt) -> str:
+        response = self.client.images.generate(
+            model="dalle3",
+            prompt=prompt,
+            size="1024x1024",
+            quality="standard",
+            n=1
+        )
 
-    # For testing purposes
+        image_url = response.data[0].url
+        return image_url
+
     def chat_completions(self, messages: list):
         answer = ""
         completion = self.client.chat.completions.create(
