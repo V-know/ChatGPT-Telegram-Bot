@@ -11,7 +11,7 @@ DBUtils==3.0.3
 distro==1.9.0
 emoji==2.2.0
 frozenlist==1.3.3
-h11==0.14.0
+h11==0.16.0
 httpcore==0.16.3
 httpx==0.24.0
 idna==3.7
