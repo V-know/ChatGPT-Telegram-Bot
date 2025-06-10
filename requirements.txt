@@ -27,7 +27,7 @@ python-telegram-bot==20.3
 PyYAML==6.0
 redis==4.5.5
 referencing==0.34.0
-requests==2.32.0
+requests==2.32.4
 rfc3986==1.5.0
 rpds-py==0.18.0
 sniffio==1.3.0
