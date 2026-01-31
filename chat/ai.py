@@ -1,22 +1,11 @@
 from config import token
-from db.MySqlConn import config
-from ai.openai import OpenAIClient
-from ai.azure import AzureAIClient
-from ai import OPENAI_CHAT_COMPLETION_OPTIONS
-
-
-def init_client():
-    if config["AI"]["TYPE"] == "azure":
-        client = AzureAIClient()
-    else:
-        client = OpenAIClient()
-    return client
+from ai import get_ai_client, OPENAI_CHAT_COMPLETION_OPTIONS
 
 
 async def ChatCompletionsAI(logged_in_user, messages) -> (str, str):
     level = logged_in_user.get("level")
 
-    ai = init_client()
+    ai = get_ai_client()
     answer = ""
     with ai.client.chat.completions.with_streaming_response.create(
             messages=messages,
@@ -31,6 +20,6 @@ async def ChatCompletionsAI(logged_in_user, messages) -> (str, str):
 
 
 async def GenerateImage(prompt):
-    ai = init_client()
+    ai = get_ai_client()
     image_url = ai.generate_image(prompt)
     return image_url
