@@ -2,7 +2,6 @@ from telegram import Update
 from telegram.ext import ContextTypes
 from telegram.error import BadRequest
 import asyncio
-import re
 
 from chat.ai import ChatCompletionsAI
 import time
@@ -10,6 +9,7 @@ import emoji
 
 from db.MySqlConn import Mysql
 from buttons.templates import token_limit
+from utils import count_tokens
 from config import (
     token,
     reply_markup,
@@ -114,14 +114,3 @@ async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             await context.bot.send_message(chat_id=notification_channel, text=msg, disable_web_page_preview=True,
                                            parse_mode=parse_mode)
     return CHOOSING
-
-
-def count_tokens(text):
-    # 使用正则表达式匹配中文汉字、英文单词和标点符号
-    pattern = r"[\u4e00-\u9fa5]|[a-zA-Z]+|[^\s\w]"
-    tokens = re.findall(pattern, text)
-
-    # 计算token数量
-    token_count = len(tokens)
-
-    return token_count
