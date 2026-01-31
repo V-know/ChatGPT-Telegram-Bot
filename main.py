@@ -63,33 +63,25 @@ def main() -> None:
     # Create the Application and pass it your bot's token.
     application = Application.builder().token(config["BOT"]["TOKEN"]).persistence(persistence).build()
 
+    # 主对话处理器列表 (CHOOSING 和 TYPING_REPLY 共用)
+    main_handlers = [
+        MessageHandler(filters.Regex(f'^{contact_admin}$'), helper),
+        MessageHandler(filters.Regex(f'^({start_button}|/start|Start)$'), start),
+        MessageHandler(filters.Regex(f'^{language_button}$'), show_languages),
+        MessageHandler(filters.Regex(f"^{reset_context_button}$"), reset_context),
+        MessageHandler(filters.Regex(f"^{set_sys_content_button}$"), set_system_content),
+        MessageHandler(filters.Regex(f"^{statistics_button}$"), statistics),
+        MessageHandler(filters.Regex(f"^{switch_role_button}$"), show_chat_modes_handle),
+        MessageHandler(filters.Regex(f"^{image_button}$"), set_image_prompt),
+        MessageHandler(filters.TEXT, answer_handler),
+        MessageHandler(filters.ATTACHMENT, non_text_handler),
+    ]
+
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler('start', start)],
         states={
-            CHOOSING: [
-                MessageHandler(filters.Regex(f'^{contact_admin}$'), helper, ),
-                MessageHandler(filters.Regex(f'^({start_button}|/start|Start)$'), start, ),
-                MessageHandler(filters.Regex(f'^{language_button}$'), show_languages, ),
-                MessageHandler(filters.Regex(f"^{reset_context_button}$"), reset_context),
-                MessageHandler(filters.Regex(f"^{set_sys_content_button}$"), set_system_content),
-                MessageHandler(filters.Regex(f"^{statistics_button}$"), statistics),
-                MessageHandler(filters.Regex(f"^{switch_role_button}$"), show_chat_modes_handle),
-                MessageHandler(filters.Regex(f"^{image_button}$"), set_image_prompt),
-                MessageHandler(filters.TEXT, answer_handler),
-                MessageHandler(filters.ATTACHMENT, non_text_handler),
-            ],
-            TYPING_REPLY: [
-                MessageHandler(filters.Regex(f'^{contact_admin}$'), helper, ),
-                MessageHandler(filters.Regex(f'^({start_button}|/start|Start)$'), start, ),
-                MessageHandler(filters.Regex(f'^{language_button}$'), show_languages, ),
-                MessageHandler(filters.Regex(f"^{reset_context_button}$"), reset_context),
-                MessageHandler(filters.Regex(f"^{set_sys_content_button}$"), set_system_content),
-                MessageHandler(filters.Regex(f"^{statistics_button}$"), statistics),
-                MessageHandler(filters.Regex(f"^{switch_role_button}$"), show_chat_modes_handle),
-                MessageHandler(filters.Regex(f"^{image_button}$"), set_image_prompt),
-                MessageHandler(filters.TEXT, answer_handler),
-                MessageHandler(filters.ATTACHMENT, non_text_handler),
-            ],
+            CHOOSING: main_handlers,
+            TYPING_REPLY: main_handlers,  # 复用同一列表
             TYPING_SYS_CONTENT: [
                 MessageHandler(filters.TEXT, set_system_content_handler),
             ],
