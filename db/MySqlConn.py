@@ -1,8 +1,7 @@
 # -*- coding: UTF-8 -*-
 """
-1、执行带参数的ＳＱＬ时，请先用sql语句指定需要输入的条件列表，然后再用tuple/list进行条件批配
-２、在格式ＳＱＬ中不需要使用引号指定数据类型，系统会根据输入参数自动识别
-３、在输入的值中不需要使用转意函数，系统会自动处理
+MySQL 数据库连接模块
+支持连接池和上下文管理器，确保连接正确释放
 """
 
 import pymysql
@@ -12,16 +11,44 @@ from config import config
 
 class Mysql(object):
     """
-    MYSQL数据库对象，负责产生数据库连接 , 此类中的连接采用连接池实现获取连接对象：conn = Mysql.getConn()
-            释放连接对象;conn.close()或del conn
+    MYSQL数据库对象，负责产生数据库连接
+    支持上下文管理器 (with 语句) 自动管理连接生命周期
+    
+    Usage:
+        # 推荐: 使用上下文管理器
+        with Mysql() as mysql:
+            user = mysql.getOne("select * from users where id=%s", (1,))
+        # 连接自动提交并释放
+        
+        # 旧方式 (仍支持，但不推荐)
+        mysql = Mysql()
+        user = mysql.getOne(...)
+        mysql.end()  # 必须手动调用
     """
-    # 连接池对象
+    # 连接池对象 (类级别单例)
     __pool = None
 
     def __init__(self):
         # 数据库构造函数，从连接池中取出连接，并生成操作游标
         self._conn = Mysql.__getConn()
         self._cursor = self._conn.cursor()
+
+    def __enter__(self):
+        """上下文管理器入口"""
+        return self
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        """上下文管理器退出，自动提交/回滚并释放连接"""
+        if exc_type is None:
+            # 无异常，提交事务
+            self.end('commit')
+        else:
+            # 有异常，回滚事务
+            self.end('rollback')
+        self._cursor.close()
+        self._conn.close()
+        # 返回 False 让异常继续传播
+        return False
 
     @staticmethod
     def __getConn():
@@ -30,24 +57,24 @@ class Mysql(object):
         @return MySQLdb.connection
         """
         if Mysql.__pool is None:
-            __pool = PooledDB(creator=pymysql,  # 使用链接数据库的模块
-                              maxconnections=60,  # 连接池允许的最大连接数，0和None表示不限制连接数
-                              mincached=2,  # 初始化时，链接池中至少创建的空闲的链接，0表示不创建
-                              maxcached=5,  # 链接池中最多闲置的链接，0和None不限制
-                              maxshared=3,
-                              # 链接池中最多共享的链接数量，0和None表示全部共享。PS: 无用，因为pymysql和MySQLdb等模块的 threadsafety都为1，所有值无论设置为多少，_maxcached永远为0，所以永远是所有链接都共享。
-                              blocking=True,  # 连接池中如果没有可用连接后，是否阻塞等待。True，等待；False，不等待然后报错
-                              maxusage=None,  # 一个链接最多被重复使用的次数，None表示无限制
-                              # setsession=["set global time_zone = '+8:00'", "set time_zone = '+8:00'"],  # You don't need this line if your db's timezone is correct.开始会话前执行的命令列表。
-                              ping=0,  # ping MySQL服务端，检查是否服务可用。
-                              host=config["MYSQL"]["DBHOST"],
-                              port=config["MYSQL"]["DBPORT"],
-                              user=config["MYSQL"]["DBUSER"],
-                              password=config["MYSQL"]["DBPWD"],
-                              database=config["MYSQL"]["DBNAME"],
-                              charset=config["MYSQL"]["DBCHAR"],
-                              cursorclass=pymysql.cursors.DictCursor)
-        return __pool.connection()
+            Mysql.__pool = PooledDB(
+                creator=pymysql,
+                maxconnections=60,
+                mincached=2,
+                maxcached=5,
+                maxshared=3,
+                blocking=True,
+                maxusage=None,
+                ping=0,
+                host=config["MYSQL"]["DBHOST"],
+                port=config["MYSQL"]["DBPORT"],
+                user=config["MYSQL"]["DBUSER"],
+                password=config["MYSQL"]["DBPWD"],
+                database=config["MYSQL"]["DBNAME"],
+                charset=config["MYSQL"]["DBCHAR"],
+                cursorclass=pymysql.cursors.DictCursor
+            )
+        return Mysql.__pool.connection()
 
     def getAll(self, sql, param=None):
         """
