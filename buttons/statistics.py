@@ -14,9 +14,9 @@ async def statistics(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     mysql = Mysql()
     user_id = user.id
     prompt_tokens = mysql.getMany(
-        f"select sum(tokens) as tokens from records where user_id={user_id} and role='user'", 1)[0]
+        "select sum(tokens) as tokens from records where user_id=%s and role='user'", 1, (user_id,))[0]
     completion_tokens = mysql.getMany(
-        f"select sum(tokens) as tokens from records where user_id={user_id} and role='assistant'", 1)[0]
+        "select sum(tokens) as tokens from records where user_id=%s and role='assistant'", 1, (user_id,))[0]
 
     user_info = mysql.getOne("select * from users where user_id=%s", user_id)
     mysql.end()

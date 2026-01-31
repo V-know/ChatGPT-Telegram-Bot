@@ -27,10 +27,10 @@ async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     nick_name = user.full_name
     mysql = Mysql()
 
-    user_checkin = mysql.getOne(f"select * from users where user_id={user_id}")
+    user_checkin = mysql.getOne("select * from users where user_id=%s", (user_id,))
     if not user_checkin:
         date_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-        sql = "insert into users (user_id, name, nick_name level, system_content, created_at) values (%s, %s, %s, %s, %s, %s)"
+        sql = "insert into users (user_id, name, nick_name, level, system_content, created_at) values (%s, %s, %s, %s, %s, %s)"
         value = [user_id, user.username, nick_name, 0, "You are an AI assistant that helps people find information.",
                  date_time]
         mysql.insertOne(sql, value)
@@ -38,14 +38,15 @@ async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     if user_checkin and not user_checkin.get("nick_name"):
         mysql.update("update users set nick_name=%s where user_id=%s", (nick_name, user_id))
 
-    logged_in_user = mysql.getOne(f"select * from users where user_id={user_id}")
+    logged_in_user = mysql.getOne("select * from users where user_id=%s", (user_id,))
     parse_mode = logged_in_user.get("parse_mode")
     # VIP level
     level = logged_in_user.get("level")
 
     # Rate limit controller
     chat_count = mysql.getOne(
-        f"select count(*) as count from records where role='user' and created_at >=NOW() - INTERVAL {time_span} MINUTE;")
+        "select count(*) as count from records where user_id=%s and role='user' and created_at >= NOW() - INTERVAL %s MINUTE",
+        (user_id, time_span))
 
     if chat_count.get("count") > rate_limit[level]:
         reply = f"请求太快了!{emoji.emojize(':rocket:')}\n" \
@@ -57,8 +58,10 @@ async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 
     placeholder_message = await update.message.reply_text("...")
     # Init messages
-    records = mysql.getMany(f"select * from records where user_id={user_id} and reset_at is null order by id desc",
-                            context_count[level])
+    records = mysql.getMany(
+        "select * from records where user_id=%s and reset_at is null order by id desc",
+        context_count[level],
+        (user_id,))
     if update.message:
         messages = []
         prompt_tokens = 0

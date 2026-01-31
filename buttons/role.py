@@ -29,7 +29,7 @@ async def reset_context(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
     mysql = Mysql()
     reset_at = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     mysql.update("update records set reset_at=%s where user_id=%s and reset_at is null", (reset_at, user_id))
-    user = mysql.getOne(f"select * from users where user_id={user_id}")
+    user = mysql.getOne("select * from users where user_id=%s", (user_id,))
     mysql.end()
     await update.message.reply_text(
         context_info[user["lang"]].safe_substitute(context_count=context_count[user["level"]]), parse_mode="Markdown",
