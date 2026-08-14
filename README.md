@@ -117,4 +117,4 @@ I hope this project can provide you with a smooth AI experience and help more pe
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=v-know/chatgpt-telegram-bot&type=Date)](https://star-history.com/#v-know/chatgpt-telegram-bot&Date)
+[![Star History Chart](https://star-history.dera.page/svg?repos=v-know/chatgpt-telegram-bot&type=Date)](https://star-history.dera.page/#v-know/chatgpt-telegram-bot&Date)
