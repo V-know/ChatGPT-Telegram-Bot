@@ -73,7 +73,7 @@ async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE) -> N
         f"<pre>error type = {html.escape(str(type(context.error)))}</pre>"
         f"<pre>context.chat_data = {html.escape(str(context.chat_data))}</pre>\n\n"
         f"<pre>context.user_data = {html.escape(str(context.user_data))}</pre>\n\n"
-        f"<pre>prompt = {html.escape(str(update.message.text))}</pre>\n\n"
+        f"<pre>prompt = {html.escape(str(update.message.text if isinstance(update, Update) and update.message else 'N/A'))}</pre>\n\n"
         f"<pre>{html.escape(tb_string)}</pre>"
     )
 
@@ -85,12 +85,14 @@ async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE) -> N
     elif type(context.error) in [openai.ErrorObject.error.Timeout, asyncio.exceptions.TimeoutError]:
         error_reply = "Time out. Retry please!"
 
-    if error_reply:
-        await update.message.reply_text(error_reply, parse_mode="Markdown", disable_web_page_preview=True)
-    else:
-        await update.message.reply_text(
-            "Oops, our servers are overloaded due to high demand. Please take a break and try again later!",
-            parse_mode="Markdown", disable_web_page_preview=True)
-        await context.bot.send_message(
-            chat_id=config["DEVELOPER_CHAT_ID"], text=message[:4096], parse_mode="HTML"
-        )
+    user_message = update.message if isinstance(update, Update) else None
+    if user_message:
+        if error_reply:
+            await user_message.reply_text(error_reply, parse_mode="Markdown", disable_web_page_preview=True)
+        else:
+            await user_message.reply_text(
+                "Oops, our servers are overloaded due to high demand. Please take a break and try again later!",
+                parse_mode="Markdown", disable_web_page_preview=True)
+    await context.bot.send_message(
+        chat_id=config["DEVELOPER_CHAT_ID"], text=message[:4096], parse_mode="HTML"
+    )

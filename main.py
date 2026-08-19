@@ -27,6 +27,7 @@ from telegram.ext import (
     ConversationHandler,
     CallbackQueryHandler,
     filters)
+from pathlib import Path
 
 from config import (
     contact_admin,
@@ -58,6 +59,7 @@ from buttons.others import non_text_handler, done, error_handler
 def main() -> None:
     """Start the bot."""
     # Create the Updater and pass it your bot's token.
+    Path("data").mkdir(parents=True, exist_ok=True)
     persistence = PicklePersistence(filepath='data/conversationbot')
 
     # Create the Application and pass it your bot's token.
