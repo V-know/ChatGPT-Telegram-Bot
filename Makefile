@@ -15,10 +15,10 @@ install: $(VENV)/bin/activate
 run: $(VENV)/bin/activate
 	$(PYTHON) main.py
 
-image: $(VENV)/bin/activate
+image:
 	docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/v-know/chatgpt-telegram-bot:latest --push .
 
-preflight: $(VENV)/bin/activate
+preflight:
 	docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/v-know/chatgpt-telegram-bot:preflight --push .
 
 # 显示帮助信息
