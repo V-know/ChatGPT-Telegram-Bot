@@ -1,6 +1,6 @@
 # ChatGPT Telegram Bot
 
-![python-version](https://img.shields.io/badge/python-3.9+-blue.svg)
+![python-version](https://img.shields.io/badge/python-3.11+-blue.svg)
 [![python-telegram-bot-version](https://img.shields.io/badge/PythonTelegramBot-20.3+-critical.svg)](https://github.com/python-telegram-bot/python-telegram-bot/releases/tag/v20.3)
 ![db](https://img.shields.io/badge/db-MySQL8-ff69b4.svg)
 [![openai-version](https://img.shields.io/badge/openai-1.19.0-orange.svg)](https://openai.com/)
