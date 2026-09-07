@@ -1,7 +1,10 @@
 from telegram import Update
+from telegram.constants import ChatAction
 from telegram.ext import ContextTypes
 from telegram.error import BadRequest
+from telegramify_markdown import convert
 import asyncio
+from contextlib import suppress
 
 from chat.ai import ChatCompletionsAI
 import time
@@ -20,7 +23,33 @@ from config import (
     context_count)
 
 
+def _convert_markdown_for_telegram(text: str):
+    display_text, entities = convert(text)
+    return display_text, [entity.to_dict() for entity in entities]
+
+
+async def _typing_heartbeat(bot, chat_id: int) -> None:
+    try:
+        while True:
+            await asyncio.sleep(4)
+            await bot.send_chat_action(chat_id=chat_id, action=ChatAction.TYPING)
+    except asyncio.CancelledError:
+        raise
+
+
 async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    chat_id = update.effective_chat.id
+    await context.bot.send_chat_action(chat_id=chat_id, action=ChatAction.TYPING)
+    typing_task = asyncio.create_task(_typing_heartbeat(context.bot, chat_id))
+    try:
+        return await _answer_handler(update, context, typing_task.cancel)
+    finally:
+        typing_task.cancel()
+        with suppress(asyncio.CancelledError):
+            await typing_task
+
+
+async def _answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE, stop_typing) -> int:
     user = update.effective_user
     prompt = update.message.text
     user_id = user.id
@@ -56,7 +85,15 @@ async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             await update.message.reply_text(reply, reply_markup=reply_markup)
             return CHOOSING
 
+        await context.bot.send_chat_action(
+            chat_id=update.effective_chat.id,
+            action=ChatAction.TYPING,
+        )
         placeholder_message = await update.message.reply_text("...")
+        await context.bot.send_chat_action(
+            chat_id=update.effective_chat.id,
+            action=ChatAction.TYPING,
+        )
         # Init messages
         records = mysql.getMany(
             "select * from records where user_id=%s and reset_at is null order by id desc",
@@ -89,13 +126,17 @@ async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
                 try:
                     if status == "length":
                         answer = token_limit[user_checkin["lang"]].safe_substitute(answer=answer, max_token=token[level])
-                        parse_mode = "Markdown"
                     elif status == "content_filter":
                         answer = f"{answer}\n\nAs an AI assistant, please ask me appropriate questions!！\nPlease contact @AiMessagerBot for more help!" \
                                  f"{emoji.emojize(':check_mark_button:')}"
-                    await context.bot.edit_message_text(answer, chat_id=placeholder_message.chat_id,
-                                                        message_id=placeholder_message.message_id,
-                                                        parse_mode=parse_mode, disable_web_page_preview=True)
+                    display_text, entities = _convert_markdown_for_telegram(answer)
+                    await context.bot.edit_message_text(
+                        display_text,
+                        chat_id=placeholder_message.chat_id,
+                        message_id=placeholder_message.message_id,
+                        entities=entities,
+                        disable_web_page_preview=True,
+                    )
                 except BadRequest as e:
                     if str(e).startswith("Message is not modified"):
                         continue
@@ -104,6 +145,7 @@ async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
                                                             message_id=placeholder_message.message_id)
                 await asyncio.sleep(0.01)  # wait a bit to avoid flooding
 
+            stop_typing()
             date_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
             sql = "insert into records (user_id, role, content, created_at, tokens) " \
                   "values (%s, %s, %s, %s, %s)"
