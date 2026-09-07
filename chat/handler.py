@@ -36,14 +36,14 @@ async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     await context.bot.send_chat_action(chat_id=chat_id, action=ChatAction.TYPING)
     typing_task = asyncio.create_task(_typing_heartbeat(context.bot, chat_id))
     try:
-        return await _answer_handler(update, context)
+        return await _answer_handler(update, context, typing_task.cancel)
     finally:
         typing_task.cancel()
         with suppress(asyncio.CancelledError):
             await typing_task
 
 
-async def _answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+async def _answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE, stop_typing) -> int:
     user = update.effective_user
     prompt = update.message.text
     user_id = user.id
@@ -135,6 +135,7 @@ async def _answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
                                                             message_id=placeholder_message.message_id)
                 await asyncio.sleep(0.01)  # wait a bit to avoid flooding
 
+            stop_typing()
             date_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
             sql = "insert into records (user_id, role, content, created_at, tokens) " \
                   "values (%s, %s, %s, %s, %s)"
