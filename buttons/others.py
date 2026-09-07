@@ -5,7 +5,6 @@ from telegram import (
 
 import time
 import json
-import html
 import openai
 import asyncio
 import traceback
@@ -67,14 +66,13 @@ async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE) -> N
     # You might need to add some logic to deal with messages longer than the 4096-character limit.
     update_str = update.to_dict() if isinstance(update, Update) else str(update)
     message = (
-        f"An exception was raised while handling an update\n"
-        f"<pre>update = {html.escape(json.dumps(update_str, indent=2, ensure_ascii=False))}"
-        "</pre>\n\n"
-        f"<pre>error type = {html.escape(str(type(context.error)))}</pre>"
-        f"<pre>context.chat_data = {html.escape(str(context.chat_data))}</pre>\n\n"
-        f"<pre>context.user_data = {html.escape(str(context.user_data))}</pre>\n\n"
-        f"<pre>prompt = {html.escape(str(update.message.text if isinstance(update, Update) and update.message else 'N/A'))}</pre>\n\n"
-        f"<pre>{html.escape(tb_string)}</pre>"
+        "An exception was raised while handling an update\n"
+        f"update = {json.dumps(update_str, indent=2, ensure_ascii=False)}\n\n"
+        f"error type = {type(context.error)}\n"
+        f"context.chat_data = {context.chat_data}\n\n"
+        f"context.user_data = {context.user_data}\n\n"
+        f"prompt = {update.message.text if isinstance(update, Update) and update.message else 'N/A'}\n\n"
+        f"{tb_string}"
     )
 
     # Finally, send the message
@@ -94,5 +92,5 @@ async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE) -> N
                 "Oops, our servers are overloaded due to high demand. Please take a break and try again later!",
                 parse_mode="Markdown", disable_web_page_preview=True)
     await context.bot.send_message(
-        chat_id=config["DEVELOPER_CHAT_ID"], text=message[:4096], parse_mode="HTML"
+        chat_id=config["DEVELOPER_CHAT_ID"], text=message[:4096]
     )

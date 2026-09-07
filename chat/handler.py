@@ -1,7 +1,9 @@
 from telegram import Update
+from telegram.constants import ChatAction
 from telegram.ext import ContextTypes
 from telegram.error import BadRequest
 import asyncio
+from contextlib import suppress
 
 from chat.ai import ChatCompletionsAI
 import time
@@ -20,7 +22,28 @@ from config import (
     context_count)
 
 
+async def _typing_heartbeat(bot, chat_id: int) -> None:
+    try:
+        while True:
+            await asyncio.sleep(4)
+            await bot.send_chat_action(chat_id=chat_id, action=ChatAction.TYPING)
+    except asyncio.CancelledError:
+        raise
+
+
 async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    chat_id = update.effective_chat.id
+    await context.bot.send_chat_action(chat_id=chat_id, action=ChatAction.TYPING)
+    typing_task = asyncio.create_task(_typing_heartbeat(context.bot, chat_id))
+    try:
+        return await _answer_handler(update, context)
+    finally:
+        typing_task.cancel()
+        with suppress(asyncio.CancelledError):
+            await typing_task
+
+
+async def _answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user = update.effective_user
     prompt = update.message.text
     user_id = user.id
@@ -56,7 +79,15 @@ async def answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             await update.message.reply_text(reply, reply_markup=reply_markup)
             return CHOOSING
 
+        await context.bot.send_chat_action(
+            chat_id=update.effective_chat.id,
+            action=ChatAction.TYPING,
+        )
         placeholder_message = await update.message.reply_text("...")
+        await context.bot.send_chat_action(
+            chat_id=update.effective_chat.id,
+            action=ChatAction.TYPING,
+        )
         # Init messages
         records = mysql.getMany(
             "select * from records where user_id=%s and reset_at is null order by id desc",
