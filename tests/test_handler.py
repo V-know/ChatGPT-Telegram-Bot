@@ -1,4 +1,5 @@
 import asyncio
+import json
 import unittest
 from types import SimpleNamespace
 from unittest.mock import AsyncMock, MagicMock, patch
@@ -7,6 +8,20 @@ from telegram.constants import ChatAction
 
 
 class TestAnswerHandler(unittest.TestCase):
+    def test_converts_commonmark_to_telegram_entities(self):
+        from chat.handler import _convert_markdown_for_telegram
+
+        text, entities = _convert_markdown_for_telegram("1. **全球经济不确定性**：价格上涨。")
+
+        self.assertEqual(text, "1. 全球经济不确定性：价格上涨。\n")
+        self.assertEqual(len(entities), 1)
+        self.assertEqual(entities[0]["type"], "bold")
+        self.assertEqual(
+            text[entities[0]["offset"]:entities[0]["offset"] + entities[0]["length"]],
+            "全球经济不确定性",
+        )
+        json.dumps(entities)
+
     def test_typing_heartbeat_repeats_until_cancelled(self):
         from chat import handler
 
@@ -53,7 +68,7 @@ class TestAnswerHandler(unittest.TestCase):
         mysql.__enter__.return_value.getOne.side_effect = [
             None,
             {
-                "parse_mode": None,
+                "parse_mode": "HTML",
                 "level": 0,
                 "system_content": "You are helpful.",
                 "lang": "en",
@@ -63,7 +78,7 @@ class TestAnswerHandler(unittest.TestCase):
         mysql.__enter__.return_value.getMany.return_value = []
 
         async def replies():
-            yield ("Hi", None)
+            yield ("**Hi**", "stop")
 
         with patch.object(handler, "Mysql", return_value=mysql), \
                 patch.object(handler, "ChatCompletionsAI", return_value=replies()), \
@@ -83,6 +98,10 @@ class TestAnswerHandler(unittest.TestCase):
             "placeholder",
             "typing",
         ])
+        edit_call = context.bot.edit_message_text.await_args
+        self.assertEqual(edit_call.args[0], "Hi")
+        self.assertEqual(edit_call.kwargs["entities"][0]["type"], "bold")
+        self.assertNotIn("parse_mode", edit_call.kwargs)
 
 
 if __name__ == "__main__":

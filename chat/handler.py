@@ -2,6 +2,7 @@ from telegram import Update
 from telegram.constants import ChatAction
 from telegram.ext import ContextTypes
 from telegram.error import BadRequest
+from telegramify_markdown import convert
 import asyncio
 from contextlib import suppress
 
@@ -20,6 +21,11 @@ from config import (
     time_span,
     notification_channel,
     context_count)
+
+
+def _convert_markdown_for_telegram(text: str):
+    display_text, entities = convert(text)
+    return display_text, [entity.to_dict() for entity in entities]
 
 
 async def _typing_heartbeat(bot, chat_id: int) -> None:
@@ -120,13 +126,17 @@ async def _answer_handler(update: Update, context: ContextTypes.DEFAULT_TYPE, st
                 try:
                     if status == "length":
                         answer = token_limit[user_checkin["lang"]].safe_substitute(answer=answer, max_token=token[level])
-                        parse_mode = "Markdown"
                     elif status == "content_filter":
                         answer = f"{answer}\n\nAs an AI assistant, please ask me appropriate questions!！\nPlease contact @AiMessagerBot for more help!" \
                                  f"{emoji.emojize(':check_mark_button:')}"
-                    await context.bot.edit_message_text(answer, chat_id=placeholder_message.chat_id,
-                                                        message_id=placeholder_message.message_id,
-                                                        parse_mode=parse_mode, disable_web_page_preview=True)
+                    display_text, entities = _convert_markdown_for_telegram(answer)
+                    await context.bot.edit_message_text(
+                        display_text,
+                        chat_id=placeholder_message.chat_id,
+                        message_id=placeholder_message.message_id,
+                        entities=entities,
+                        disable_web_page_preview=True,
+                    )
                 except BadRequest as e:
                     if str(e).startswith("Message is not modified"):
                         continue
